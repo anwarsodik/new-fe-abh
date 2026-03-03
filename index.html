@@ -46,12 +46,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Hero Section Gradient Animation */
-        .hero-pattern {
-            background-color: #f0fdf4;
-            background-image: radial-gradient(#dcfce7 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
 
         /* Marquee Animation */
         @keyframes marquee {
@@ -136,7 +130,18 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 hero-pattern overflow-hidden">
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center justify-center">
+        <!-- Background Video -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                    type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <!-- Overlay to ensure text readability -->
+            <div class="absolute inset-0 bg-white/80 backdrop-blur-[2px]"></div>
+        </div>
+
         <!-- Decorative blobs -->
         <div
             class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-primary-100 blur-3xl opacity-50 mix-blend-multiply pointer-events-none">
