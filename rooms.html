@@ -37,58 +37,153 @@
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #2E7D32; border-radius: 3px; }
 
-    /* Navbar */
     .nav-scrolled { background: rgba(255,255,255,0.97) !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08) !important; }
-
-    /* Mobile menu */
     #mobile-menu { transition: max-height .35s ease, opacity .35s ease; max-height: 0; opacity: 0; overflow: hidden; }
     #mobile-menu.open { max-height: 400px; opacity: 1; }
 
-    /* Filter tab */
-    .filter-tab { transition: all .2s; }
-    .filter-tab.active { background: #2E7D32; color: #fff; border-color: #2E7D32; }
-
-    /* Card hover */
+    /* ── Unit card ── */
     .unit-card { transition: transform .3s ease, box-shadow .3s ease; }
     .unit-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(46,125,50,.13); }
 
-    /* Status badges */
+    /* ── Status badges ── */
     .badge-available { background: #dcfce7; color: #15803d; }
     .badge-monthly   { background: #dbeafe; color: #1d4ed8; }
     .badge-daily     { background: #fef9c3; color: #a16207; }
     .badge-yearly    { background: #f3e8ff; color: #7e22ce; }
 
-    /* Image slider — SLIDE transition */
+    /* ── Image slider ── */
     .img-slider { position: relative; overflow: hidden; }
-
     .img-track {
-      display: flex;
-      height: 200px;
+      display: flex; height: 200px;
       transition: transform .45s cubic-bezier(.25,.46,.45,.94);
       will-change: transform;
     }
-    .img-slide {
-      flex: 0 0 100%;
-      height: 200px;
-      background-size: cover;
-      background-position: center;
+    .img-slide { flex: 0 0 100%; height: 200px; background-size: cover; background-position: center; }
+    .img-nav {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+      width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.85);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; transition: opacity .2s; border: none;
     }
-
-    .img-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
-               width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.85);
-               display: flex; align-items: center; justify-content: center; cursor: pointer;
-               opacity: 0; transition: opacity .2s; border: none; }
     .img-slider:hover .img-nav { opacity: 1; }
     .img-nav-prev { left: 8px; }
     .img-nav-next { right: 8px; }
 
-    /* Skeleton loader */
-    @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
-    .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-                background-size: 400px 100%; animation: shimmer 1.4s infinite; }
+    /* ── Sort select ── */
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
 
-    /* Sort select */
-    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    /* ══════════════════════════════
+       FILTER SIDEBAR
+    ══════════════════════════════ */
+    .filter-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 1.25rem;
+      overflow: hidden;
+    }
+
+    .fsec-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .875rem 1.25rem;
+      cursor: pointer; user-select: none;
+      transition: background .15s;
+    }
+    .fsec-head:hover { background: #f9fafb; }
+
+    .fsec-body {
+      padding: .5rem 1.25rem .875rem;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .fsec-icon { transition: transform .25s ease; flex-shrink: 0; }
+    .fsec-icon.rotated { transform: rotate(180deg); }
+
+    /* Custom checkbox row */
+    .fcheck-row {
+      display: flex; align-items: center; gap: .625rem;
+      padding: .35rem 0;
+      cursor: pointer;
+    }
+    .fcheck-row:hover .fcheck-box { border-color: #2E7D32; }
+
+    .fcheck-row input[type="checkbox"] {
+      position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;
+    }
+
+    .fcheck-box {
+      width: 1.125rem; height: 1.125rem; flex-shrink: 0;
+      border: 2px solid #d1d5db; border-radius: .3rem;
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+
+    .fcheck-row input[type="checkbox"]:checked ~ .fcheck-box {
+      background: #2E7D32; border-color: #2E7D32;
+    }
+    .fcheck-row input[type="checkbox"]:checked ~ .fcheck-box::after {
+      content: '';
+      display: block;
+      width: 5px; height: 8px;
+      border: 2px solid white;
+      border-top: none; border-left: none;
+      transform: rotate(45deg) translate(-0.5px, -1px);
+    }
+
+    .fcheck-label {
+      font-family: 'Inter', sans-serif;
+      font-size: .875rem;
+      color: #4b5563;
+      transition: color .15s;
+    }
+    .fcheck-row:has(input:checked) .fcheck-label { color: #2E7D32; font-weight: 600; }
+
+    /* ── Active filter chips ── */
+    .chip {
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 600;
+      color: #2E7D32; background: #e8f5e9; border: 1px solid #a5d6a7;
+      padding: .3rem .65rem; border-radius: 100px;
+      cursor: pointer; transition: background .15s;
+      white-space: nowrap;
+    }
+    .chip:hover { background: #c8e6c9; }
+
+    /* ══════════════════════════════
+       MOBILE FILTER DRAWER
+    ══════════════════════════════ */
+    #filter-overlay {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,.45); backdrop-filter: blur(3px);
+    }
+    #filter-overlay.open { display: block; }
+
+    #filter-drawer {
+      position: fixed; top: 0; left: 0; bottom: 0;
+      width: min(300px, 85vw);
+      background: white; z-index: 301;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow: 6px 0 32px rgba(0,0,0,.18);
+    }
+    #filter-overlay.open #filter-drawer { transform: translateX(0); }
+
+    .mobile-fsec-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .75rem 0;
+      cursor: pointer; user-select: none;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .mobile-fsec-icon { transition: transform .25s ease; }
+    .mobile-fsec-icon.rotated { transform: rotate(180deg); }
+    .mobile-fsec-body { padding: .5rem 0 .75rem; border-bottom: 1px solid #f3f4f6; }
   </style>
 </head>
 
@@ -97,20 +192,15 @@
 <div id="navbar-placeholder"></div>
 
 
-<!-- ══════════════════════════════════════
+<!-- ══════════════════════════════
      PAGE HEADER
-══════════════════════════════════════ -->
+══════════════════════════════ -->
 <section class="relative pt-32 pb-16 px-4 overflow-hidden" style="min-height:280px">
-  <!-- Background photo -->
   <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=85&auto=format&fit=crop"
        alt="Apartemen Bale Hinggil"
        class="absolute inset-0 w-full h-full object-cover object-center" />
-  <!-- Overlay -->
   <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(27,67,50,0.88) 0%, rgba(46,125,50,0.72) 60%, rgba(0,0,0,0.45) 100%)"></div>
-
-  <!-- Content -->
   <div class="relative z-10 max-w-7xl mx-auto">
-    <!-- Breadcrumb -->
     <div class="flex items-center gap-2 mb-5">
       <a href="index.html" class="font-sans text-sm text-white/60 hover:text-white transition-colors flex items-center gap-1">
         <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
@@ -118,7 +208,6 @@
       <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-white/40"></i>
       <span class="font-sans text-sm text-white/90">Units</span>
     </div>
-
     <p class="font-sans text-white/60 text-xs font-semibold uppercase tracking-widest mb-2">Browse Our</p>
     <h1 class="font-serif text-white mb-4" style="font-size:clamp(2.2rem,5vw,3.5rem); text-shadow:0 2px 16px rgba(0,0,0,0.3)">
       Units
@@ -130,43 +219,124 @@
 </section>
 
 
-<!-- ══════════════════════════════════════
-     FILTERS + SORT BAR
-══════════════════════════════════════ -->
-<div class="sticky top-[72px] z-40 bg-white border-b border-gray-200 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3">
+<!-- ══════════════════════════════
+     MOBILE: Filter button + sort bar
+══════════════════════════════ -->
+<div class="lg:hidden sticky top-[68px] z-40 bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center gap-2">
 
-      <!-- Filter tabs -->
-      <div class="flex gap-2 overflow-x-auto pb-1 sm:pb-0">
-        <button class="filter-tab active font-sans text-sm font-semibold px-4 py-2 rounded-full border whitespace-nowrap transition-all"
-                style="border-color:#2E7D32" onclick="filterUnits('all', this)">
-          Semua
-        </button>
-        <button class="filter-tab font-sans text-sm font-semibold px-4 py-2 rounded-full border border-gray-200 text-gray-600 whitespace-nowrap"
-                onclick="filterUnits('available', this)">
-          Tersedia
-        </button>
-        <button class="filter-tab font-sans text-sm font-semibold px-4 py-2 rounded-full border border-gray-200 text-gray-600 whitespace-nowrap"
-                onclick="filterUnits('daily', this)">
-          Harian
-        </button>
-        <button class="filter-tab font-sans text-sm font-semibold px-4 py-2 rounded-full border border-gray-200 text-gray-600 whitespace-nowrap"
-                onclick="filterUnits('monthly', this)">
-          Bulanan
-        </button>
-        <button class="filter-tab font-sans text-sm font-semibold px-4 py-2 rounded-full border border-gray-200 text-gray-600 whitespace-nowrap"
-                onclick="filterUnits('yearly', this)">
-          Tahunan
-        </button>
+    <button onclick="openFilterDrawer()"
+            class="flex items-center gap-1.5 px-3.5 py-2 rounded-full border-2 font-sans text-sm font-semibold flex-shrink-0 transition-all"
+            style="border-color:#2E7D32; color:#2E7D32">
+      <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+      Filter
+      <span id="mobile-badge"
+            class="hidden w-5 h-5 rounded-full text-[11px] font-bold text-white items-center justify-center flex-shrink-0"
+            style="background:#2E7D32">0</span>
+    </button>
+
+    <select id="sort-mob" onchange="sortUnits(this.value)"
+            class="flex-1 font-sans text-sm text-gray-700 border border-gray-200 rounded-xl px-3 py-2 bg-white focus:outline-none cursor-pointer">
+      <option value="default">Urutkan</option>
+      <option value="price-asc">Harga: Terendah</option>
+      <option value="price-desc">Harga: Tertinggi</option>
+      <option value="floor-asc">Lantai: Terendah</option>
+      <option value="floor-desc">Lantai: Tertinggi</option>
+    </select>
+
+    <span id="count-mob" class="font-sans text-xs text-gray-400 flex-shrink-0 whitespace-nowrap"></span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     MAIN LAYOUT: SIDEBAR + CONTENT
+══════════════════════════════ -->
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="flex gap-7 items-start">
+
+
+    <!-- ─────────────────────────
+         DESKTOP FILTER SIDEBAR
+    ───────────────────────── -->
+    <aside class="hidden lg:block w-60 xl:w-64 flex-shrink-0 sticky top-[92px]">
+      <div class="filter-card">
+
+        <!-- Sidebar header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <div class="flex items-center gap-2">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4" style="color:#2E7D32"></i>
+            <span class="font-serif text-base text-gray-900">Filter</span>
+          </div>
+          <button id="reset-btn" onclick="resetAllFilters()"
+                  class="font-sans text-xs font-semibold transition-colors hidden"
+                  style="color:#2E7D32">
+            Reset
+          </button>
+        </div>
+
+        <!-- VIEW UNIT -->
+        <div>
+          <div class="fsec-head" onclick="toggleFSection('fs-view','fsi-view')">
+            <span class="font-sans text-sm font-semibold text-gray-800">View Unit</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 fsec-icon" id="fsi-view"></i>
+          </div>
+          <div id="fs-view" class="fsec-body">
+            <div class="space-y-0.5">
+              <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Pool" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Pool View</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Mountain" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Mountain View</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Sky Garden" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Sky Garden</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Garden" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Garden View</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Sea" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Sea View</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Suramadu" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Suramadu View</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIPE UNIT -->
+        <div>
+          <div class="fsec-head" onclick="toggleFSection('fs-type','fsi-type')">
+            <span class="font-sans text-sm font-semibold text-gray-800">Tipe Unit</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 fsec-icon" id="fsi-type"></i>
+          </div>
+          <div id="fs-type" class="fsec-body">
+            <div class="space-y-0.5">
+              <label class="fcheck-row"><input type="checkbox" data-cat="type" data-val="Studio" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Studio</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="type" data-val="2BR" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">2 Bedroom</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="type" data-val="3BR" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">3 Bedroom</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- DURASI SEWA -->
+        <div>
+          <div class="fsec-head" onclick="toggleFSection('fs-durasi','fsi-durasi')">
+            <span class="font-sans text-sm font-semibold text-gray-800">Durasi Sewa</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 fsec-icon" id="fsi-durasi"></i>
+          </div>
+          <div id="fs-durasi" class="fsec-body" style="border-bottom:none">
+            <div class="space-y-0.5">
+              <label class="fcheck-row"><input type="checkbox" data-cat="durasi" data-val="daily" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Harian</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="durasi" data-val="monthly" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Bulanan</span></label>
+              <label class="fcheck-row"><input type="checkbox" data-cat="durasi" data-val="yearly" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Tahunan</span></label>
+            </div>
+          </div>
+        </div>
+
       </div>
+    </aside>
 
-      <!-- Sort + count -->
-      <div class="flex items-center gap-3 flex-shrink-0">
-        <span id="unit-count" class="font-sans text-sm text-gray-500 whitespace-nowrap">Menampilkan 15 unit</span>
-        <select id="sort-select" onchange="sortUnits(this.value)"
-                class="font-sans text-sm text-gray-700 border border-gray-200 rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 cursor-pointer"
-                style="--tw-ring-color:#2E7D32">
+
+    <!-- ─────────────────────────
+         MAIN CONTENT
+    ───────────────────────── -->
+    <main class="flex-1 min-w-0">
+
+      <!-- Sort bar + count (desktop) -->
+      <div class="hidden lg:flex items-center justify-between mb-5">
+        <span id="count-desk" class="font-sans text-sm text-gray-500">Menampilkan 15 unit</span>
+        <select id="sort-desk" onchange="sortUnits(this.value)"
+                class="font-sans text-sm text-gray-700 border border-gray-200 rounded-xl px-3 py-2 bg-white focus:outline-none cursor-pointer">
           <option value="default">Urutkan</option>
           <option value="price-asc">Harga: Terendah</option>
           <option value="price-desc">Harga: Tertinggi</option>
@@ -175,167 +345,292 @@
         </select>
       </div>
 
-    </div>
+      <!-- Active filter chips -->
+      <div id="chips-row" class="flex flex-wrap gap-2 mb-5 hidden"></div>
+
+      <!-- Hint -->
+      <p class="font-sans text-xs text-gray-400 mb-5 flex items-center gap-1.5">
+        <i data-lucide="info" class="w-3.5 h-3.5"></i>
+        Klik kartu untuk detail &amp; pemesanan
+      </p>
+
+      <!-- Unit grid -->
+      <div id="units-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="hidden flex-col items-center justify-center py-24 text-center">
+        <i data-lucide="search-x" class="w-14 h-14 text-gray-300 mb-4"></i>
+        <h3 class="font-serif text-gray-700 text-xl mb-2">Tidak ada unit ditemukan</h3>
+        <p class="font-sans text-gray-400 text-sm mb-5">Coba ubah atau reset filter untuk melihat lebih banyak unit</p>
+        <button onclick="resetAllFilters()"
+                class="font-sans text-sm font-semibold px-6 py-2.5 rounded-full text-white"
+                style="background:#2E7D32">
+          Reset Filter
+        </button>
+      </div>
+
+    </main>
+
   </div>
 </div>
 
 
-<!-- ══════════════════════════════════════
-     UNIT GRID
-══════════════════════════════════════ -->
-<main class="max-w-7xl mx-auto px-4 py-10">
+<!-- ══════════════════════════════
+     MOBILE FILTER DRAWER
+══════════════════════════════ -->
+<div id="filter-overlay" onclick="handleOverlayClick(event)">
+  <div id="filter-drawer">
 
-  <p class="font-sans text-xs text-gray-400 mb-6 flex items-center gap-1.5">
-    <i data-lucide="info" class="w-3.5 h-3.5"></i>
-    Klik kartu untuk detail &amp; pemesanan
-  </p>
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
+      <div class="flex items-center gap-2">
+        <i data-lucide="sliders-horizontal" class="w-4 h-4" style="color:#2E7D32"></i>
+        <span class="font-serif text-base text-gray-900">Filter</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="resetAllFilters()" class="font-sans text-xs font-semibold" style="color:#2E7D32">Reset</button>
+        <button onclick="closeFilterDrawer()" class="p-1 rounded-full hover:bg-gray-100">
+          <i data-lucide="x" class="w-5 h-5 text-gray-500"></i>
+        </button>
+      </div>
+    </div>
 
-  <div id="units-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    <!-- Cards injected by JS -->
+    <div class="px-5 py-4">
+
+      <!-- View Unit (mobile) -->
+      <div class="mb-1">
+        <div class="mobile-fsec-head" onclick="toggleMobileFSection('mfs-view','mfsi-view')">
+          <span class="font-sans text-sm font-semibold text-gray-800">View Unit</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 mobile-fsec-icon" id="mfsi-view"></i>
+        </div>
+        <div id="mfs-view" class="mobile-fsec-body">
+          <div class="space-y-0.5 pt-2">
+            <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Pool" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Pool View</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Mountain" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Mountain View</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Sky Garden" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Sky Garden</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Garden" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Garden View</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Sea" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Sea View</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="view" data-val="Suramadu" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Suramadu View</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tipe Unit (mobile) -->
+      <div class="mb-1">
+        <div class="mobile-fsec-head" onclick="toggleMobileFSection('mfs-type','mfsi-type')">
+          <span class="font-sans text-sm font-semibold text-gray-800">Tipe Unit</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 mobile-fsec-icon" id="mfsi-type"></i>
+        </div>
+        <div id="mfs-type" class="mobile-fsec-body">
+          <div class="space-y-0.5 pt-2">
+            <label class="fcheck-row"><input type="checkbox" data-cat="type" data-val="Studio" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Studio</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="type" data-val="2BR" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">2 Bedroom</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="type" data-val="3BR" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">3 Bedroom</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Durasi Sewa (mobile) -->
+      <div>
+        <div class="mobile-fsec-head" style="border-bottom:none" onclick="toggleMobileFSection('mfs-durasi','mfsi-durasi')">
+          <span class="font-sans text-sm font-semibold text-gray-800">Durasi Sewa</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 mobile-fsec-icon" id="mfsi-durasi"></i>
+        </div>
+        <div id="mfs-durasi" class="pt-2" style="padding-bottom:.5rem">
+          <div class="space-y-0.5">
+            <label class="fcheck-row"><input type="checkbox" data-cat="durasi" data-val="daily" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Harian</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="durasi" data-val="monthly" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Bulanan</span></label>
+            <label class="fcheck-row"><input type="checkbox" data-cat="durasi" data-val="yearly" onchange="toggleFilter(this)" /><div class="fcheck-box"></div><span class="fcheck-label">Tahunan</span></label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-4">
+      <button onclick="closeFilterDrawer()"
+              class="w-full py-3.5 rounded-xl font-sans text-sm font-semibold text-white"
+              style="background:#2E7D32">
+        Tampilkan Hasil
+      </button>
+    </div>
+
   </div>
-
-  <!-- Empty state -->
-  <div id="empty-state" class="hidden flex-col items-center justify-center py-24 text-center">
-    <i data-lucide="search-x" class="w-14 h-14 text-gray-300 mb-4"></i>
-    <h3 class="font-serif text-gray-700 text-xl mb-2">Tidak ada hasil</h3>
-    <p class="font-sans text-gray-400 text-sm">Coba kata kunci atau filter yang berbeda</p>
-  </div>
-
-</main>
+</div>
 
 
 <div id="footer-placeholder"></div>
 
 
-<!-- ══════════════════════════════════════
+<!-- ══════════════════════════════
      JAVASCRIPT
-══════════════════════════════════════ -->
+══════════════════════════════ -->
 <script>
-  /* ── Render shared components ── */
   renderNavbar('rooms');
   renderFooter();
 
-  /* ── Use shared data from units-data.js ── */
-  const units      = UNITS;
+  const units       = UNITS;
   const statusLabel = STATUS_LABEL;
   const statusClass = STATUS_CLASS;
   const viewIcons   = VIEW_ICONS;
 
-  function buildCard(unit) {
-    const imgs = unit.images.map(src =>
-      `<div class="img-slide" style="background-image:url('${src}')"></div>`
-    ).join('');
+  /* ── Filter state ── */
+  const activeFilters = { view: new Set(), type: new Set(), durasi: new Set() };
+  let currentSort = 'default';
 
-    const interiorIcon = unit.interior.includes('Furnished') ? 'sofa'
-      : unit.interior.includes('AC') ? 'wind' : 'box';
+  const viewLabels   = { Pool:'Pool View', Mountain:'Mountain View', 'Sky Garden':'Sky Garden', Garden:'Garden View', Sea:'Sea View', Suramadu:'Suramadu View', City:'City View' };
+  const typeLabels   = { Studio:'Studio', '2BR':'2 Bedroom', '3BR':'3 Bedroom' };
+  const durasiLabels = { daily:'Harian', monthly:'Bulanan', yearly:'Tahunan' };
+  const catLabels    = { view: viewLabels, type: typeLabels, durasi: durasiLabels };
 
-    return `
-    <article class="unit-card bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm cursor-pointer"
-             data-status="${unit.status}" data-price="${unit.price}" data-floor="${unit.floor}"
-             onclick="openUnit('${unit.id}')">
+  /* ── Toggle checkbox ── */
+  function toggleFilter(input) {
+    const cat = input.dataset.cat;
+    const val = input.dataset.val;
 
-      <!-- Image slider -->
-      <div class="img-slider" style="height:200px">
-        <div class="img-track" data-index="0">
-          ${imgs}
-        </div>
-        ${unit.images.length > 1 ? `
-        <button class="img-nav img-nav-prev" onclick="event.stopPropagation();slideImg(this,-1)" aria-label="Prev">
-          <i data-lucide="chevron-left" class="w-4 h-4 text-gray-700"></i>
-        </button>
-        <button class="img-nav img-nav-next" onclick="event.stopPropagation();slideImg(this,1)" aria-label="Next">
-          <i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i>
-        </button>` : ''}
-        <!-- Status badge -->
-        <span class="absolute top-3 left-3 font-sans text-[11px] font-bold px-3 py-1 rounded-full ${statusClass[unit.status]}">
-          ${statusLabel[unit.status]}
-        </span>
-        <!-- Price badge -->
-        <span class="absolute bottom-3 right-3 font-sans text-[11px] font-semibold text-white px-2.5 py-1 rounded-full" style="background:rgba(0,0,0,0.55);backdrop-filter:blur(4px)">
-          ${formatPrice(unit.price)} /malam
-        </span>
-      </div>
+    if (input.checked) activeFilters[cat].add(val);
+    else               activeFilters[cat].delete(val);
 
-      <!-- Content -->
-      <div class="p-4">
-        <div class="mb-1">
-          <h3 class="font-serif text-gray-900 text-lg leading-tight">${unit.id}</h3>
-        </div>
+    /* Sync all checkboxes with same cat+val */
+    document.querySelectorAll('input[data-cat="' + cat + '"]').forEach(function(cb) {
+      if (cb.dataset.val === val) cb.checked = input.checked;
+    });
 
-        <p class="font-sans text-sm text-gray-500 mb-3 flex items-center gap-1.5">
-          <i data-lucide="map-pin" class="w-3.5 h-3.5 flex-shrink-0" style="color:#2E7D32"></i>
-          Tower ${unit.tower} · Lt. ${unit.floor}
-        </p>
-
-        <!-- Spec chips -->
-        <div class="flex flex-wrap gap-1.5 mb-4">
-          <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full">
-            <i data-lucide="layout-template" class="w-3 h-3"></i>${unit.type}
-          </span>
-          <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full">
-            <i data-lucide="${viewIcons[unit.view] || 'eye'}" class="w-3 h-3"></i>${unit.view}
-          </span>
-          <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full">
-            <i data-lucide="${interiorIcon}" class="w-3 h-3"></i>${unit.interior}
-          </span>
-          ${unit.capacity ? `<span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full">
-            <i data-lucide="users" class="w-3 h-3"></i>${unit.capacity} Orang
-          </span>` : ''}
-        </div>
-
-        <!-- Price + CTA -->
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <span class="font-serif text-lg font-semibold text-gray-900">${formatPrice(unit.price)}</span>
-            <span class="font-sans text-xs text-gray-400 ml-1">/malam</span>
-          </div>
-          <div class="flex items-center gap-1">
-            <i data-lucide="star" class="w-3 h-3 text-yellow-400 fill-yellow-400"></i>
-            <span class="font-sans text-xs font-semibold text-gray-600">4.9</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <a href="room-detail.html?id=${unit.id}"
-             onclick="event.stopPropagation()"
-             class="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans text-sm font-semibold text-white transition-all hover:opacity-90"
-             style="background:#2E7D32">
-            Select Room
-          </a>
-          <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20tanya%20unit%20${unit.id}"
-             target="_blank"
-             onclick="event.stopPropagation()"
-             class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-sans text-sm font-semibold border-2 transition-all hover:bg-gray-50"
-             style="color:#2E7D32;border-color:#2E7D32">
-            <i data-lucide="message-circle" class="w-4 h-4"></i>
-            Tanya
-          </a>
-        </div>
-      </div>
-    </article>`;
+    renderGrid();
+    renderChips();
+    updateBadge();
   }
 
-  /* ── Render & Filter ── */
-  let currentFilter = 'all';
-  let currentSort   = 'default';
+  /* ── Remove single filter (chip click) ── */
+  function removeFilter(cat, val) {
+    activeFilters[cat].delete(val);
+    document.querySelectorAll('input[data-cat="' + cat + '"]').forEach(function(cb) {
+      if (cb.dataset.val === val) cb.checked = false;
+    });
+    renderGrid();
+    renderChips();
+    updateBadge();
+  }
 
+  /* ── Reset all ── */
+  function resetAllFilters() {
+    ['view','type','durasi'].forEach(function(cat) { activeFilters[cat].clear(); });
+    document.querySelectorAll('input[data-cat]').forEach(function(cb) { cb.checked = false; });
+    renderGrid();
+    renderChips();
+    updateBadge();
+  }
+
+  /* ── Badge & reset btn ── */
+  function updateBadge() {
+    var total = activeFilters.view.size + activeFilters.type.size + activeFilters.durasi.size;
+    var badge = document.getElementById('mobile-badge');
+    if (badge) {
+      badge.textContent = total;
+      badge.style.display = total > 0 ? 'inline-flex' : 'none';
+    }
+    var resetBtn = document.getElementById('reset-btn');
+    if (resetBtn) resetBtn.classList.toggle('hidden', total === 0);
+  }
+
+  /* ── Render chips ── */
+  function renderChips() {
+    var row   = document.getElementById('chips-row');
+    var chips = [];
+
+    ['view','type','durasi'].forEach(function(cat) {
+      activeFilters[cat].forEach(function(val) {
+        var label = catLabels[cat][val] || val;
+        chips.push(
+          '<button class="chip" onclick="removeFilter(\'' + cat + '\',\'' + val.replace(/'/g, "\\'") + '\')">' +
+          label +
+          '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+          '</button>'
+        );
+      });
+    });
+
+    row.innerHTML = chips.join('');
+    row.classList.toggle('hidden', chips.length === 0);
+  }
+
+  /* ── Filter + sort ── */
   function getFiltered() {
-    let list = [...units];
-    if (currentFilter !== 'all') list = list.filter(u => u.status === currentFilter);
-    if (currentSort === 'price-asc')   list.sort((a,b) => a.price - b.price);
-    if (currentSort === 'price-desc')  list.sort((a,b) => b.price - a.price);
-    if (currentSort === 'floor-asc')   list.sort((a,b) => a.floor - b.floor);
-    if (currentSort === 'floor-desc')  list.sort((a,b) => b.floor - a.floor);
+    var list = units.slice();
+
+    if (activeFilters.view.size > 0)
+      list = list.filter(function(u) { return activeFilters.view.has(u.view); });
+    if (activeFilters.type.size > 0)
+      list = list.filter(function(u) { return activeFilters.type.has(u.type); });
+    if (activeFilters.durasi.size > 0)
+      list = list.filter(function(u) { return activeFilters.durasi.has(u.status); });
+
+    if (currentSort === 'price-asc')  list.sort(function(a,b){ return a.price - b.price; });
+    if (currentSort === 'price-desc') list.sort(function(a,b){ return b.price - a.price; });
+    if (currentSort === 'floor-asc')  list.sort(function(a,b){ return a.floor - b.floor; });
+    if (currentSort === 'floor-desc') list.sort(function(a,b){ return b.floor - a.floor; });
+
     return list;
   }
 
+  /* ── Build card ── */
+  function buildCard(unit) {
+    var imgs = unit.images.map(function(src) {
+      return '<div class="img-slide" style="background-image:url(\'' + src + '\')"></div>';
+    }).join('');
+
+    var interiorIcon = unit.interior.includes('Furnished') ? 'sofa'
+      : unit.interior.includes('AC') ? 'wind' : 'box';
+
+    var navBtns = unit.images.length > 1
+      ? '<button class="img-nav img-nav-prev" onclick="event.stopPropagation();slideImg(this,-1)" aria-label="Prev"><i data-lucide="chevron-left" class="w-4 h-4 text-gray-700"></i></button>' +
+        '<button class="img-nav img-nav-next" onclick="event.stopPropagation();slideImg(this,1)" aria-label="Next"><i data-lucide="chevron-right" class="w-4 h-4 text-gray-700"></i></button>'
+      : '';
+
+    var capChip = unit.capacity
+      ? '<span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="users" class="w-3 h-3"></i>' + unit.capacity + ' Orang</span>'
+      : '';
+
+    return '<article class="unit-card bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm cursor-pointer" onclick="openUnit(\'' + unit.id + '\')">' +
+      '<div class="img-slider" style="height:200px">' +
+        '<div class="img-track" data-index="0">' + imgs + '</div>' +
+        navBtns +
+        '<span class="absolute top-3 left-3 font-sans text-[11px] font-bold px-3 py-1 rounded-full ' + statusClass[unit.status] + '">' + statusLabel[unit.status] + '</span>' +
+        '<span class="absolute bottom-3 right-3 font-sans text-[11px] font-semibold text-white px-2.5 py-1 rounded-full" style="background:rgba(0,0,0,0.55);backdrop-filter:blur(4px)">' + formatPrice(unit.price) + ' /malam</span>' +
+      '</div>' +
+      '<div class="p-4">' +
+        '<h3 class="font-serif text-gray-900 text-lg leading-tight mb-1">' + unit.id + '</h3>' +
+        '<p class="font-sans text-sm text-gray-500 mb-3 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 flex-shrink-0" style="color:#2E7D32"></i>Tower ' + unit.tower + ' · Lt. ' + unit.floor + '</p>' +
+        '<div class="flex flex-wrap gap-1.5 mb-4">' +
+          '<span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="layout-template" class="w-3 h-3"></i>' + unit.type + '</span>' +
+          '<span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="' + (viewIcons[unit.view] || 'eye') + '" class="w-3 h-3"></i>' + unit.view + '</span>' +
+          '<span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="' + interiorIcon + '" class="w-3 h-3"></i>' + unit.interior + '</span>' +
+          capChip +
+        '</div>' +
+        '<div class="flex items-center justify-between mb-3">' +
+          '<div><span class="font-serif text-lg font-semibold text-gray-900">' + formatPrice(unit.price) + '</span><span class="font-sans text-xs text-gray-400 ml-1">/malam</span></div>' +
+          '<div class="flex items-center gap-1"><i data-lucide="star" class="w-3 h-3 text-yellow-400 fill-yellow-400"></i><span class="font-sans text-xs font-semibold text-gray-600">4.9</span></div>' +
+        '</div>' +
+        '<div class="flex items-center gap-2">' +
+          '<a href="room-detail.html?id=' + unit.id + '" onclick="event.stopPropagation()" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans text-sm font-semibold text-white transition-all hover:opacity-90" style="background:#2E7D32">Select Room</a>' +
+          '<a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20tanya%20unit%20' + unit.id + '" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-sans text-sm font-semibold border-2 transition-all hover:bg-gray-50" style="color:#2E7D32;border-color:#2E7D32"><i data-lucide="message-circle" class="w-4 h-4"></i>Tanya</a>' +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  /* ── Render grid ── */
   function renderGrid() {
-    const list   = getFiltered();
-    const grid   = document.getElementById('units-grid');
-    const empty  = document.getElementById('empty-state');
-    const countEl = document.getElementById('unit-count');
+    var list  = getFiltered();
+    var grid  = document.getElementById('units-grid');
+    var empty = document.getElementById('empty-state');
+    var txt   = 'Menampilkan ' + list.length + ' unit';
 
     grid.innerHTML = list.map(buildCard).join('');
-    countEl.textContent = `Menampilkan ${list.length} unit`;
+
+    var desk = document.getElementById('count-desk');
+    var mob  = document.getElementById('count-mob');
+    if (desk) desk.textContent = txt;
+    if (mob)  mob.textContent  = list.length + ' unit';
 
     if (list.length === 0) {
       grid.classList.add('hidden');
@@ -346,42 +641,66 @@
       empty.classList.add('hidden');
       empty.classList.remove('flex');
     }
+
     lucide.createIcons();
   }
 
-  function filterUnits(filter, btn) {
-    currentFilter = filter;
-    document.querySelectorAll('.filter-tab').forEach(b => {
-      b.classList.remove('active');
-      b.style.borderColor = '';
-      b.classList.add('text-gray-600');
-      b.style.color = '';
-    });
-    btn.classList.add('active');
-    btn.classList.remove('text-gray-600');
-    btn.style.borderColor = '#2E7D32';
-    renderGrid();
-  }
-
+  /* ── Sort ── */
   function sortUnits(val) {
     currentSort = val;
+    var desk = document.getElementById('sort-desk');
+    var mob  = document.getElementById('sort-mob');
+    if (desk) desk.value = val;
+    if (mob)  mob.value  = val;
     renderGrid();
   }
 
-  /* ── Image slider per card (slide transition) ── */
+  /* ── Image slider ── */
   function slideImg(btn, dir) {
-    const track  = btn.closest('.img-slider').querySelector('.img-track');
-    const slides = track.querySelectorAll('.img-slide');
-    const total  = slides.length;
-    let idx = parseInt(track.dataset.index) || 0;
+    var track  = btn.closest('.img-slider').querySelector('.img-track');
+    var slides = track.querySelectorAll('.img-slide');
+    var total  = slides.length;
+    var idx    = parseInt(track.dataset.index) || 0;
     idx = (idx + dir + total) % total;
     track.dataset.index = idx;
-    track.style.transform = `translateX(-${idx * 100}%)`;
+    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
   }
 
-  /* ── Open unit detail page ── */
   function openUnit(id) {
-    location.href = `room-detail.html?id=${encodeURIComponent(id)}`;
+    location.href = 'room-detail.html?id=' + encodeURIComponent(id);
+  }
+
+  /* ── Sidebar accordion ── */
+  function toggleFSection(bodyId, iconId) {
+    var body   = document.getElementById(bodyId);
+    var icon   = document.getElementById(iconId);
+    var isOpen = !body.classList.contains('hidden');
+    body.classList.toggle('hidden', isOpen);
+    if (icon) icon.classList.toggle('rotated', !isOpen);
+  }
+
+  function toggleMobileFSection(bodyId, iconId) {
+    var body   = document.getElementById(bodyId);
+    var icon   = document.getElementById(iconId);
+    if (!body) return;
+    var isOpen = body.style.display === 'none' || body.style.display === '';
+    body.style.display = isOpen ? 'block' : 'none';
+    if (icon) icon.classList.toggle('rotated', isOpen);
+  }
+
+  /* ── Mobile drawer ── */
+  function openFilterDrawer() {
+    document.getElementById('filter-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterDrawer() {
+    document.getElementById('filter-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('filter-overlay')) closeFilterDrawer();
   }
 
   /* ── Init ── */
