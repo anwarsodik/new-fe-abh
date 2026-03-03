@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect Stay - Apartment Hub</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Phosphor Icons (for icons matching the original design) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        .glass Navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section Gradient Animation */
+        .hero-pattern {
+            background-color: #f0fdf4;
+            background-image: radial-gradient(#dcfce7 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            animation: marquee 20s linear infinite;
+        }
+
+        /* Custom Scrollbar for tabs and sliders */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #dcfce7;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #22c55e;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-primary-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <div class="text-primary-600 text-3xl font-bold flex items-center gap-2">
+                        <i class="ph-fill ph-buildings"></i>
+                        <span>Apartment<span class="text-gray-900 text-xl">Hub</span></span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-primary-600 font-medium">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Units</a>
+                    <a href="#"
+                        class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Properties</a>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Promo</a>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Features</a>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Contact</a>
+                </div>
+
+                <!-- Auth & Dark Mode -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button
+                        class="p-2 text-gray-600 hover:text-primary-600 transition-colors rounded-full hover:bg-gray-100">
+                        <i class="ph ph-moon text-xl"></i>
+                    </button>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Login</a>
+                    <a href="#"
+                        class="bg-primary-600 text-white px-6 py-2.5 rounded-full font-medium hover:bg-primary-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Register</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                        <i class="ph ph-list text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 hero-pattern overflow-hidden">
+        <!-- Decorative blobs -->
+        <div
+            class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-primary-100 blur-3xl opacity-50 mix-blend-multiply pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 -ml-40 -mb-40 w-96 h-96 rounded-full bg-green-200 blur-3xl opacity-50 mix-blend-multiply pointer-events-none">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span
+                    class="inline-block py-1 px-3 rounded-full bg-primary-100 text-primary-700 font-semibold text-sm mb-4 border border-primary-200">
+                    Welcome to hotelify.id
+                </span>
+                <h1
+                    class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
+                    Find Your <span class="text-primary-600">Perfect Stay</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 font-light">
+                    Discover and book premium apartments. Comfortable, convenient, and curated just for you.
+                </p>
+            </div>
+
+            <!-- Search Widget -->
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-4 md:p-6 border border-gray-100 relative">
+                <!-- Tabs -->
+                <div class="flex space-x-2 mb-6 border-b border-gray-100 pb-2 overflow-x-auto custom-scrollbar">
+                    <button
+                        class="px-6 py-2 rounded-full bg-primary-50 text-primary-700 font-semibold text-sm flex-shrink-0">
+                        Harian (Daily)
+                    </button>
+                    <button
+                        class="px-6 py-2 rounded-full text-gray-500 hover:bg-gray-50 font-medium text-sm transition-colors flex-shrink-0">
+                        Bulanan (Monthly)
+                    </button>
+                    <button
+                        class="px-6 py-2 rounded-full text-gray-500 hover:bg-gray-50 font-medium text-sm transition-colors flex-shrink-0">
+                        Tahunan (Yearly)
+                    </button>
+                </div>
+
+                <!-- Search Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <!-- Location -->
+                    <div
+                        class="col-span-1 md:col-span-1 border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0 md:pr-4">
+                        <label
+                            class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Location</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                                <i class="ph ph-map-pin text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="text"
+                                class="block w-full pl-8 pr-3 py-2 border-0 outline-none text-gray-900 font-medium placeholder-gray-400 focus:ring-0 sm:text-base bg-transparent"
+                                placeholder="Where are you going?">
+                        </div>
+                    </div>
+
+                    <!-- Dates -->
+                    <div
+                        class="col-span-1 md:col-span-1 border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0 md:px-4">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Check In
+                            - Out</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                                <i class="ph ph-calendar-blank text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="text"
+                                class="block w-full pl-8 pr-3 py-2 border-0 outline-none text-gray-900 font-medium placeholder-gray-400 focus:ring-0 sm:text-base bg-transparent"
+                                placeholder="Add dates">
+                        </div>
+                    </div>
+
+                    <!-- Guests -->
+                    <div class="col-span-1 md:col-span-1 pb-4 md:pb-0 md:px-4">
+                        <label
+                            class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Guests</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                                <i class="ph ph-users text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="text"
+                                class="block w-full pl-8 pr-3 py-2 border-0 outline-none text-gray-900 font-medium placeholder-gray-400 focus:ring-0 sm:text-base bg-transparent"
+                                placeholder="Add guests">
+                        </div>
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="col-span-1 md:col-span-1">
+                        <button
+                            class="w-full bg-primary-600 text-white rounded-2xl py-4 flex items-center justify-center gap-2 hover:bg-primary-700 transition-colors shadow-lg shadow-primary-500/30">
+                            <i class="ph ph-magnifying-glass text-xl"></i>
+                            <span class="font-semibold text-lg">Search</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Marquee -->
+    <section class="py-10 bg-white border-b border-gray-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
+            <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest">Trusted by our partners</p>
+        </div>
+        <div class="relative w-full flex overflow-x-hidden">
+            <div
+                class="py-4 animate-marquee whitespace-nowrap flex items-center gap-12 sm:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+                <span class="text-2xl font-bold text-gray-800">Hotels.com</span>
+                <span class="text-2xl font-bold text-gray-800">Expedia</span>
+                <span class="text-2xl font-bold text-gray-800">Trip.com</span>
+                <span class="text-2xl font-bold text-gray-800">Traveloka</span>
+                <span class="text-2xl font-bold text-gray-800">Agoda</span>
+                <span class="text-2xl font-bold text-gray-800">Booking.com</span>
+                <span class="text-2xl font-bold text-gray-800">Airbnb</span>
+                <span class="text-2xl font-bold text-gray-800">Tiket.com</span>
+                <!-- Duplicate for seamless scroll -->
+                <span class="text-2xl font-bold text-gray-800">Hotels.com</span>
+                <span class="text-2xl font-bold text-gray-800">Expedia</span>
+                <span class="text-2xl font-bold text-gray-800">Trip.com</span>
+                <span class="text-2xl font-bold text-gray-800">Traveloka</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Features Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose hotelify.id?</h2>
+                <p class="text-gray-600">Experience the best in class apartment viewing and booking process.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                    <div
+                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
+                        <i class="ph ph-shield-check text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Secure Booking</h3>
+                    <p class="text-gray-600 text-sm">Your payments and personal information are always protected.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                    <div
+                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
+                        <i class="ph ph-star py text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Premium Quality</h3>
+                    <p class="text-gray-600 text-sm">Hand-picked properties ensuring the highest standards of comfort.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                    <div
+                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
+                        <i class="ph ph-headset mt text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">24/7 Support</h3>
+                    <p class="text-gray-600 text-sm">Our dedicated team is always here to help you anytime.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                    <div
+                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
+                        <i class="ph ph-lightning text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Instant Booking</h3>
+                    <p class="text-gray-600 text-sm">Book your perfect stay instantly without waiting for approval.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Featured Properties</h2>
+                    <p class="text-gray-600">Discover our most popular and highly-rated apartments.</p>
+                </div>
+                <a href="#"
+                    class="hidden sm:flex text-primary-600 font-semibold hover:text-primary-700 items-center gap-1">
+                    View All <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Horizontal Slider Container -->
+            <div class="flex gap-6 overflow-x-auto pb-8 custom-scrollbar snap-x">
+                <!-- Card 1 -->
+                <div
+                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Apartment"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div
+                            class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
+                            POPULAR
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
+                            <i class="ph-fill ph-heart"></i>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-900">Unit A-03-37</h3>
+                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
+                                <i class="ph-fill ph-star text-yellow-400"></i> 4.9
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
+                            <i class="ph ph-map-pin"></i> Jakarta Selatan
+                        </p>
+                        <div class="flex gap-2 mb-6">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Studio</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">City
+                                View</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <div>
+                                <p class="text-xs text-gray-500">Starting from</p>
+                                <p class="text-lg font-bold text-primary-600">Rp 500.000 <span
+                                        class="text-sm font-normal text-gray-500">/ night</span></p>
+                            </div>
+                            <button
+                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div
+                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1de2d92088?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Apartment"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div
+                            class="absolute top-4 left-4 bg-primary-600/90 text-white backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                            PREMIUM
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
+                            <i class="ph ph-heart text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-900">Unit A-11-62</h3>
+                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
+                                <i class="ph-fill ph-star text-yellow-400"></i> 4.8
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
+                            <i class="ph ph-map-pin"></i> Jakarta Pusat
+                        </p>
+                        <div class="flex gap-2 mb-6">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">2 Beds</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Balcony</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <div>
+                                <p class="text-xs text-gray-500">Starting from</p>
+                                <p class="text-lg font-bold text-primary-600">Rp 850.000 <span
+                                        class="text-sm font-normal text-gray-500">/ night</span></p>
+                            </div>
+                            <button
+                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div
+                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Apartment"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div
+                            class="absolute top-4 left-4 bg-gray-900/90 text-white backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                            NEW
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
+                            <i class="ph ph-heart text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-900">Unit A-26-21</h3>
+                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
+                                <i class="ph-fill ph-star text-yellow-400"></i> 'New'
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
+                            <i class="ph ph-map-pin"></i> Tangerang
+                        </p>
+                        <div class="flex gap-2 mb-6">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">1 Bed</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Pool
+                                View</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <div>
+                                <p class="text-xs text-gray-500">Starting from</p>
+                                <p class="text-lg font-bold text-primary-600">Rp 450.000 <span
+                                        class="text-sm font-normal text-gray-500">/ night</span></p>
+                            </div>
+                            <button
+                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 (To show overflow) -->
+                <div
+                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Apartment"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div
+                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
+                            <i class="ph ph-heart text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-900">Unit A-26-35</h3>
+                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
+                                <i class="ph-fill ph-star text-yellow-400"></i> 4.7
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
+                            <i class="ph ph-map-pin"></i> Jakarta Barat
+                        </p>
+                        <div class="flex gap-2 mb-6">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Studio</span>
+                            <span
+                                class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Strategic</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <div>
+                                <p class="text-xs text-gray-500">Starting from</p>
+                                <p class="text-lg font-bold text-primary-600">Rp 480.000 <span
+                                        class="text-sm font-normal text-gray-500">/ night</span></p>
+                            </div>
+                            <button
+                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gray-50 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-gray-600">Your perfect stay is just three simple steps away.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+                <!-- Connecting Line -->
+                <div class="hidden md:block absolute top-8 left-[16.6%] right-[16.6%] h-0.5 bg-gray-200"></div>
+
+                <!-- Step 1 -->
+                <div class="relative text-center">
+                    <div
+                        class="w-16 h-16 mx-auto bg-primary-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 relative z-10 shadow-lg shadow-primary-500/30">
+                        1
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Search</h3>
+                    <p class="text-gray-600">Find the perfect apartment matching your needs, location, and budget.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative text-center">
+                    <div
+                        class="w-16 h-16 mx-auto bg-primary-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 relative z-10 shadow-lg shadow-primary-500/30">
+                        2
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Book</h3>
+                    <p class="text-gray-600">Select your dates, review the details, and book securely online.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative text-center">
+                    <div
+                        class="w-16 h-16 mx-auto bg-primary-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 relative z-10 shadow-lg shadow-primary-500/30">
+                        3
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Enjoy</h3>
+                    <p class="text-gray-600">Move in, relax, and enjoy your comfortable premium stay.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Fasilitas Lengkap</h2>
+                <p class="text-gray-600">Enjoy premium amenities designed for your absolute comfort.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Amenity 1 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-wifi-high text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Free WiFi</span>
+                </div>
+                <!-- Amenity 2 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-swimming-pool text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Swimming Pool</span>
+                </div>
+                <!-- Amenity 3 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-barbell text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Gym Center</span>
+                </div>
+                <!-- Amenity 4 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-car text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Free Parking</span>
+                </div>
+                <!-- Amenity 5 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-cooking-pot text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Kitchen</span>
+                </div>
+                <!-- Amenity 6 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-video-camera text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">CCTV 24/7</span>
+                </div>
+                <!-- Amenity 7 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-washing-machine text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Laundry</span>
+                </div>
+                <!-- Amenity 8 -->
+                <div
+                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
+                    <div
+                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
+                        <i class="ph ph-bell-ringing text-2xl"></i>
+                    </div>
+                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Receptionist</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-600">Got questions? We've got answers.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <details class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 group relative">
+                    <summary
+                        class="flex justify-between items-center font-semibold text-gray-900 cursor-pointer list-none text-lg">
+                        How do I make a reservation?
+                        <span class="transition group-open:rotate-180">
+                            <i class="ph ph-caret-down text-gray-400"></i>
+                        </span>
+                    </summary>
+                    <div class="text-gray-600 mt-4 leading-relaxed pr-8">
+                        You can easily make a reservation by searching for your desired dates and location on our
+                        homepage, selecting an apartment, and following the seamless checkout process.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 2 -->
+                <details class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 group relative">
+                    <summary
+                        class="flex justify-between items-center font-semibold text-gray-900 cursor-pointer list-none text-lg">
+                        What is your cancellation policy?
+                        <span class="transition group-open:rotate-180">
+                            <i class="ph ph-caret-down text-gray-400"></i>
+                        </span>
+                    </summary>
+                    <div class="text-gray-600 mt-4 leading-relaxed pr-8">
+                        Our cancellation policy varies depending on the property and booking length. Most properties
+                        offer free cancellation up to 48 hours before check-in. Please review the specific terms on the
+                        property page.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 3 -->
+                <details class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 group relative">
+                    <summary
+                        class="flex justify-between items-center font-semibold text-gray-900 cursor-pointer list-none text-lg">
+                        Are utilities included in monthly rentals?
+                        <span class="transition group-open:rotate-180">
+                            <i class="ph ph-caret-down text-gray-400"></i>
+                        </span>
+                    </summary>
+                    <div class="text-gray-600 mt-4 leading-relaxed pr-8">
+                        Yes, for our monthly premium apartments, standard utilities such as water, high-speed WiFi, and
+                        general maintenance are included in your rent. Electricity allowances differ by unit.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Brand & Description -->
+                <div class="col-span-1 md:col-span-2 lg:col-span-1 border-b border-gray-800 pb-8 lg:border-0 lg:pb-0">
+                    <div class="text-primary-500 text-3xl font-bold flex items-center gap-2 mb-6">
+                        <i class="ph-fill ph-buildings"></i>
+                        <span class="text-white">Apartment<span
+                                class="text-gray-400 font-medium text-xl">Hub</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-6 leading-relaxed text-sm">
+                        Your trusted partner for finding premium apartments. We connect you with the best living spaces
+                        seamlessly.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors">
+                            <i class="ph-fill ph-facebook-logo text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors">
+                            <i class="ph-fill ph-twitter-logo text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors">
+                            <i class="ph-fill ph-instagram-logo text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">About Us</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Careers</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Blog</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Help Center</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Terms of Service</a>
+                        </li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Cancellation Policy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Newsletter</h4>
+                    <p class="text-sm text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and
+                        exclusive promos.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email"
+                            class="w-full bg-gray-800 border-none rounded-l-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary-500 text-white outline-none">
+                        <button type="submit"
+                            class="bg-primary-600 text-white px-4 py-3 rounded-r-xl hover:bg-primary-700 transition-colors">
+                            <i class="ph ph-paper-plane-tilt"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div
+                class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2026 ApartmentHub (hotelify.id). All rights reserved.</p>
+                <div class="mt-4 md:mt-0 space-x-4">
+                    <span>IDR (Rp)</span>
+                    <span>English (EN)</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
