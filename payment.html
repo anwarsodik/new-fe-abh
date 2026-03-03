@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metode Pembayaran — Bale Hinggil Stay</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="components.js"></script>
+  <script src="units-data.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display','Georgia','serif'],
+            sans:  ['Inter','system-ui','sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    /* ── Page layout ── */
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 5rem;
+    }
+
+    .section-card {
+      background: white;
+      border-radius: 1.25rem;
+      border: 1px solid #e5e7eb;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .step-num {
+      width: 2rem; height: 2rem; border-radius: 50%;
+      background: #2E7D32; color: white;
+      font-family: Inter, sans-serif; font-size: .85rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Payment option cards ── */
+    .pay-option {
+      display: flex; align-items: center; gap: .875rem;
+      padding: 1rem 1.125rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: .875rem;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .pay-option:has(input:checked) {
+      border-color: #2E7D32;
+      background: #f0fdf4;
+    }
+    .pay-option input[type="radio"] { accent-color: #2E7D32; width:1.1rem; height:1.1rem; flex-shrink:0; }
+
+    /* ── Bank account card ── */
+    .bank-card {
+      border: 1px solid #e5e7eb;
+      border-radius: .875rem;
+      padding: 1rem 1.125rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: #fafafa;
+    }
+
+    /* ── Order summary ── */
+    .order-sticky {
+      position: sticky;
+      top: 5.5rem;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: Inter, sans-serif;
+      font-size: .85rem;
+      padding: .25rem 0;
+    }
+
+    /* ── Confirm button ── */
+    .btn-confirm {
+      width: 100%;
+      padding: .9rem 1.5rem;
+      border-radius: .875rem;
+      background: #F97316;
+      color: white;
+      font-family: Inter, sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      transition: background .2s;
+    }
+    .btn-confirm:hover { background: #C2410C; }
+
+    /* ── Copy button ── */
+    .copy-btn {
+      font-family: Inter, sans-serif;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #2E7D32;
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: .5rem;
+      padding: .3rem .7rem;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .copy-btn:hover { background: #dcfce7; }
+
+    /* ── Success modal ── */
+    #success-modal {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    #success-modal.open { display: flex; }
+    #success-panel {
+      background: white; border-radius: 1.5rem;
+      padding: 2.5rem 2rem; max-width: 440px; width: 100%;
+      text-align: center;
+    }
+    .success-icon {
+      width: 5rem; height: 5rem; border-radius: 50%;
+      background: #f0fdf4; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    /* ── DP info box ── */
+    #dp-info {
+      display: none;
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      border-radius: .875rem;
+      padding: 1rem;
+      margin-top: .75rem;
+    }
+
+    /* ── Transfer info box ── */
+    #transfer-info {
+      margin-top: .75rem;
+    }
+
+    /* ── Cash info box ── */
+    #cash-info {
+      display: none;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: .875rem;
+      padding: 1rem;
+      margin-top: .75rem;
+    }
+
+    /* ── Breadcrumb ── */
+    .bc-sep::before { content:'/'; margin:0 .4rem; color:#9CA3AF; }
+
+    /* ── Mobile bottom bar ── */
+    .mobile-bar {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      padding: .875rem 1.25rem;
+      z-index: 50;
+    }
+    @media (max-width: 1023px) { .mobile-bar { display: block; } }
+  </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-900">
+
+<!-- NAVBAR -->
+<div id="navbar-placeholder"></div>
+
+<!-- ═══ SUCCESS MODAL ═══ -->
+<div id="success-modal">
+  <div id="success-panel">
+    <div class="success-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2 class="font-serif text-2xl text-gray-900 mb-2">Pesanan Dikirim!</h2>
+    <p class="font-sans text-sm text-gray-500 leading-relaxed mb-6">
+      Tim kami akan menghubungi Anda melalui WhatsApp dalam <strong>kurang dari 5 menit</strong> untuk konfirmasi booking.
+    </p>
+    <div id="modal-unit-info" class="bg-gray-50 rounded-xl p-4 mb-6 text-left">
+      <!-- injected -->
+    </div>
+    <a id="modal-wa-btn" href="#" target="_blank"
+       class="btn-confirm mb-3" style="text-decoration:none;display:flex">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="white">
+        <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm7.27 19.555c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z"/>
+      </svg>
+      Chat via WhatsApp
+    </a>
+    <button onclick="document.getElementById('success-modal').classList.remove('open')"
+            class="w-full py-3 rounded-xl font-sans text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-colors">
+      Tutup
+    </button>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="flex items-center font-sans text-sm text-gray-400 mb-6 flex-wrap">
+    <a href="index.html" class="hover:text-gray-700 transition-colors">Home</a>
+    <span class="bc-sep">Rooms</span>
+    <span class="bc-sep" id="bc-unit">Unit</span>
+    <span class="bc-sep">
+      <a href="javascript:history.back()" class="hover:text-gray-700 transition-colors">Pesan</a>
+    </span>
+    <span class="bc-sep font-semibold text-gray-700">Pembayaran</span>
+  </nav>
+
+  <div class="flex flex-col lg:flex-row gap-6">
+
+    <!-- ══════════ LEFT: PAYMENT FORM ══════════ -->
+    <div class="flex-1 min-w-0">
+
+      <!-- Payment Method -->
+      <div class="section-card">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+          <div class="step-num">1</div>
+          <div>
+            <h2 class="font-serif text-xl text-gray-900">Metode Pembayaran</h2>
+            <p class="font-sans text-xs text-gray-400 mt-0.5">Pilih cara pembayaran yang paling mudah untuk Anda</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Transfer Bank -->
+          <label class="pay-option" onclick="showPayInfo('transfer')">
+            <input type="radio" name="payment" value="transfer" checked />
+            <div class="flex items-center gap-3 flex-1">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#e8f5e9">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <div>
+                <p class="font-sans text-sm font-semibold text-gray-800">Transfer Bank</p>
+                <p class="font-sans text-xs text-gray-400">BCA / Mandiri / BNI · Konfirmasi via WA</p>
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </label>
+
+          <!-- Transfer detail / bank accounts -->
+          <div id="transfer-info">
+            <div class="space-y-2 pl-4">
+              <!-- BCA -->
+              <div class="bank-card">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:#005BAA">BCA</div>
+                  <div>
+                    <p class="font-sans text-xs text-gray-400">Bank Central Asia</p>
+                    <p class="font-sans text-sm font-bold text-gray-900" id="bca-num">1234567890</p>
+                    <p class="font-sans text-xs text-gray-500">a.n. <strong>Bale Hinggil Stay</strong></p>
+                  </div>
+                </div>
+                <button class="copy-btn" onclick="copyText('bca-num', this)">Salin</button>
+              </div>
+              <!-- Mandiri -->
+              <div class="bank-card">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:#003D7A">MDR</div>
+                  <div>
+                    <p class="font-sans text-xs text-gray-400">Bank Mandiri</p>
+                    <p class="font-sans text-sm font-bold text-gray-900" id="mdr-num">1400012345678</p>
+                    <p class="font-sans text-xs text-gray-500">a.n. <strong>Bale Hinggil Stay</strong></p>
+                  </div>
+                </div>
+                <button class="copy-btn" onclick="copyText('mdr-num', this)">Salin</button>
+              </div>
+              <!-- BNI -->
+              <div class="bank-card">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:#F98E17">BNI</div>
+                  <div>
+                    <p class="font-sans text-xs text-gray-400">Bank Negara Indonesia</p>
+                    <p class="font-sans text-sm font-bold text-gray-900" id="bni-num">9876543210</p>
+                    <p class="font-sans text-xs text-gray-500">a.n. <strong>Bale Hinggil Stay</strong></p>
+                  </div>
+                </div>
+                <button class="copy-btn" onclick="copyText('bni-num', this)">Salin</button>
+              </div>
+              <p class="font-sans text-xs text-gray-400 pt-1 pl-1">
+                ⚠️ Setelah transfer, kirim bukti pembayaran via WhatsApp ke admin kami.
+              </p>
+            </div>
+          </div>
+
+          <!-- Tunai / Cash -->
+          <label class="pay-option" onclick="showPayInfo('cash')">
+            <input type="radio" name="payment" value="cash" />
+            <div class="flex items-center gap-3 flex-1">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#fef3c7">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div>
+                <p class="font-sans text-sm font-semibold text-gray-800">Tunai (Cash)</p>
+                <p class="font-sans text-xs text-gray-400">Bayar langsung saat check-in di kantor</p>
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </label>
+
+          <div id="cash-info">
+            <div class="pl-4">
+              <div class="flex items-start gap-3 p-3 rounded-xl" style="background:#fffbeb;border:1px solid #fde68a">
+                <span style="font-size:1.25rem">📍</span>
+                <div>
+                  <p class="font-sans text-sm font-semibold text-amber-800 mb-1">Kantor Bale Hinggil Stay</p>
+                  <p class="font-sans text-xs text-amber-700 leading-relaxed">Jl. Raya Manyar Kertoarjo No. 1, Surabaya Timur</p>
+                  <p class="font-sans text-xs text-amber-700 mt-1">Buka: Senin–Sabtu, 09.00–17.00 WIB</p>
+                  <p class="font-sans text-xs text-amber-700 mt-1">⚠️ Siapkan uang pas. Pembayaran diterima saat check-in.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DP 50% -->
+          <label class="pay-option" onclick="showPayInfo('dp')">
+            <input type="radio" name="payment" value="dp" />
+            <div class="flex items-center gap-3 flex-1">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#ede9fe">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <p class="font-sans text-sm font-semibold text-gray-800">DP 50% Dulu</p>
+                <p class="font-sans text-xs text-gray-400">Bayar sisa saat check-in · Booking aman</p>
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </label>
+
+          <div id="dp-info">
+            <div class="pl-4">
+              <div class="rounded-xl p-3" style="background:#f5f3ff;border:1px solid #ddd6fe">
+                <p class="font-sans text-sm font-semibold text-purple-800 mb-2">Skema DP 50%</p>
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center font-bold flex-shrink-0">1</span>
+                    <p class="font-sans text-xs text-purple-700">Bayar DP <strong id="dp-amount-display">50%</strong> sekarang via transfer bank</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center font-bold flex-shrink-0">2</span>
+                    <p class="font-sans text-xs text-purple-700">Unit dikonfirmasi & diblokir untuk Anda</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center font-bold flex-shrink-0">3</span>
+                    <p class="font-sans text-xs text-purple-700">Sisa pembayaran dilunasi saat check-in</p>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-purple-200 flex justify-between items-center">
+                  <span class="font-sans text-xs text-purple-600">Jumlah DP:</span>
+                  <span class="font-sans text-sm font-bold text-purple-700" id="dp-amount-num">Rp 0</span>
+                </div>
+              </div>
+              <!-- Bank accounts for DP -->
+              <div class="space-y-2 mt-3">
+                <div class="bank-card">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:#005BAA">BCA</div>
+                    <div>
+                      <p class="font-sans text-xs text-gray-400">Bank Central Asia</p>
+                      <p class="font-sans text-sm font-bold text-gray-900" id="dp-bca-num">1234567890</p>
+                      <p class="font-sans text-xs text-gray-500">a.n. <strong>Bale Hinggil Stay</strong></p>
+                    </div>
+                  </div>
+                  <button class="copy-btn" onclick="copyText('dp-bca-num', this)">Salin</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div class="section-card">
+        <div class="flex items-start gap-3">
+          <input type="checkbox" id="f-agree" class="mt-0.5 w-4 h-4 rounded flex-shrink-0" style="accent-color:#2E7D32" />
+          <label for="f-agree" class="font-sans text-sm text-gray-600 leading-relaxed cursor-pointer">
+            Saya menyetujui
+            <a href="#" class="font-semibold underline" style="color:#2E7D32">Syarat & Ketentuan</a>
+            dan
+            <a href="#" class="font-semibold underline" style="color:#2E7D32">Kebijakan Privasi</a>
+            Bale Hinggil Stay.
+          </label>
+        </div>
+        <p id="err-agree" class="font-sans text-xs text-red-500 mt-2 pl-7" style="display:none">
+          Harap setujui syarat & ketentuan terlebih dahulu.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ══════════ RIGHT: ORDER SUMMARY ══════════ -->
+    <div class="lg:w-96 flex-shrink-0">
+      <div class="order-sticky">
+
+        <!-- Unit card -->
+        <div class="section-card p-0 overflow-hidden mb-4">
+          <div class="relative h-36 overflow-hidden">
+            <img id="sum-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                 alt="Unit" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div id="sum-status" class="absolute top-3 left-3 px-2 py-0.5 rounded-full font-sans text-xs font-semibold"></div>
+          </div>
+          <div class="p-4">
+            <h3 id="sum-unit-id" class="font-serif text-lg text-gray-900 mb-1">—</h3>
+            <p id="sum-location" class="font-sans text-xs text-gray-400 mb-3">—</p>
+            <div id="sum-chips" class="flex flex-wrap gap-1.5 mb-3"></div>
+            <!-- Booking dates -->
+            <div class="space-y-2 pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <div>
+                  <p class="font-sans text-xs text-gray-400">Check-in</p>
+                  <p class="font-sans text-xs font-semibold text-gray-700" id="summary-checkin">—</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <div>
+                  <p class="font-sans text-xs text-gray-400">Check-out</p>
+                  <p class="font-sans text-xs font-semibold text-gray-700" id="summary-checkout">—</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <div>
+                  <p class="font-sans text-xs text-gray-400">Tamu</p>
+                  <p class="font-sans text-xs font-semibold text-gray-700" id="summary-guests">—</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price breakdown -->
+        <div class="section-card">
+          <h3 class="font-serif text-base text-gray-900 mb-4 pb-3 border-b border-gray-100">Rincian Harga</h3>
+          <div class="space-y-2 mb-5">
+            <div class="price-row">
+              <span id="nights-label" class="text-gray-500">1 malam</span>
+              <span id="nights-sub" class="font-medium text-gray-800">—</span>
+            </div>
+            <div class="price-row">
+              <span class="text-gray-500">Biaya layanan</span>
+              <span class="font-medium text-gray-800">Rp 50.000</span>
+            </div>
+            <div class="price-row" id="dp-row" style="display:none">
+              <span class="text-gray-500" style="color:#7C3AED">DP 50%</span>
+              <span id="dp-amount" class="font-semibold" style="color:#7C3AED">Rp 0</span>
+            </div>
+            <div class="border-t border-dashed border-gray-200 pt-2 price-row">
+              <span class="font-bold text-gray-900" style="font-size:.95rem">Total</span>
+              <span id="total-price" class="font-bold text-lg" style="color:#2E7D32">—</span>
+            </div>
+          </div>
+
+          <!-- Confirm button (desktop) -->
+          <button type="button" onclick="submitOrder()" class="btn-confirm hidden lg:flex">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="white">
+              <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm7.27 19.555c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z"/>
+            </svg>
+            Konfirmasi Pesanan
+          </button>
+
+          <!-- Trust badges -->
+          <div class="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-gray-100">
+            <div class="flex items-center gap-1.5 text-gray-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span class="font-sans text-xs">Aman & Terpercaya</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-gray-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span class="font-sans text-xs">Respons &lt; 5 Menit</span>
+            </div>
+          </div>
+          <a href="https://wa.me/6281234567890" target="_blank"
+             class="flex items-center justify-center gap-2 mt-3 font-sans text-xs font-semibold"
+             style="color:#2E7D32">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="14" height="14" fill="#2E7D32">
+              <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm7.27 19.555c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z"/>
+            </svg>
+            Butuh bantuan? Chat WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Mobile bottom bar -->
+<div class="mobile-bar">
+  <button type="button" onclick="submitOrder()" class="btn-confirm">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="white">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm7.27 19.555c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z"/>
+    </svg>
+    Konfirmasi Pesanan
+  </button>
+</div>
+
+<!-- FOOTER -->
+<div id="footer-placeholder"></div>
+
+<script>
+  /* ══════════════════════════════════════════════
+     Read URL params
+  ══════════════════════════════════════════════ */
+  var params    = new URLSearchParams(location.search);
+  var unitId    = params.get('id')       || '';
+  var checkin   = params.get('checkin')  || '';
+  var checkout  = params.get('checkout') || '';
+  var guests    = parseInt(params.get('guests') || '1', 10);
+  var pName     = params.get('name')     || '';
+  var pPhone    = params.get('phone')    || '';
+  var pEmail    = params.get('email')    || '';
+  var pKtp      = params.get('ktp')      || '';
+  var pNotes    = params.get('notes')    || '';
+
+  var unit      = typeof getUnitById === 'function' ? getUnitById(unitId) : null;
+  var unitPrice = unit ? unit.price : 500000;
+
+  /* ══════════════════════════════════════════════
+     Helpers
+  ══════════════════════════════════════════════ */
+  var diSrc = function(n) { return 'Rp ' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+
+  function fmtDate(str) {
+    if (!str) return '—';
+    var d = new Date(str + 'T00:00:00');
+    return d.toLocaleDateString('id-ID', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+  }
+  function fmtDateShort(str) {
+    if (!str) return '—';
+    var d = new Date(str + 'T00:00:00');
+    return d.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+  }
+
+  function nightsCount() {
+    if (!checkin || !checkout) return 1;
+    return Math.max(1, Math.round((new Date(checkout) - new Date(checkin)) / 86400000));
+  }
+
+  /* ══════════════════════════════════════════════
+     Render order summary
+  ══════════════════════════════════════════════ */
+  function renderSummary() {
+    /* Unit image */
+    if (unit && unit.images && unit.images[0]) {
+      document.getElementById('sum-img').src = unit.images[0];
+    }
+
+    /* Status badge */
+    var statusEl = document.getElementById('sum-status');
+    var sLabel   = (typeof STATUS_LABEL !== 'undefined' && unit) ? (STATUS_LABEL[unit.status] || unit.status) : '';
+    var sClass   = (typeof STATUS_CLASS  !== 'undefined' && unit) ? (STATUS_CLASS[unit.status]  || '') : '';
+    statusEl.textContent  = sLabel;
+    statusEl.className    = 'absolute top-3 left-3 px-2 py-0.5 rounded-full font-sans text-xs font-semibold ' + sClass;
+
+    document.getElementById('sum-unit-id').textContent  = unit ? unit.id : unitId;
+    document.getElementById('sum-location').textContent = unit ? ('Tower ' + unit.tower + ' · Lantai ' + unit.floor + ' · ' + unit.view) : '—';
+
+    /* Spec chips */
+    if (unit) {
+      var chips = [
+        unit.type,
+        unit.size + ' m²',
+        unit.bedrooms + ' KT',
+        unit.bathrooms + ' KM'
+      ];
+      document.getElementById('sum-chips').innerHTML = chips.map(function(c) {
+        return '<span class="font-sans text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">' + c + '</span>';
+      }).join('');
+    }
+
+    document.getElementById('summary-checkin').textContent  = fmtDate(checkin);
+    document.getElementById('summary-checkout').textContent = fmtDate(checkout);
+    document.getElementById('summary-guests').textContent   = guests + ' Orang';
+
+    document.getElementById('bc-unit').textContent = unitId || 'Unit';
+
+    recalcPrice();
+  }
+
+  /* ══════════════════════════════════════════════
+     Price recalc
+  ══════════════════════════════════════════════ */
+  function recalcPrice() {
+    var nights = nightsCount();
+    var sub    = unitPrice * nights;
+    var total  = sub + 50000;
+    var isDP   = document.querySelector('input[name="payment"]:checked').value === 'dp';
+
+    document.getElementById('nights-label').textContent = nights + ' malam × ' + diSrc(unitPrice);
+    document.getElementById('nights-sub').textContent   = diSrc(sub);
+    document.getElementById('total-price').textContent  = diSrc(total);
+
+    var dpAmt = Math.ceil(total / 2);
+    var dpRow = document.getElementById('dp-row');
+    dpRow.style.display = isDP ? 'flex' : 'none';
+    if (isDP) document.getElementById('dp-amount').textContent = diSrc(dpAmt);
+
+    /* DP info display */
+    document.getElementById('dp-amount-num').textContent     = diSrc(dpAmt);
+    document.getElementById('dp-amount-display').textContent = diSrc(dpAmt);
+  }
+
+  /* ══════════════════════════════════════════════
+     Payment method show/hide info
+  ══════════════════════════════════════════════ */
+  function showPayInfo(method) {
+    document.getElementById('transfer-info').style.display = method === 'transfer' ? 'block' : 'none';
+    document.getElementById('cash-info').style.display     = method === 'cash'     ? 'block' : 'none';
+    document.getElementById('dp-info').style.display       = method === 'dp'       ? 'block' : 'none';
+    recalcPrice();
+  }
+
+  document.querySelectorAll('input[name="payment"]').forEach(function(r) {
+    r.addEventListener('change', function() { showPayInfo(this.value); });
+  });
+
+  /* ══════════════════════════════════════════════
+     Copy to clipboard
+  ══════════════════════════════════════════════ */
+  function copyText(elId, btn) {
+    var text = document.getElementById(elId).textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      var orig = btn.textContent;
+      btn.textContent = '✓ Disalin';
+      btn.style.background = '#dcfce7';
+      setTimeout(function() { btn.textContent = orig; btn.style.background = ''; }, 2000);
+    }).catch(function() {
+      /* fallback */
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      var orig = btn.textContent;
+      btn.textContent = '✓ Disalin';
+      setTimeout(function() { btn.textContent = orig; }, 2000);
+    });
+  }
+
+  /* ══════════════════════════════════════════════
+     Submit / Confirm
+  ══════════════════════════════════════════════ */
+  function submitOrder() {
+    var agree    = document.getElementById('f-agree');
+    var errAgree = document.getElementById('err-agree');
+    if (!agree.checked) {
+      errAgree.style.display = 'block';
+      agree.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    errAgree.style.display = 'none';
+
+    var payment  = document.querySelector('input[name="payment"]:checked').value;
+    var nights   = nightsCount();
+    var sub      = unitPrice * nights;
+    var total    = sub + 50000;
+    var isDP     = payment === 'dp';
+    var payLabel = { transfer: 'Transfer Bank', cash: 'Tunai (Cash)', dp: 'DP 50%' };
+
+    var msg = '🏠 *Pemesanan Unit Bale Hinggil Stay*\n\n' +
+      '📋 *Detail Unit*\n' +
+      'Unit: ' + (unit ? unit.id : unitId) + '\n' +
+      (unit ? 'Tipe: ' + unit.type + '\nTower ' + unit.tower + ' · Lantai ' + unit.floor + '\n' : '') + '\n' +
+      '📅 *Jadwal*\n' +
+      'Check-in: '  + fmtDateShort(checkin)  + '\n' +
+      'Check-out: ' + fmtDateShort(checkout) + '\n' +
+      'Durasi: '    + nights + ' malam\n' +
+      'Tamu: '      + guests + ' orang\n\n' +
+      '👤 *Data Pemesan*\n' +
+      'Nama: '   + (pName  || '-') + '\n' +
+      'No. WA: +62' + (pPhone || '-') + '\n' +
+      (pEmail ? 'Email: ' + pEmail + '\n' : '') +
+      'KTP: '    + (pKtp   || '-') + '\n\n' +
+      '💳 *Pembayaran*\n' +
+      'Metode: ' + payLabel[payment] + '\n\n' +
+      '💰 *Rincian Harga*\n' +
+      nights + ' malam × ' + diSrc(unitPrice) + ' = ' + diSrc(sub) + '\n' +
+      'Biaya layanan = Rp 50.000\n' +
+      'Total = ' + diSrc(total) +
+      (isDP ? '\nDP 50% = ' + diSrc(Math.ceil(total / 2)) : '') + '\n' +
+      (pNotes ? '\n📝 *Catatan*\n' + pNotes : '');
+
+    var waUrl = 'https://wa.me/6281234567890?text=' + encodeURIComponent(msg);
+
+    /* Show success modal */
+    document.getElementById('modal-unit-info').innerHTML =
+      '<div style="display:flex;flex-direction:column;gap:.5rem">' +
+      '<p style="font-family:\'Playfair Display\',serif;font-size:1rem;color:#111827">Unit ' + (unit ? unit.id : unitId) + '</p>' +
+      '<p style="font-family:Inter,sans-serif;font-size:.75rem;color:#6b7280">' + fmtDateShort(checkin) + ' — ' + fmtDateShort(checkout) + ' · ' + nights + ' malam</p>' +
+      '<p style="font-family:Inter,sans-serif;font-size:.75rem;color:#6b7280">Metode: ' + payLabel[payment] + '</p>' +
+      '<p style="font-family:Inter,sans-serif;font-size:.875rem;font-weight:700;color:#2E7D32">' + diSrc(total) + (isDP ? ' (DP ' + diSrc(Math.ceil(total / 2)) + ')' : '') + '</p>' +
+      '</div>';
+
+    document.getElementById('modal-wa-btn').href = waUrl;
+    document.getElementById('success-modal').classList.add('open');
+  }
+
+  /* Close modal on backdrop click */
+  document.getElementById('success-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+
+  /* ══════════════════════════════════════════════
+     Init
+  ══════════════════════════════════════════════ */
+  renderNavbar('rooms');
+  renderFooter();
+  renderSummary();
+  showPayInfo('transfer');
+  lucide.createIcons();
+</script>
+
+</body>
+</html>

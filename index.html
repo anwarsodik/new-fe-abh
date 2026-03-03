@@ -1,794 +1,1116 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
+<html lang="id" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Your Perfect Stay - Apartment Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bale Hinggil Stay – Apartemen Premium Surabaya Timur</title>
+  <meta name="description" content="Nikmati kemewahan dan kenyamanan di Apartemen Bale Hinggil, jantung Surabaya Timur. Tersedia unit harian, bulanan, dan tahunan dengan fasilitas premium." />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Phosphor Icons (for icons matching the original design) -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="components.js"></script>
 
-    <style>
-        .glass Navbar {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        }
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              deep: '#2E7D32',
+              mid:  '#388E3C',
+              soft: '#4CAF50',
+              pale: '#e8f5e9',
+            },
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; color: #111827; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
+    [id] { scroll-margin-top: 80px; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #2E7D32; border-radius: 3px; }
+
+    /* Navbar */
+    .nav-scrolled {
+      background: rgba(255,255,255,0.97) !important;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08) !important;
+    }
+
+    /* Hero Slider */
+    .hero-slider {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+      will-change: opacity;
+      z-index: 0;
+    }
+    .hero-slide.active { opacity: 1; z-index: 1; }
+
+    .hero-slide::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(27,67,50,0.50) 0%, rgba(0,0,0,0.72) 100%);
+      z-index: 1;
+    }
+
+    .hero-slide-1 {
+      background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=85&auto=format&fit=crop');
+    }
+    .hero-slide-2 {
+      background-image: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&q=85&auto=format&fit=crop');
+    }
 
 
-        /* Marquee Animation */
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
+    .slider-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 20;
+      width: 44px; height: 44px;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .slider-arrow:hover { background: rgba(255,255,255,0.28); }
+    .slider-arrow-prev { left: 20px; }
+    .slider-arrow-next { right: 20px; }
 
-            100% {
-                transform: translateX(-50%);
-            }
-        }
+    /* Booking tabs */
+    .tab-btn.active { background-color: #2E7D32; color: #fff; }
+    .tab-btn { transition: background-color .2s, color .2s; }
 
-        .animate-marquee {
-            animation: marquee 20s linear infinite;
-        }
+    /* Card hover */
+    .card-lift { transition: transform .3s ease, box-shadow .3s ease; }
+    .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(27,67,50,.15); }
 
-        /* Custom Scrollbar for tabs and sliders */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 4px;
-        }
+    /* FAQ accordion */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .faq-body.open { max-height: 400px; }
+    .faq-icon { transition: transform .3s ease; }
+    .faq-icon.rotated { transform: rotate(45deg); }
 
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
+    .promo-badge { background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%); }
 
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #dcfce7;
-            border-radius: 10px;
-        }
+    .featured-bg {
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(27,67,50,0.80) 60%, transparent 100%),
+        url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1400&q=85&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
 
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #22c55e;
-        }
-    </style>
+    .divider { width: 56px; height: 3px; background: #2E7D32; border-radius: 2px; }
+
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(27,67,50,.5); }
+      70%  { box-shadow: 0 0 0 12px rgba(27,67,50,0); }
+      100% { box-shadow: 0 0 0 0 rgba(27,67,50,0); }
+    }
+    .wa-pulse { animation: pulse-ring 2s infinite; }
+
+    #mobile-menu { transition: max-height .35s ease, opacity .35s ease; max-height: 0; opacity: 0; overflow: hidden; }
+    #mobile-menu.open { max-height: 400px; opacity: 1; }
+  </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-primary-500 selection:text-white">
+<body class="bg-white antialiased">
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer">
-                    <div class="text-primary-600 text-3xl font-bold flex items-center gap-2">
-                        <i class="ph-fill ph-buildings"></i>
-                        <span>Apartment<span class="text-gray-900 text-xl">Hub</span></span>
-                    </div>
-                </div>
+<div id="navbar-placeholder"></div>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-primary-600 font-medium">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Units</a>
-                    <a href="#"
-                        class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Properties</a>
-                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Promo</a>
-                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Features</a>
-                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Contact</a>
-                </div>
 
-                <!-- Auth & Dark Mode -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <button
-                        class="p-2 text-gray-600 hover:text-primary-600 transition-colors rounded-full hover:bg-gray-100">
-                        <i class="ph ph-moon text-xl"></i>
-                    </button>
-                    <a href="#" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Login</a>
-                    <a href="#"
-                        class="bg-primary-600 text-white px-6 py-2.5 rounded-full font-medium hover:bg-primary-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Register</a>
-                </div>
+<!-- ═══════════════════════════════════════════════════════
+     HERO SECTION — IMAGE SLIDER
+════════════════════════════════════════════════════════ -->
+<section id="hero" class="hero-slider pt-20 pb-40 flex flex-col items-center justify-center">
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button class="text-gray-600 hover:text-gray-900 focus:outline-none">
-                        <i class="ph ph-list text-3xl"></i>
-                    </button>
-                </div>
-            </div>
+  <!-- Slide 1 -->
+  <div class="hero-slide hero-slide-1 active"></div>
+  <!-- Slide 2 -->
+  <div class="hero-slide hero-slide-2"></div>
+
+  <!-- Prev / Next arrows -->
+  <button class="slider-arrow slider-arrow-prev" onclick="heroSlider.prev()" aria-label="Sebelumnya" style="z-index:20">
+    <i data-lucide="chevron-left" class="w-5 h-5 text-white"></i>
+  </button>
+  <button class="slider-arrow slider-arrow-next" onclick="heroSlider.next()" aria-label="Berikutnya" style="z-index:20">
+    <i data-lucide="chevron-right" class="w-5 h-5 text-white"></i>
+  </button>
+
+  <!-- Accent shapes -->
+  <div class="absolute top-28 left-8 w-40 h-40 rounded-full opacity-10 blur-3xl pointer-events-none" style="background:#4CAF50;z-index:2"></div>
+  <div class="absolute bottom-32 right-10 w-56 h-56 rounded-full opacity-10 blur-3xl pointer-events-none" style="background:#2E7D32;z-index:2"></div>
+
+  <!-- Content -->
+  <div class="relative text-center max-w-4xl mx-auto px-4" style="z-index:20">
+
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm mb-6">
+      <i data-lucide="star" class="w-3.5 h-3.5 text-yellow-300 fill-yellow-300"></i>
+      <span class="font-sans text-xs font-medium text-white/90 tracking-wide">Rating 4.9 · 500+ Tamu Puas</span>
+    </div>
+
+    <h1 class="font-serif text-white leading-tight mb-6"
+        style="font-size:clamp(2rem,5vw,3.75rem); text-shadow: 0 2px 20px rgba(0,0,0,0.4)">
+      Kemewahan &amp; Kenyamanan<br />
+      <em class="not-italic" style="color:#a5d6a7">di Jantung Surabaya Timur</em>
+    </h1>
+
+    <p class="font-sans text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed" style="font-size:clamp(1rem,2vw,1.125rem)">
+      Apartemen Bale Hinggil menghadirkan unit premium yang didesain untuk kenyamanan hidup modern — lengkap dengan fasilitas bintang lima, lokasi strategis, dan layanan profesional 24 jam.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#booking"
+         class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-sans font-semibold text-white text-sm sm:text-base transition-all hover:opacity-90 hover:scale-105 shadow-lg"
+         style="background:#2E7D32">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+        Cek Ketersediaan
+      </a>
+      <a href="#featured"
+         class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-sans font-semibold text-white text-sm sm:text-base border border-white/40 bg-white/10 backdrop-blur-sm transition-all hover:bg-white/20">
+        <i data-lucide="play-circle" class="w-5 h-5"></i>
+        Lihat Unit Unggulan
+      </a>
+    </div>
+
+    <div class="mt-16 flex flex-wrap justify-center gap-x-12 gap-y-6">
+      <div class="text-center">
+        <p class="font-serif text-3xl text-white">120+</p>
+        <p class="font-sans text-xs text-white/60 mt-1 uppercase tracking-widest">Unit Tersedia</p>
+      </div>
+      <div class="w-px bg-white/20 hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-serif text-3xl text-white">4.9★</p>
+        <p class="font-sans text-xs text-white/60 mt-1 uppercase tracking-widest">Rating Tamu</p>
+      </div>
+      <div class="w-px bg-white/20 hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-serif text-3xl text-white">7 Menit</p>
+        <p class="font-sans text-xs text-white/60 mt-1 uppercase tracking-widest">dari Toll MERR</p>
+      </div>
+      <div class="w-px bg-white/20 hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-serif text-3xl text-white">24/7</p>
+        <p class="font-sans text-xs text-white/60 mt-1 uppercase tracking-widest">Layanan Concierge</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" style="z-index:20">
+    <div class="w-6 h-10 rounded-full border-2 border-white/40 flex items-start justify-center pt-2">
+      <div class="w-1 h-2 rounded-full bg-white/80"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     BOOKING BAR
+════════════════════════════════════════════════════════ -->
+<section id="booking" class="relative z-20 -mt-20 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 border border-gray-100">
+
+      <!-- Tabs (centered) -->
+      <div class="flex gap-2 mb-6 bg-gray-100 p-1 rounded-xl w-fit mx-auto">
+        <button class="tab-btn active font-sans text-sm font-semibold px-5 py-2 rounded-lg" onclick="switchTab('harian',this)">Harian</button>
+        <button class="tab-btn font-sans text-sm font-semibold px-5 py-2 rounded-lg text-gray-600" onclick="switchTab('bulanan',this)">Bulanan</button>
+        <button class="tab-btn font-sans text-sm font-semibold px-5 py-2 rounded-lg text-gray-600" onclick="switchTab('tahunan',this)">Tahunan</button>
+      </div>
+
+      <!-- Inputs -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+
+        <div class="flex flex-col gap-1.5">
+          <label class="font-sans text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="calendar" class="w-3.5 h-3.5" style="color:#2E7D32"></i>Check-in
+          </label>
+          <input type="date" id="checkin-input"
+                 class="w-full border border-gray-200 rounded-xl px-4 py-3 font-sans text-sm text-gray-800 focus:outline-none focus:ring-2 focus:border-transparent bg-gray-50 focus:bg-white transition-all" />
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center justify-center">
-        <!-- Background Video -->
-        <div class="absolute inset-0 z-0">
-            <video autoplay loop muted playsinline class="w-full h-full object-cover">
-                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
-                    type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <!-- Overlay to ensure text readability -->
-            <div class="absolute inset-0 bg-white/80 backdrop-blur-[2px]"></div>
+        <div class="flex flex-col gap-1.5">
+          <label class="font-sans text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="calendar-check-2" class="w-3.5 h-3.5" style="color:#2E7D32"></i>Check-out
+          </label>
+          <input type="date" id="checkout-input"
+                 class="w-full border border-gray-200 rounded-xl px-4 py-3 font-sans text-sm text-gray-800 focus:outline-none focus:ring-2 focus:border-transparent bg-gray-50 focus:bg-white transition-all" />
         </div>
 
-        <!-- Decorative blobs -->
-        <div
-            class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-primary-100 blur-3xl opacity-50 mix-blend-multiply pointer-events-none">
+        <div class="flex flex-col gap-1.5">
+          <label class="font-sans text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="users" class="w-3.5 h-3.5" style="color:#2E7D32"></i>Jumlah Tamu
+          </label>
+          <div class="flex items-center border border-gray-200 rounded-xl bg-gray-50 px-4 py-3 gap-3">
+            <button onclick="changeGuests(-1)" class="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-green-800 hover:text-green-800 transition-colors text-sm font-bold">−</button>
+            <span id="guest-count" class="font-sans text-sm font-semibold text-gray-800 flex-1 text-center">2 Tamu</span>
+            <button onclick="changeGuests(1)"  class="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-green-800 hover:text-green-800 transition-colors text-sm font-bold">+</button>
+          </div>
         </div>
-        <div
-            class="absolute bottom-0 left-0 -ml-40 -mb-40 w-96 h-96 rounded-full bg-green-200 blur-3xl opacity-50 mix-blend-multiply pointer-events-none">
+
+        <button onclick="handleSearch()"
+                class="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-sans font-semibold text-white text-sm transition-all hover:opacity-90 hover:scale-[1.02] active:scale-95 shadow-md"
+                style="background:#2E7D32">
+          <i data-lucide="search" class="w-4 h-4"></i>
+          Cari Kamar
+        </button>
+      </div>
+
+      <p class="mt-4 font-sans text-xs text-gray-400 flex items-center gap-1.5">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5" style="color:#2E7D32"></i>
+        Harga terbaik dijamin · Tidak ada biaya tersembunyi · Pembatalan gratis 24 jam
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PROMO KAMAR
+════════════════════════════════════════════════════════ -->
+<section id="units" class="py-24 bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <!-- Header + nav arrows -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+      <div>
+        <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-3" style="color:#2E7D32">Penawaran Eksklusif</p>
+        <h2 class="font-serif text-gray-900 mb-4" style="font-size:clamp(1.75rem,4vw,2.75rem)">Promo Kamar Pilihan</h2>
+        <div class="divider mb-4"></div>
+        <p class="font-sans text-gray-500 max-w-xl leading-relaxed">Temukan unit terbaik dengan harga spesial. Promo terbatas — pesan sekarang sebelum kehabisan.</p>
+      </div>
+      <!-- Prev / Next buttons -->
+      <div class="flex gap-2 flex-shrink-0">
+        <button id="promo-prev"
+                class="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all hover:text-white hover:border-transparent"
+                style="border-color:#2E7D32; color:#2E7D32"
+                onmouseover="this.style.background='#2E7D32'" onmouseout="this.style.background='transparent'"
+                aria-label="Sebelumnya">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <button id="promo-next"
+                class="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all hover:text-white hover:border-transparent"
+                style="border-color:#2E7D32; color:#2E7D32"
+                onmouseover="this.style.background='#2E7D32'" onmouseout="this.style.background='transparent'"
+                aria-label="Berikutnya">
+          <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scrollable track (full-width overflow) -->
+  <div class="relative">
+    <div id="promo-track"
+         class="flex gap-6 overflow-x-auto scroll-smooth pb-4"
+         style="padding-left: max(1rem, calc((100vw - 80rem) / 2)); padding-right: max(1rem, calc((100vw - 80rem) / 2)); scrollbar-width: none; -ms-overflow-style: none;">
+
+      <!-- Card 1: Studio -->
+      <article class="card-lift bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm flex-shrink-0" style="width: 320px">
+        <div class="relative h-52 bg-gray-100 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80&auto=format&fit=crop"
+               alt="Studio Unit" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+          <span class="promo-badge absolute top-4 left-4 font-sans text-[10px] font-bold text-white uppercase tracking-widest px-3 py-1 rounded-full">Special Offer</span>
+          <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm font-sans text-xs font-semibold text-gray-700 px-2.5 py-1 rounded-full">Studio</span>
+        </div>
+        <div class="p-6">
+          <h3 class="font-serif text-gray-900 text-xl mb-1">Studio Cozy Unit</h3>
+          <p class="font-sans text-sm text-gray-500 mb-4 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5" style="color:#2E7D32"></i>Lantai 8 – City View
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="maximize-2" class="w-3 h-3"></i> 28 m²</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="bed-single" class="w-3 h-3"></i> 1 Bed</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="wifi" class="w-3 h-3"></i> WiFi</span>
+          </div>
+          <div class="flex flex-col gap-0.5 mb-5">
+            <span class="font-sans text-xs text-gray-400 line-through">Rp 450.000</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-xl font-semibold" style="color:#2E7D32">Rp 299.000</span>
+              <span class="font-sans text-xs text-white font-semibold px-2 py-0.5 rounded-md" style="background:#2E7D32">/malam</span>
+            </div>
+          </div>
+          <a href="#booking" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-sans text-sm font-semibold text-white transition-all hover:opacity-90" style="background:#2E7D32">
+            Pesan Unit Ini <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 2: Deluxe (Popular) -->
+      <article class="card-lift rounded-2xl overflow-hidden shadow-xl relative flex-shrink-0" style="width:320px; border:2px solid #2E7D32">
+        <div class="relative h-52 bg-gray-100 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80&auto=format&fit=crop"
+               alt="Deluxe Unit" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+          <span class="promo-badge absolute top-4 left-4 font-sans text-[10px] font-bold text-white uppercase tracking-widest px-3 py-1 rounded-full">Special Offer</span>
+          <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm font-sans text-xs font-semibold text-gray-700 px-2.5 py-1 rounded-full">Deluxe</span>
+          <span class="absolute bottom-4 left-1/2 -translate-x-1/2 font-sans text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full text-white shadow-md whitespace-nowrap" style="background:#2E7D32">★ Paling Populer</span>
+        </div>
+        <div class="p-6 bg-white">
+          <h3 class="font-serif text-gray-900 text-xl mb-1">Deluxe One Bedroom</h3>
+          <p class="font-sans text-sm text-gray-500 mb-4 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5" style="color:#2E7D32"></i>Lantai 15 – Pool View
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="maximize-2" class="w-3 h-3"></i> 42 m²</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="bed-double" class="w-3 h-3"></i> 1 King Bed</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="bath" class="w-3 h-3"></i> Bathtub</span>
+          </div>
+          <div class="flex flex-col gap-0.5 mb-5">
+            <span class="font-sans text-xs text-gray-400 line-through">Rp 780.000</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-xl font-semibold" style="color:#2E7D32">Rp 549.000</span>
+              <span class="font-sans text-xs text-white font-semibold px-2 py-0.5 rounded-md" style="background:#2E7D32">/malam</span>
+            </div>
+          </div>
+          <a href="#booking" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-sans text-sm font-semibold text-white transition-all hover:opacity-90" style="background:#2E7D32">
+            Pesan Unit Ini <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 3: Suite -->
+      <article class="card-lift bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm flex-shrink-0" style="width:320px">
+        <div class="relative h-52 bg-gray-100 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80&auto=format&fit=crop"
+               alt="Suite Unit" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+          <span class="promo-badge absolute top-4 left-4 font-sans text-[10px] font-bold text-white uppercase tracking-widest px-3 py-1 rounded-full">Special Offer</span>
+          <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm font-sans text-xs font-semibold text-gray-700 px-2.5 py-1 rounded-full">Suite</span>
+        </div>
+        <div class="p-6">
+          <h3 class="font-serif text-gray-900 text-xl mb-1">Executive Suite</h3>
+          <p class="font-sans text-sm text-gray-500 mb-4 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5" style="color:#2E7D32"></i>Lantai 22 – Panoramic View
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="maximize-2" class="w-3 h-3"></i> 65 m²</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="bed-double" class="w-3 h-3"></i> 2 Bedroom</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="utensils" class="w-3 h-3"></i> Dapur</span>
+          </div>
+          <div class="flex flex-col gap-0.5 mb-5">
+            <span class="font-sans text-xs text-gray-400 line-through">Rp 1.500.000</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-xl font-semibold" style="color:#2E7D32">Rp 999.000</span>
+              <span class="font-sans text-xs text-white font-semibold px-2 py-0.5 rounded-md" style="background:#2E7D32">/malam</span>
+            </div>
+          </div>
+          <a href="#booking" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-sans text-sm font-semibold text-white transition-all hover:opacity-90" style="background:#2E7D32">
+            Pesan Unit Ini <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 4: Premium (bonus card agar slider terasa) -->
+      <article class="card-lift bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm flex-shrink-0" style="width:320px">
+        <div class="relative h-52 bg-gray-100 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80&auto=format&fit=crop"
+               alt="Premium Unit" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+          <span class="promo-badge absolute top-4 left-4 font-sans text-[10px] font-bold text-white uppercase tracking-widest px-3 py-1 rounded-full">Special Offer</span>
+          <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm font-sans text-xs font-semibold text-gray-700 px-2.5 py-1 rounded-full">Premium</span>
+        </div>
+        <div class="p-6">
+          <h3 class="font-serif text-gray-900 text-xl mb-1">Premium Family Unit</h3>
+          <p class="font-sans text-sm text-gray-500 mb-4 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5" style="color:#2E7D32"></i>Lantai 18 – Garden View
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="maximize-2" class="w-3 h-3"></i> 55 m²</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="bed-double" class="w-3 h-3"></i> 2 Bed</span>
+            <span class="inline-flex items-center gap-1 font-sans text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"><i data-lucide="users" class="w-3 h-3"></i> Family</span>
+          </div>
+          <div class="flex flex-col gap-0.5 mb-5">
+            <span class="font-sans text-xs text-gray-400 line-through">Rp 1.200.000</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-xl font-semibold" style="color:#2E7D32">Rp 799.000</span>
+              <span class="font-sans text-xs text-white font-semibold px-2 py-0.5 rounded-md" style="background:#2E7D32">/malam</span>
+            </div>
+          </div>
+          <a href="#booking" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-sans text-sm font-semibold text-white transition-all hover:opacity-90" style="background:#2E7D32">
+            Pesan Unit Ini <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </article>
+
+    </div>
+    <!-- hide scrollbar for webkit -->
+    <style>#promo-track::-webkit-scrollbar { display: none; }</style>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 mt-8 text-center">
+    <a href="#booking" class="inline-flex items-center gap-2 font-sans text-sm font-semibold border-b-2 pb-0.5 transition-colors hover:opacity-70" style="color:#2E7D32;border-color:#2E7D32">
+      Lihat Semua Unit <i data-lucide="arrow-right" class="w-4 h-4"></i>
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FEATURED UNIT BANNER
+════════════════════════════════════════════════════════ -->
+<section id="featured" class="featured-bg py-24 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-xl">
+
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 mb-6">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-yellow-300"></i>
+        <span class="font-sans text-xs font-semibold text-white/90 tracking-wide">Unit Unggulan Bulan Ini</span>
+      </div>
+
+      <h2 class="font-serif text-white mb-4 leading-tight" style="font-size:clamp(1.75rem,4vw,2.75rem)">
+        Executive Suite<br />
+        <em class="not-italic" style="color:#a5d6a7">with Panoramic City View</em>
+      </h2>
+
+      <p class="font-sans text-white/75 mb-8 leading-relaxed">
+        Rasakan pengalaman menginap setara hotel bintang lima di unit seluas 65 m² kami. Dilengkapi 2 kamar tidur mewah, dapur lengkap, ruang tamu elegan, dan pemandangan kota Surabaya yang menakjubkan dari lantai 22.
+      </p>
+
+      <ul class="space-y-3 mb-10">
+        <li class="flex items-center gap-3 font-sans text-sm text-white/80">
+          <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:#2E7D32"><i data-lucide="check" class="w-3 h-3 text-white"></i></div>
+          Fully furnished dengan interior premium
+        </li>
+        <li class="flex items-center gap-3 font-sans text-sm text-white/80">
+          <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:#2E7D32"><i data-lucide="check" class="w-3 h-3 text-white"></i></div>
+          Smart TV 65" + Netflix &amp; Disney+
+        </li>
+        <li class="flex items-center gap-3 font-sans text-sm text-white/80">
+          <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:#2E7D32"><i data-lucide="check" class="w-3 h-3 text-white"></i></div>
+          Bathtub soaking + rain shower
+        </li>
+        <li class="flex items-center gap-3 font-sans text-sm text-white/80">
+          <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:#2E7D32"><i data-lucide="check" class="w-3 h-3 text-white"></i></div>
+          Akses rooftop private terrace
+        </li>
+      </ul>
+
+      <div class="flex flex-wrap items-center gap-5">
+        <div>
+          <p class="font-serif text-4xl text-white">Rp 999.000 <span class="text-base font-sans font-normal text-white/60">/malam</span></p>
+        </div>
+        <a href="#booking"
+           class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sans font-semibold text-sm text-white border-2 border-white hover:bg-white transition-all"
+           onmouseover="this.style.color='#2E7D32'" onmouseout="this.style.color='#fff'">
+          Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PROMO BANNER
+════════════════════════════════════════════════════════ -->
+<section class="px-4 py-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="relative rounded-2xl overflow-hidden" style="background: linear-gradient(135deg, #0a3d8f 0%, #1565c0 40%, #1e88e5 75%, #29b6f6 100%);">
+
+      <!-- Background decoration circles -->
+      <div class="absolute -top-10 -left-10 w-48 h-48 rounded-full opacity-10" style="background:#fff"></div>
+      <div class="absolute -bottom-12 left-32 w-56 h-56 rounded-full opacity-10" style="background:#fff"></div>
+      <div class="absolute top-0 right-48 w-32 h-32 rounded-full opacity-10" style="background:#fff"></div>
+
+      <!-- Star sparkles -->
+      <div class="absolute top-4 left-36 text-white opacity-60 text-lg select-none">✦</div>
+      <div class="absolute bottom-4 left-52 text-white opacity-40 text-sm select-none">✦</div>
+      <div class="absolute top-3 left-56 text-white opacity-30 text-xs select-none">✦</div>
+
+      <div class="relative flex flex-col sm:flex-row items-stretch min-h-[120px]">
+
+        <!-- LEFT: Ramadan label -->
+        <div class="flex flex-col justify-center px-6 py-5 min-w-[180px]">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="text-white text-base select-none">✦</span>
+            <span class="font-sans font-semibold text-white text-sm tracking-wide">Ramadan</span>
+          </div>
+          <p class="font-serif text-white leading-none mb-1" style="font-size:2.6rem; font-weight:800; letter-spacing:-1px">
+            FULL
+          </p>
+          <p class="font-sans font-bold text-white text-xl leading-none mb-2">Promo</p>
+          <div class="inline-flex items-center gap-1.5 bg-white/20 border border-white/30 rounded-full px-3 py-1 w-fit">
+            <span class="font-sans text-white font-bold text-xs">Spesial 3.3 &nbsp;·&nbsp; 1–5 Mar</span>
+          </div>
+          <p class="font-sans text-white/50 text-[10px] mt-1.5">S&K berlaku</p>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <span
-                    class="inline-block py-1 px-3 rounded-full bg-primary-100 text-primary-700 font-semibold text-sm mb-4 border border-primary-200">
-                    Welcome to hotelify.id
-                </span>
-                <h1
-                    class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
-                    Find Your <span class="text-primary-600">Perfect Stay</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-600 font-light">
-                    Discover and book premium apartments. Comfortable, convenient, and curated just for you.
-                </p>
-            </div>
+        <!-- Divider -->
+        <div class="hidden sm:block w-px my-5" style="background:rgba(255,255,255,0.2)"></div>
 
-            <!-- Search Widget -->
-            <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-4 md:p-6 border border-gray-100 relative">
-                <!-- Tabs -->
-                <div class="flex space-x-2 mb-6 border-b border-gray-100 pb-2 overflow-x-auto custom-scrollbar">
-                    <button
-                        class="px-6 py-2 rounded-full bg-primary-50 text-primary-700 font-semibold text-sm flex-shrink-0">
-                        Harian (Daily)
-                    </button>
-                    <button
-                        class="px-6 py-2 rounded-full text-gray-500 hover:bg-gray-50 font-medium text-sm transition-colors flex-shrink-0">
-                        Bulanan (Monthly)
-                    </button>
-                    <button
-                        class="px-6 py-2 rounded-full text-gray-500 hover:bg-gray-50 font-medium text-sm transition-colors flex-shrink-0">
-                        Tahunan (Yearly)
-                    </button>
-                </div>
-
-                <!-- Search Inputs -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-                    <!-- Location -->
-                    <div
-                        class="col-span-1 md:col-span-1 border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0 md:pr-4">
-                        <label
-                            class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Location</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                                <i class="ph ph-map-pin text-gray-400 text-lg"></i>
-                            </div>
-                            <input type="text"
-                                class="block w-full pl-8 pr-3 py-2 border-0 outline-none text-gray-900 font-medium placeholder-gray-400 focus:ring-0 sm:text-base bg-transparent"
-                                placeholder="Where are you going?">
-                        </div>
-                    </div>
-
-                    <!-- Dates -->
-                    <div
-                        class="col-span-1 md:col-span-1 border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0 md:px-4">
-                        <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Check In
-                            - Out</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                                <i class="ph ph-calendar-blank text-gray-400 text-lg"></i>
-                            </div>
-                            <input type="text"
-                                class="block w-full pl-8 pr-3 py-2 border-0 outline-none text-gray-900 font-medium placeholder-gray-400 focus:ring-0 sm:text-base bg-transparent"
-                                placeholder="Add dates">
-                        </div>
-                    </div>
-
-                    <!-- Guests -->
-                    <div class="col-span-1 md:col-span-1 pb-4 md:pb-0 md:px-4">
-                        <label
-                            class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Guests</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                                <i class="ph ph-users text-gray-400 text-lg"></i>
-                            </div>
-                            <input type="text"
-                                class="block w-full pl-8 pr-3 py-2 border-0 outline-none text-gray-900 font-medium placeholder-gray-400 focus:ring-0 sm:text-base bg-transparent"
-                                placeholder="Add guests">
-                        </div>
-                    </div>
-
-                    <!-- Search Button -->
-                    <div class="col-span-1 md:col-span-1">
-                        <button
-                            class="w-full bg-primary-600 text-white rounded-2xl py-4 flex items-center justify-center gap-2 hover:bg-primary-700 transition-colors shadow-lg shadow-primary-500/30">
-                            <i class="ph ph-magnifying-glass text-xl"></i>
-                            <span class="font-semibold text-lg">Search</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <!-- MIDDLE: Cashback -->
+        <div class="flex flex-col justify-center px-6 py-5 flex-1">
+          <p class="font-sans text-white/80 text-xs font-semibold uppercase tracking-widest mb-1">Instant Cashback</p>
+          <div class="flex items-baseline gap-1 mb-1">
+            <span class="font-sans text-white font-medium text-sm">s.d.</span>
+            <span class="font-serif text-white leading-none" style="font-size:2.8rem; font-weight:800">3jt</span>
+          </div>
+          <p class="font-sans text-white/70 text-xs">untuk pemesanan unit bulanan & tahunan</p>
         </div>
-    </section>
 
-    <!-- Partner Marquee -->
-    <section class="py-10 bg-white border-b border-gray-100 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
-            <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest">Trusted by our partners</p>
+        <!-- Divider -->
+        <div class="hidden sm:block w-px my-5" style="background:rgba(255,255,255,0.2)"></div>
+
+        <!-- RIGHT-MIDDLE: Midnight Sale + Harga Spesial -->
+        <div class="flex flex-col justify-center px-6 py-5 flex-1 gap-3">
+          <!-- Midnight Sale badge -->
+          <div class="inline-flex items-start gap-2 rounded-xl p-3 w-fit" style="background:#e53935">
+            <div>
+              <p class="font-sans text-white font-bold text-xs uppercase tracking-wide leading-none mb-0.5">MIDNIGHT SALE</p>
+              <p class="font-sans text-white/90 text-xs">3 Mar (00.00 WIB)</p>
+            </div>
+          </div>
+          <!-- Harga unit spesial -->
+          <div>
+            <p class="font-sans text-white/80 text-xs font-semibold mb-0.5">Harga Unit Studio</p>
+            <div class="flex items-baseline gap-1">
+              <span class="font-sans text-white font-medium text-sm">cuma</span>
+              <span class="font-serif text-white leading-none" style="font-size:2rem; font-weight:800">300rb</span>
+            </div>
+            <p class="font-sans text-white/60 text-[10px]">/malam · terbatas!</p>
+          </div>
+          <!-- Kuota tag -->
+          <div class="inline-flex items-center gap-2 bg-white/15 rounded-lg px-3 py-1.5 w-fit">
+            <span class="font-sans text-white font-semibold text-xs">🎉 Kuota lebih banyak!</span>
+          </div>
         </div>
-        <div class="relative w-full flex overflow-x-hidden">
-            <div
-                class="py-4 animate-marquee whitespace-nowrap flex items-center gap-12 sm:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
-                <span class="text-2xl font-bold text-gray-800">Hotels.com</span>
-                <span class="text-2xl font-bold text-gray-800">Expedia</span>
-                <span class="text-2xl font-bold text-gray-800">Trip.com</span>
-                <span class="text-2xl font-bold text-gray-800">Traveloka</span>
-                <span class="text-2xl font-bold text-gray-800">Agoda</span>
-                <span class="text-2xl font-bold text-gray-800">Booking.com</span>
-                <span class="text-2xl font-bold text-gray-800">Airbnb</span>
-                <span class="text-2xl font-bold text-gray-800">Tiket.com</span>
-                <!-- Duplicate for seamless scroll -->
-                <span class="text-2xl font-bold text-gray-800">Hotels.com</span>
-                <span class="text-2xl font-bold text-gray-800">Expedia</span>
-                <span class="text-2xl font-bold text-gray-800">Trip.com</span>
-                <span class="text-2xl font-bold text-gray-800">Traveloka</span>
-            </div>
+
+        <!-- Divider -->
+        <div class="hidden sm:block w-px my-5" style="background:rgba(255,255,255,0.2)"></div>
+
+        <!-- FAR RIGHT: QR Code + CTA -->
+        <div class="flex flex-col items-center justify-center px-6 py-5 gap-2">
+          <!-- QR Code (SVG placeholder) -->
+          <div class="bg-white rounded-xl p-2">
+            <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+              <!-- QR finder patterns -->
+              <rect width="72" height="72" fill="white"/>
+              <!-- Top-left finder -->
+              <rect x="4" y="4" width="24" height="24" rx="2" fill="#111"/>
+              <rect x="8" y="8" width="16" height="16" rx="1" fill="white"/>
+              <rect x="11" y="11" width="10" height="10" rx="1" fill="#111"/>
+              <!-- Top-right finder -->
+              <rect x="44" y="4" width="24" height="24" rx="2" fill="#111"/>
+              <rect x="48" y="8" width="16" height="16" rx="1" fill="white"/>
+              <rect x="51" y="11" width="10" height="10" rx="1" fill="#111"/>
+              <!-- Bottom-left finder -->
+              <rect x="4" y="44" width="24" height="24" rx="2" fill="#111"/>
+              <rect x="8" y="48" width="16" height="16" rx="1" fill="white"/>
+              <rect x="11" y="51" width="10" height="10" rx="1" fill="#111"/>
+              <!-- Data modules (random pattern) -->
+              <rect x="32" y="4" width="4" height="4" fill="#111"/><rect x="38" y="4" width="4" height="4" fill="#111"/>
+              <rect x="32" y="10" width="4" height="4" fill="#111"/><rect x="36" y="12" width="4" height="4" fill="#111"/>
+              <rect x="32" y="18" width="4" height="4" fill="#111"/><rect x="40" y="16" width="4" height="4" fill="#111"/>
+              <rect x="4" y="32" width="4" height="4" fill="#111"/><rect x="10" y="32" width="4" height="4" fill="#111"/>
+              <rect x="18" y="32" width="4" height="4" fill="#111"/><rect x="24" y="36" width="4" height="4" fill="#111"/>
+              <rect x="4" y="38" width="4" height="4" fill="#111"/><rect x="14" y="40" width="4" height="4" fill="#111"/>
+              <rect x="32" y="32" width="4" height="4" fill="#111"/><rect x="38" y="32" width="4" height="4" fill="#111"/>
+              <rect x="44" y="32" width="4" height="4" fill="#111"/><rect x="50" y="32" width="4" height="4" fill="#111"/>
+              <rect x="56" y="32" width="4" height="4" fill="#111"/><rect x="64" y="32" width="4" height="4" fill="#111"/>
+              <rect x="32" y="38" width="4" height="4" fill="#111"/><rect x="40" y="38" width="4" height="4" fill="#111"/>
+              <rect x="48" y="40" width="4" height="4" fill="#111"/><rect x="56" y="38" width="4" height="4" fill="#111"/>
+              <rect x="36" y="44" width="4" height="4" fill="#111"/><rect x="44" y="46" width="4" height="4" fill="#111"/>
+              <rect x="52" y="44" width="4" height="4" fill="#111"/><rect x="60" y="46" width="4" height="4" fill="#111"/>
+              <rect x="32" y="50" width="4" height="4" fill="#111"/><rect x="40" y="52" width="4" height="4" fill="#111"/>
+              <rect x="48" y="54" width="4" height="4" fill="#111"/><rect x="56" y="50" width="4" height="4" fill="#111"/>
+              <rect x="64" y="52" width="4" height="4" fill="#111"/><rect x="36" y="58" width="4" height="4" fill="#111"/>
+              <rect x="44" y="60" width="4" height="4" fill="#111"/><rect x="52" y="62" width="4" height="4" fill="#111"/>
+              <rect x="60" y="58" width="4" height="4" fill="#111"/><rect x="64" y="64" width="4" height="4" fill="#111"/>
+            </svg>
+          </div>
+          <div class="text-center">
+            <p class="font-sans text-white font-bold text-xs uppercase tracking-widest">Download</p>
+            <p class="font-sans text-white font-bold text-xs uppercase tracking-widest">Sekarang</p>
+          </div>
         </div>
-    </section>
 
-    <!-- Top Features Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Choose hotelify.id?</h2>
-                <p class="text-gray-600">Experience the best in class apartment viewing and booking process.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FACILITIES
+════════════════════════════════════════════════════════ -->
+<section id="facilities" class="py-24 px-4" style="background:#F8F9FA">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="mb-14 text-center">
+      <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-3" style="color:#2E7D32">Fasilitas Kami</p>
+      <h2 class="font-serif text-gray-900 mb-4" style="font-size:clamp(1.75rem,4vw,2.75rem)">Semua yang Anda Butuhkan</h2>
+      <div class="divider mx-auto mb-5"></div>
+      <p class="font-sans text-gray-500 max-w-xl mx-auto leading-relaxed">Fasilitas lengkap dan berstandar internasional untuk kenyamanan hidup Anda sehari-hari.</p>
+    </div>
+
+    <!-- Photo card grid: 3 col top, 3 col bottom -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- 1. Swimming Pool -->
+      <div class="card-lift group relative rounded-2xl overflow-hidden cursor-pointer" style="height:220px">
+        <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=700&q=80&auto=format&fit=crop"
+             alt="Swimming Pool" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 transition-opacity duration-300"
+             style="background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(27,67,50,0.85)">
+              <i data-lucide="waves" class="w-4 h-4 text-white"></i>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Feature 1 -->
-                <div
-                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                    <div
-                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
-                        <i class="ph ph-shield-check text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Secure Booking</h3>
-                    <p class="text-gray-600 text-sm">Your payments and personal information are always protected.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div
-                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                    <div
-                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
-                        <i class="ph ph-star py text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Premium Quality</h3>
-                    <p class="text-gray-600 text-sm">Hand-picked properties ensuring the highest standards of comfort.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div
-                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                    <div
-                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
-                        <i class="ph ph-headset mt text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">24/7 Support</h3>
-                    <p class="text-gray-600 text-sm">Our dedicated team is always here to help you anytime.</p>
-                </div>
-
-                <!-- Feature 4 -->
-                <div
-                    class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-                    <div
-                        class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-4">
-                        <i class="ph ph-lightning text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Instant Booking</h3>
-                    <p class="text-gray-600 text-sm">Book your perfect stay instantly without waiting for approval.</p>
-                </div>
-            </div>
+            <h4 class="font-serif text-white text-lg leading-tight">Swimming Pool</h4>
+          </div>
+          <p class="font-sans text-white/70 text-xs">Kolam renang outdoor rooftop dengan city view</p>
         </div>
-    </section>
+      </div>
 
-    <!-- Featured Properties -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Featured Properties</h2>
-                    <p class="text-gray-600">Discover our most popular and highly-rated apartments.</p>
-                </div>
-                <a href="#"
-                    class="hidden sm:flex text-primary-600 font-semibold hover:text-primary-700 items-center gap-1">
-                    View All <i class="ph ph-arrow-right"></i>
-                </a>
+      <!-- 2. Gym Center -->
+      <div class="card-lift group relative rounded-2xl overflow-hidden cursor-pointer" style="height:220px">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=80&auto=format&fit=crop"
+             alt="Gym Center" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 transition-opacity duration-300"
+             style="background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(27,67,50,0.85)">
+              <i data-lucide="dumbbell" class="w-4 h-4 text-white"></i>
             </div>
-
-            <!-- Horizontal Slider Container -->
-            <div class="flex gap-6 overflow-x-auto pb-8 custom-scrollbar snap-x">
-                <!-- Card 1 -->
-                <div
-                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Apartment"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div
-                            class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
-                            POPULAR
-                        </div>
-                        <div
-                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
-                            <i class="ph-fill ph-heart"></i>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-900">Unit A-03-37</h3>
-                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
-                                <i class="ph-fill ph-star text-yellow-400"></i> 4.9
-                            </div>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
-                            <i class="ph ph-map-pin"></i> Jakarta Selatan
-                        </p>
-                        <div class="flex gap-2 mb-6">
-                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Studio</span>
-                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">City
-                                View</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                            <div>
-                                <p class="text-xs text-gray-500">Starting from</p>
-                                <p class="text-lg font-bold text-primary-600">Rp 500.000 <span
-                                        class="text-sm font-normal text-gray-500">/ night</span></p>
-                            </div>
-                            <button
-                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div
-                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1502672260266-1c1de2d92088?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Apartment"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div
-                            class="absolute top-4 left-4 bg-primary-600/90 text-white backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-                            PREMIUM
-                        </div>
-                        <div
-                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
-                            <i class="ph ph-heart text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-900">Unit A-11-62</h3>
-                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
-                                <i class="ph-fill ph-star text-yellow-400"></i> 4.8
-                            </div>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
-                            <i class="ph ph-map-pin"></i> Jakarta Pusat
-                        </p>
-                        <div class="flex gap-2 mb-6">
-                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">2 Beds</span>
-                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Balcony</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                            <div>
-                                <p class="text-xs text-gray-500">Starting from</p>
-                                <p class="text-lg font-bold text-primary-600">Rp 850.000 <span
-                                        class="text-sm font-normal text-gray-500">/ night</span></p>
-                            </div>
-                            <button
-                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div
-                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Apartment"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div
-                            class="absolute top-4 left-4 bg-gray-900/90 text-white backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-                            NEW
-                        </div>
-                        <div
-                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
-                            <i class="ph ph-heart text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-900">Unit A-26-21</h3>
-                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
-                                <i class="ph-fill ph-star text-yellow-400"></i> 'New'
-                            </div>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
-                            <i class="ph ph-map-pin"></i> Tangerang
-                        </p>
-                        <div class="flex gap-2 mb-6">
-                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">1 Bed</span>
-                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Pool
-                                View</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                            <div>
-                                <p class="text-xs text-gray-500">Starting from</p>
-                                <p class="text-lg font-bold text-primary-600">Rp 450.000 <span
-                                        class="text-sm font-normal text-gray-500">/ night</span></p>
-                            </div>
-                            <button
-                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 (To show overflow) -->
-                <div
-                    class="min-w-[300px] md:min-w-[350px] bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group snap-center cursor-pointer">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Apartment"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div
-                            class="absolute top-4 right-4 bg-white/90 backdrop-blur w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 transition-colors shadow-sm">
-                            <i class="ph ph-heart text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-900">Unit A-26-35</h3>
-                            <div class="flex items-center gap-1 text-sm font-semibold bg-gray-100 px-2 py-1 rounded-md">
-                                <i class="ph-fill ph-star text-yellow-400"></i> 4.7
-                            </div>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
-                            <i class="ph ph-map-pin"></i> Jakarta Barat
-                        </p>
-                        <div class="flex gap-2 mb-6">
-                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Studio</span>
-                            <span
-                                class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">Strategic</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                            <div>
-                                <p class="text-xs text-gray-500">Starting from</p>
-                                <p class="text-lg font-bold text-primary-600">Rp 480.000 <span
-                                        class="text-sm font-normal text-gray-500">/ night</span></p>
-                            </div>
-                            <button
-                                class="bg-primary-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h4 class="font-serif text-white text-lg leading-tight">Gym Center</h4>
+          </div>
+          <p class="font-sans text-white/70 text-xs">Peralatan fitness modern & instruktur berpengalaman</p>
         </div>
-    </section>
+      </div>
 
-    <!-- How It Works Section -->
-    <section class="py-20 bg-gray-50 border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
-                <p class="text-gray-600">Your perfect stay is just three simple steps away.</p>
+      <!-- 3. 24/7 Security -->
+      <div class="card-lift group relative rounded-2xl overflow-hidden cursor-pointer" style="height:220px">
+        <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=700&q=80&auto=format&fit=crop"
+             alt="24/7 Security" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 transition-opacity duration-300"
+             style="background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(27,67,50,0.85)">
+              <i data-lucide="shield-check" class="w-4 h-4 text-white"></i>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-                <!-- Connecting Line -->
-                <div class="hidden md:block absolute top-8 left-[16.6%] right-[16.6%] h-0.5 bg-gray-200"></div>
-
-                <!-- Step 1 -->
-                <div class="relative text-center">
-                    <div
-                        class="w-16 h-16 mx-auto bg-primary-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 relative z-10 shadow-lg shadow-primary-500/30">
-                        1
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Search</h3>
-                    <p class="text-gray-600">Find the perfect apartment matching your needs, location, and budget.</p>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="relative text-center">
-                    <div
-                        class="w-16 h-16 mx-auto bg-primary-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 relative z-10 shadow-lg shadow-primary-500/30">
-                        2
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Book</h3>
-                    <p class="text-gray-600">Select your dates, review the details, and book securely online.</p>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="relative text-center">
-                    <div
-                        class="w-16 h-16 mx-auto bg-primary-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 relative z-10 shadow-lg shadow-primary-500/30">
-                        3
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Enjoy</h3>
-                    <p class="text-gray-600">Move in, relax, and enjoy your comfortable premium stay.</p>
-                </div>
-            </div>
+            <h4 class="font-serif text-white text-lg leading-tight">24/7 Security</h4>
+          </div>
+          <p class="font-sans text-white/70 text-xs">CCTV 24 jam & petugas keamanan profesional</p>
         </div>
-    </section>
+      </div>
 
-    <!-- Amenities Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Fasilitas Lengkap</h2>
-                <p class="text-gray-600">Enjoy premium amenities designed for your absolute comfort.</p>
+      <!-- 4. Food Court -->
+      <div class="card-lift group relative rounded-2xl overflow-hidden cursor-pointer" style="height:220px">
+        <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=700&q=80&auto=format&fit=crop"
+             alt="Food Court" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 transition-opacity duration-300"
+             style="background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(27,67,50,0.85)">
+              <i data-lucide="utensils-crossed" class="w-4 h-4 text-white"></i>
             </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <!-- Amenity 1 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-wifi-high text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Free WiFi</span>
-                </div>
-                <!-- Amenity 2 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-swimming-pool text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Swimming Pool</span>
-                </div>
-                <!-- Amenity 3 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-barbell text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Gym Center</span>
-                </div>
-                <!-- Amenity 4 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-car text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Free Parking</span>
-                </div>
-                <!-- Amenity 5 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-cooking-pot text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Kitchen</span>
-                </div>
-                <!-- Amenity 6 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-video-camera text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">CCTV 24/7</span>
-                </div>
-                <!-- Amenity 7 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-washing-machine text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Laundry</span>
-                </div>
-                <!-- Amenity 8 -->
-                <div
-                    class="p-4 rounded-xl border border-gray-100 hover:border-primary-500 hover:bg-primary-50 transition-colors flex items-center gap-4 group cursor-pointer">
-                    <div
-                        class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:text-primary-600 transition-colors">
-                        <i class="ph ph-bell-ringing text-2xl"></i>
-                    </div>
-                    <span class="font-semibold text-gray-800 group-hover:text-primary-700">Receptionist</span>
-                </div>
-            </div>
+            <h4 class="font-serif text-white text-lg leading-tight">Food Court</h4>
+          </div>
+          <p class="font-sans text-white/70 text-xs">Pilihan kuliner lengkap di lantai dasar gedung</p>
         </div>
-    </section>
+      </div>
 
-    <!-- FAQ Section -->
-    <section class="py-20 bg-gray-100">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-                <p class="text-gray-600">Got questions? We've got answers.</p>
+      <!-- 5. High-Speed WiFi -->
+      <div class="card-lift group relative rounded-2xl overflow-hidden cursor-pointer" style="height:220px">
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=700&q=80&auto=format&fit=crop"
+             alt="High-Speed WiFi" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 transition-opacity duration-300"
+             style="background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(27,67,50,0.85)">
+              <i data-lucide="wifi" class="w-4 h-4 text-white"></i>
             </div>
-
-            <div class="space-y-4">
-                <!-- FAQ Item 1 -->
-                <details class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 group relative">
-                    <summary
-                        class="flex justify-between items-center font-semibold text-gray-900 cursor-pointer list-none text-lg">
-                        How do I make a reservation?
-                        <span class="transition group-open:rotate-180">
-                            <i class="ph ph-caret-down text-gray-400"></i>
-                        </span>
-                    </summary>
-                    <div class="text-gray-600 mt-4 leading-relaxed pr-8">
-                        You can easily make a reservation by searching for your desired dates and location on our
-                        homepage, selecting an apartment, and following the seamless checkout process.
-                    </div>
-                </details>
-
-                <!-- FAQ Item 2 -->
-                <details class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 group relative">
-                    <summary
-                        class="flex justify-between items-center font-semibold text-gray-900 cursor-pointer list-none text-lg">
-                        What is your cancellation policy?
-                        <span class="transition group-open:rotate-180">
-                            <i class="ph ph-caret-down text-gray-400"></i>
-                        </span>
-                    </summary>
-                    <div class="text-gray-600 mt-4 leading-relaxed pr-8">
-                        Our cancellation policy varies depending on the property and booking length. Most properties
-                        offer free cancellation up to 48 hours before check-in. Please review the specific terms on the
-                        property page.
-                    </div>
-                </details>
-
-                <!-- FAQ Item 3 -->
-                <details class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 group relative">
-                    <summary
-                        class="flex justify-between items-center font-semibold text-gray-900 cursor-pointer list-none text-lg">
-                        Are utilities included in monthly rentals?
-                        <span class="transition group-open:rotate-180">
-                            <i class="ph ph-caret-down text-gray-400"></i>
-                        </span>
-                    </summary>
-                    <div class="text-gray-600 mt-4 leading-relaxed pr-8">
-                        Yes, for our monthly premium apartments, standard utilities such as water, high-speed WiFi, and
-                        general maintenance are included in your rent. Electricity allowances differ by unit.
-                    </div>
-                </details>
-            </div>
+            <h4 class="font-serif text-white text-lg leading-tight">High-Speed WiFi</h4>
+          </div>
+          <p class="font-sans text-white/70 text-xs">Fiber optic 1 Gbps di seluruh area gedung</p>
         </div>
-    </section>
+      </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <!-- Brand & Description -->
-                <div class="col-span-1 md:col-span-2 lg:col-span-1 border-b border-gray-800 pb-8 lg:border-0 lg:pb-0">
-                    <div class="text-primary-500 text-3xl font-bold flex items-center gap-2 mb-6">
-                        <i class="ph-fill ph-buildings"></i>
-                        <span class="text-white">Apartment<span
-                                class="text-gray-400 font-medium text-xl">Hub</span></span>
-                    </div>
-                    <p class="text-gray-400 mb-6 leading-relaxed text-sm">
-                        Your trusted partner for finding premium apartments. We connect you with the best living spaces
-                        seamlessly.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#"
-                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors">
-                            <i class="ph-fill ph-facebook-logo text-xl"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors">
-                            <i class="ph-fill ph-twitter-logo text-xl"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors">
-                            <i class="ph-fill ph-instagram-logo text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Company</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">About Us</a></li>
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Careers</a></li>
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Blog</a></li>
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Contact</a></li>
-                    </ul>
-                </div>
-
-                <!-- Support -->
-                <div>
-                    <h4 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Support</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Help Center</a></li>
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Terms of Service</a>
-                        </li>
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-primary-400 transition-colors text-sm">Cancellation Policy</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter -->
-                <div>
-                    <h4 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Newsletter</h4>
-                    <p class="text-sm text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and
-                        exclusive promos.</p>
-                    <form class="flex">
-                        <input type="email" placeholder="Your email"
-                            class="w-full bg-gray-800 border-none rounded-l-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary-500 text-white outline-none">
-                        <button type="submit"
-                            class="bg-primary-600 text-white px-4 py-3 rounded-r-xl hover:bg-primary-700 transition-colors">
-                            <i class="ph ph-paper-plane-tilt"></i>
-                        </button>
-                    </form>
-                </div>
+      <!-- 6. Parkir Gratis -->
+      <div class="card-lift group relative rounded-2xl overflow-hidden cursor-pointer" style="height:220px">
+        <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=700&q=80&auto=format&fit=crop"
+             alt="Parkir Gratis" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 transition-opacity duration-300"
+             style="background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(27,67,50,0.85)">
+              <i data-lucide="car" class="w-4 h-4 text-white"></i>
             </div>
-
-            <!-- Copyright -->
-            <div
-                class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                <p>&copy; 2026 ApartmentHub (hotelify.id). All rights reserved.</p>
-                <div class="mt-4 md:mt-0 space-x-4">
-                    <span>IDR (Rp)</span>
-                    <span>English (EN)</span>
-                </div>
-            </div>
+            <h4 class="font-serif text-white text-lg leading-tight">Parkir Gratis</h4>
+          </div>
+          <p class="font-sans text-white/70 text-xs">Area basement 3 lantai, aman & terjaga</p>
         </div>
-    </footer>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════════════ -->
+<section class="py-24 px-4 bg-white">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="mb-14 text-center">
+      <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-3" style="color:#2E7D32">Testimoni</p>
+      <h2 class="font-serif text-gray-900 mb-4" style="font-size:clamp(1.75rem,4vw,2.75rem)">Apa Kata Tamu Kami</h2>
+      <div class="divider mx-auto"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <blockquote class="bg-gray-50 rounded-2xl p-7 border border-gray-100">
+        <div class="flex gap-0.5 mb-4">
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+        </div>
+        <p class="font-sans text-gray-700 text-sm leading-relaxed mb-5 italic">"Fasilitasnya luar biasa, staf sangat ramah dan profesional. View dari lantai 15 amazing banget! Pasti bakal balik lagi."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-serif text-sm text-white" style="background:#2E7D32">AR</div>
+          <div><p class="font-sans text-sm font-semibold text-gray-900">Arini Rahmawati</p><p class="font-sans text-xs text-gray-500">Jakarta · Tamu Bulanan</p></div>
+        </div>
+      </blockquote>
+
+      <blockquote class="rounded-2xl p-7 text-white" style="background:#2E7D32">
+        <div class="flex gap-0.5 mb-4">
+          <i data-lucide="star" class="w-4 h-4 text-yellow-300 fill-yellow-300"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-300 fill-yellow-300"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-300 fill-yellow-300"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-300 fill-yellow-300"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-300 fill-yellow-300"></i>
+        </div>
+        <p class="font-sans text-white/85 text-sm leading-relaxed mb-5 italic">"Worth it banget! Executive Suite-nya sangat nyaman untuk kerja remote. WiFi kencang, view cantik, dan dapur lengkap. 10/10!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-serif text-sm bg-white" style="color:#2E7D32">DP</div>
+          <div><p class="font-sans text-sm font-semibold text-white">Dimas Pratama</p><p class="font-sans text-xs text-white/60">Bandung · Tamu Tahunan</p></div>
+        </div>
+      </blockquote>
+
+      <blockquote class="bg-gray-50 rounded-2xl p-7 border border-gray-100">
+        <div class="flex gap-0.5 mb-4">
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+        </div>
+        <p class="font-sans text-gray-700 text-sm leading-relaxed mb-5 italic">"Lokasi sangat strategis, dekat mall dan akses tol mudah. Security 24 jam bikin saya tenang. Proses booking juga super gampang!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center font-serif text-sm text-white" style="background:#2E7D32">SN</div>
+          <div><p class="font-sans text-sm font-semibold text-gray-900">Siti Nurfadhilah</p><p class="font-sans text-xs text-gray-500">Surabaya · Tamu Harian</p></div>
+        </div>
+      </blockquote>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FAQ
+════════════════════════════════════════════════════════ -->
+<section id="faq" class="py-24 px-4 relative overflow-hidden"
+  style="background: linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #2E7D32 100%)">
+
+  <!-- Decorative circles -->
+  <div class="absolute -top-20 -left-20 w-72 h-72 rounded-full pointer-events-none" style="background:rgba(255,255,255,0.04)"></div>
+  <div class="absolute -bottom-24 -right-16 w-96 h-96 rounded-full pointer-events-none" style="background:rgba(255,255,255,0.04)"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style="background:rgba(255,255,255,0.02)"></div>
+
+  <div class="max-w-3xl mx-auto relative">
+
+    <div class="mb-14 text-center">
+      <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-3" style="color:#a5d6a7">Bantuan</p>
+      <h2 class="font-serif text-white mb-4" style="font-size:clamp(1.75rem,4vw,2.75rem)">Pertanyaan Umum</h2>
+      <div class="mx-auto mb-5" style="width:56px;height:3px;background:#a5d6a7;border-radius:2px"></div>
+      <p class="font-sans max-w-md mx-auto leading-relaxed" style="color:rgba(255,255,255,0.65)">Temukan jawaban atas pertanyaan yang paling sering ditanyakan oleh tamu kami.</p>
+    </div>
+
+    <div class="space-y-3">
+
+      <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4" onclick="toggleFaq(this)">
+          <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Jam berapa check-in dan check-out?</span>
+          <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+        </button>
+        <div class="faq-body px-6">
+          <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Check-in tersedia mulai pukul <strong>14:00 WIB</strong> dan check-out paling lambat pukul <strong>12:00 WIB</strong>. Jika Anda memerlukan early check-in atau late check-out, silakan hubungi tim kami minimal 24 jam sebelumnya.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4" onclick="toggleFaq(this)">
+          <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Apakah ada deposit yang harus dibayar?</span>
+          <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+        </button>
+        <div class="faq-body px-6">
+          <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Ya, kami meminta <strong>deposit keamanan</strong> sebesar Rp 500.000 untuk sewa harian dan Rp 1.500.000 untuk sewa bulanan. Deposit ini sepenuhnya dapat dikembalikan selambat-lambatnya <strong>3 hari kerja</strong> setelah check-out.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4" onclick="toggleFaq(this)">
+          <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Apakah tersedia parkir kendaraan?</span>
+          <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+        </button>
+        <div class="faq-body px-6">
+          <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Tersedia parkir gratis di area basement (3 lantai) untuk <strong>1 kendaraan per unit</strong>. Parkir tambahan tersedia dengan biaya Rp 20.000/hari. Parkir sepeda motor gratis tanpa batas.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4" onclick="toggleFaq(this)">
+          <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Apakah unit menerima hewan peliharaan?</span>
+          <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+        </button>
+        <div class="faq-body px-6">
+          <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Saat ini kami belum menerima hewan peliharaan demi kenyamanan seluruh penghuni. Kami dapat merekomendasikan penitipan hewan terpercaya di sekitar lokasi.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4" onclick="toggleFaq(this)">
+          <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Bagaimana proses pembatalan reservasi?</span>
+          <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+        </button>
+        <div class="faq-body px-6">
+          <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Pembatalan <strong>lebih dari 24 jam</strong> sebelum check-in: refund penuh (100%). Pembatalan <strong>kurang dari 24 jam</strong>: dikenakan biaya satu malam. Hubungi kami melalui WhatsApp untuk proses pembatalan.</p>
+        </div>
+      </div>
+
+      <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4" onclick="toggleFaq(this)">
+          <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Metode pembayaran apa saja yang diterima?</span>
+          <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+        </button>
+        <div class="faq-body px-6">
+          <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Kami menerima <strong>Transfer Bank</strong> (BCA, BRI, Mandiri, BNI), <strong>E-wallet</strong> (GoPay, OVO, DANA, ShopeePay), dan <strong>Virtual Account</strong>. Tersedia juga cicilan kartu kredit tanpa bunga untuk sewa jangka panjang.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-10 text-center rounded-2xl p-8 border" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);backdrop-filter:blur(8px)">
+      <i data-lucide="message-circle-question" class="w-10 h-10 mx-auto mb-4" style="color:#a5d6a7"></i>
+      <h3 class="font-serif text-white text-xl mb-2">Masih ada pertanyaan?</h3>
+      <p class="font-sans text-sm mb-5" style="color:rgba(255,255,255,0.6)">Tim kami siap membantu Anda 24 jam sehari, 7 hari seminggu.</p>
+      <a href="https://wa.me/6281234567890?text=Halo%20Bale%20Hinggil%20Stay%2C%20saya%20ingin%20bertanya."
+         target="_blank" rel="noopener noreferrer"
+         class="wa-pulse inline-flex items-center gap-2 px-6 py-3 rounded-full font-sans font-semibold text-sm transition-all hover:opacity-90"
+         style="background:#a5d6a7;color:#2E7D32">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        Chat WhatsApp Sekarang
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<div id="footer-placeholder"></div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════ -->
+<script>
+  /* ── Render shared components ─────────────────── */
+  renderNavbar('home');
+  renderFooter();
+
+  /* ── Hero Image Slider ───────────────────────── */
+  const heroSlider = (() => {
+    const slides = document.querySelectorAll('.hero-slide');
+    const total  = slides.length;
+    let current  = 0;
+    let timer    = null;
+
+    function goTo(index) {
+      slides[current].classList.remove('active');
+
+      current = (index + total) % total;
+      slides[current].classList.add('active');
+
+      resetTimer();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(next, 5000);
+    }
+
+    resetTimer();
+    document.getElementById('hero').addEventListener('mouseenter', () => clearInterval(timer));
+    document.getElementById('hero').addEventListener('mouseleave', resetTimer);
+
+    return { goTo, next, prev };
+  })();
+
+  /* ── Booking tabs ────────────────────────────── */
+  let activeTab = 'harian';
+
+  function fmt(d) { return d.toISOString().split('T')[0]; }
+
+  function calcCheckout(dateStr) {
+    const d = new Date(dateStr);
+    if (activeTab === 'bulanan') {
+      d.setMonth(d.getMonth() + 1);
+    } else if (activeTab === 'tahunan') {
+      d.setFullYear(d.getFullYear() + 1);
+    } else {
+      d.setDate(d.getDate() + 1);
+    }
+    return fmt(d);
+  }
+
+  function autoCheckout() {
+    const checkin = document.getElementById('checkin-input').value;
+    if (!checkin) return;
+    const minCheckout = new Date(checkin);
+    minCheckout.setDate(minCheckout.getDate() + 1);
+    document.getElementById('checkout-input').value = calcCheckout(checkin);
+    document.getElementById('checkout-input').min   = fmt(minCheckout);
+  }
+
+  function switchTab(tabName, btn) {
+    activeTab = tabName;
+
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.classList.add('text-gray-600');
+    });
+    btn.classList.add('active');
+    btn.classList.remove('text-gray-600');
+
+    // Semua tab pakai date picker
+    document.getElementById('checkin-input').type  = 'date';
+    document.getElementById('checkout-input').type = 'date';
+
+    // Auto-isi checkout sesuai tab
+    autoCheckout();
+  }
+
+  // Saat check-in berubah, auto-update checkout sesuai tab aktif
+  document.getElementById('checkin-input').addEventListener('change', autoCheckout);
+
+  /* ── Guest counter ───────────────────────────── */
+  let guests = 2;
+  function changeGuests(delta) {
+    guests = Math.max(1, Math.min(10, guests + delta));
+    document.getElementById('guest-count').textContent = guests === 1 ? '1 Tamu' : guests + ' Tamu';
+  }
+
+  /* ── Search handler ──────────────────────────── */
+  function handleSearch() {
+    const checkin  = document.getElementById('checkin-input').value;
+    const checkout = document.getElementById('checkout-input').value;
+    if (!checkin || !checkout) {
+      [document.getElementById('checkin-input'), document.getElementById('checkout-input')].forEach(el => {
+        if (!el.value) {
+          el.style.borderColor = '#ef4444';
+          el.style.boxShadow   = '0 0 0 3px rgba(239,68,68,0.15)';
+          setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1800);
+        }
+      });
+      return;
+    }
+    alert(`Mencari unit untuk ${guests} tamu\nCheck-in: ${checkin}\nCheck-out: ${checkout}`);
+  }
+
+  /* Default dates */
+  (function() {
+    const today    = new Date();
+    const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
+    document.getElementById('checkin-input').value  = fmt(today);
+    document.getElementById('checkout-input').value = fmt(tomorrow);
+    document.getElementById('checkin-input').min    = fmt(today);
+    document.getElementById('checkout-input').min   = fmt(tomorrow);
+  })();
+
+  /* ── Promo Kamar Slider ─────────────────────── */
+  (function() {
+    const track    = document.getElementById('promo-track');
+    const btnPrev  = document.getElementById('promo-prev');
+    const btnNext  = document.getElementById('promo-next');
+    const cardW    = 320 + 24; // card width + gap
+
+    btnNext.addEventListener('click', () => {
+      track.scrollBy({ left: cardW, behavior: 'smooth' });
+    });
+    btnPrev.addEventListener('click', () => {
+      track.scrollBy({ left: -cardW, behavior: 'smooth' });
+    });
+
+    // Update arrow opacity based on scroll position
+    function updateArrows() {
+      btnPrev.style.opacity = track.scrollLeft <= 10 ? '0.35' : '1';
+      btnNext.style.opacity = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10 ? '0.35' : '1';
+    }
+    track.addEventListener('scroll', updateArrows);
+    updateArrows();
+  })();
+
+  /* ── FAQ accordion ───────────────────────────── */
+  function toggleFaq(trigger) {
+    const item   = trigger.closest('.faq-item');
+    const body   = item.querySelector('.faq-body');
+    const icon   = trigger.querySelector('.faq-icon');
+    const isOpen = body.classList.contains('open');
+
+    document.querySelectorAll('.faq-body.open').forEach(b => {
+      b.classList.remove('open');
+      b.closest('.faq-item').querySelector('.faq-icon').classList.remove('rotated');
+    });
+
+    if (!isOpen) {
+      body.classList.add('open');
+      icon.classList.add('rotated');
+    }
+  }
+</script>
 
 </body>
-
 </html>

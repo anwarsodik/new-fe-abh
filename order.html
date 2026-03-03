@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pesan Unit — Bale Hinggil Stay</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="components.js"></script>
+  <script src="units-data.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display','Georgia','serif'],
+            sans:  ['Inter','system-ui','sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    /* ── Form inputs ── */
+    .form-input {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: .875rem;
+      padding: .85rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .875rem;
+      color: #111827;
+      background: #fff;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+    .form-input:focus {
+      border-color: #2E7D32;
+      box-shadow: 0 0 0 3px rgba(46,125,50,.1);
+    }
+    .form-input.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.08); }
+
+    .form-label {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: .5rem;
+    }
+    .form-hint { font-family:'Inter',sans-serif; font-size:.75rem; color:#9ca3af; margin-top:.35rem; }
+    .form-error { font-family:'Inter',sans-serif; font-size:.75rem; color:#ef4444; margin-top:.35rem; display:none; }
+
+    /* ── Section card ── */
+    .section-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: #111827;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* ── Step badge ── */
+    .step-num {
+      width: 2rem; height: 2rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: .8rem; font-weight: 700;
+      color: white;
+      background: #2E7D32;
+      flex-shrink: 0;
+    }
+
+
+    /* ── Order summary sticky ── */
+    @media(min-width:1024px) {
+      .order-summary { position: sticky; top: 96px; }
+    }
+
+    /* ── Unit photo ── */
+    .unit-photo {
+      width: 100%; height: 160px;
+      object-fit: cover;
+      border-radius: 1rem;
+      display: block;
+      background: #e5e7eb;
+    }
+
+    /* ── Price row ── */
+    .price-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Inter', sans-serif; font-size: .875rem;
+    }
+
+    /* ── Confirm button ── */
+    .btn-confirm {
+      background: #F97316;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: 1rem;
+      border-radius: .875rem;
+      width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      border: none; cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .btn-confirm:hover { background: #C2410C; }
+    .btn-confirm:active { transform: scale(.98); }
+
+    /* ── Breadcrumb ── */
+    .bc-sep::before { content:'/'; margin:0 .4rem; color:#9CA3AF; }
+
+  </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-900">
+
+<!-- NAVBAR -->
+<div id="navbar-placeholder"></div>
+
+
+
+
+<!-- ═══ MAIN ═══ -->
+<main class="pt-[68px]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Breadcrumb -->
+    <nav class="flex items-center flex-wrap text-xs font-sans text-gray-400 mb-6">
+      <a href="index.html" class="hover:text-gray-700 transition-colors">Home</a>
+      <span class="bc-sep"></span>
+      <a href="rooms.html" class="hover:text-gray-700 transition-colors">Rooms</a>
+      <span class="bc-sep"></span>
+      <a id="bc-unit-link" href="#" class="hover:text-gray-700 transition-colors">Unit —</a>
+      <span class="bc-sep"></span>
+      <span class="text-gray-700 font-medium">Pesan</span>
+    </nav>
+
+    <div class="flex flex-col lg:flex-row gap-8 items-start">
+
+      <!-- ─────────── LEFT: FORMS ─────────── -->
+      <div class="flex-1 min-w-0 space-y-6">
+
+        <!-- Step 1: Booking Details -->
+        <div class="section-card">
+          <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+            <div class="step-num">1</div>
+            <h2 class="font-serif text-xl text-gray-900">Detail Booking</h2>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="form-label">Check-in</label>
+              <input type="date" id="f-checkin" class="form-input" />
+            </div>
+            <div>
+              <label class="form-label">Check-out</label>
+              <input type="date" id="f-checkout" class="form-input" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="form-label">Jumlah Tamu</label>
+              <div class="flex items-center gap-3 border border-gray-200 rounded-[.875rem] px-4 py-3" style="border-width:1.5px">
+                <button type="button" onclick="changeGuest(-1)"
+                        class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0"
+                        style="background:#e8f5e9;color:#2E7D32">−</button>
+                <span id="guest-display" class="flex-1 text-center font-sans font-semibold text-gray-800">1</span>
+                <button type="button" onclick="changeGuest(1)"
+                        class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg text-white flex-shrink-0"
+                        style="background:#2E7D32">+</button>
+              </div>
+            </div>
+            <div>
+              <label class="form-label">Tipe Sewa</label>
+              <select id="f-rent-type" class="form-input" onchange="recalc()">
+                <option value="harian">Harian</option>
+                <option value="bulanan" selected>Bulanan</option>
+                <option value="tahunan">Tahunan</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Step 2: Personal Info -->
+        <div class="section-card">
+          <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+            <div class="step-num">2</div>
+            <h2 class="font-serif text-xl text-gray-900">Data Pemesan</h2>
+          </div>
+
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="form-label">Nama Lengkap <span class="text-red-500">*</span></label>
+                <input type="text" id="f-name" class="form-input" placeholder="Masukkan nama lengkap" />
+                <p class="form-error" id="err-name">Nama lengkap wajib diisi</p>
+              </div>
+              <div>
+                <label class="form-label">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                <div class="relative">
+                  <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-sans text-sm text-gray-400 font-medium">+62</span>
+                  <input type="tel" id="f-phone" class="form-input" style="padding-left:3rem" placeholder="812-3456-7890" />
+                </div>
+                <p class="form-error" id="err-phone">Nomor WhatsApp wajib diisi</p>
+              </div>
+            </div>
+            <div>
+              <label class="form-label">Email</label>
+              <input type="email" id="f-email" class="form-input" placeholder="nama@email.com" />
+              <p class="form-hint">Opsional — untuk pengiriman invoice</p>
+            </div>
+            <div>
+              <label class="form-label">KTP / Identitas <span class="text-red-500">*</span></label>
+              <input type="text" id="f-ktp" class="form-input" placeholder="Nomor KTP 16 digit" maxlength="16" />
+              <p class="form-error" id="err-ktp">Nomor KTP wajib diisi</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Step 3: Notes -->
+        <div class="section-card">
+          <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+            <div class="step-num">3</div>
+            <h2 class="font-serif text-xl text-gray-900">Catatan Tambahan</h2>
+          </div>
+          <textarea id="f-notes" class="form-input" rows="4"
+                    style="resize:vertical;min-height:100px"
+                    placeholder="Contoh: Butuh parkir motor, tiba sekitar pukul 15:00, atau permintaan khusus lainnya..."></textarea>
+          <p class="form-hint">Opsional — kami akan berusaha mengakomodasi permintaan Anda</p>
+        </div>
+
+
+        <!-- Terms -->
+        <div class="flex items-start gap-3 px-1">
+          <input type="checkbox" id="f-agree" class="mt-0.5 flex-shrink-0 w-4 h-4 rounded" style="accent-color:#2E7D32" />
+          <label for="f-agree" class="font-sans text-sm text-gray-600 leading-relaxed cursor-pointer">
+            Saya menyetujui
+            <a href="#" class="font-semibold hover:underline" style="color:#2E7D32">Syarat & Ketentuan</a>
+            serta
+            <a href="#" class="font-semibold hover:underline" style="color:#2E7D32">Kebijakan Privasi</a>
+            Bale Hinggil Stay.
+          </label>
+        </div>
+        <p class="form-error px-1" id="err-agree">Anda harus menyetujui syarat & ketentuan</p>
+
+        <!-- Mobile submit -->
+        <div class="lg:hidden">
+          <button type="button" onclick="submitOrder()" class="btn-confirm">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="white">
+              <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm7.27 19.555c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z"/>
+            </svg>
+            Konfirmasi Pesanan
+          </button>
+        </div>
+
+      </div>
+      <!-- end LEFT -->
+
+
+      <!-- ─────────── RIGHT: ORDER SUMMARY ─────────── -->
+      <aside class="w-full lg:w-80 xl:w-96 flex-shrink-0">
+        <div class="order-summary space-y-4">
+
+          <!-- Unit card -->
+          <div class="section-card">
+            <h3 class="font-serif text-lg text-gray-900 mb-4 pb-3 border-b border-gray-100">Ringkasan Pesanan</h3>
+
+            <!-- Unit photo -->
+            <img id="summary-photo" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                 alt="" class="unit-photo mb-4" />
+
+            <!-- Unit info -->
+            <div class="mb-4">
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <p id="summary-unit-id" class="font-serif text-lg text-gray-900">Unit —</p>
+                <span id="summary-status" class="font-sans text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0" style="background:#dcfce7;color:#166534">Tersedia</span>
+              </div>
+              <p id="summary-location" class="font-sans text-sm text-gray-400 mb-3">Tower A · Lt. 3</p>
+
+              <!-- Spec chips -->
+              <div id="summary-specs" class="flex flex-wrap gap-1.5"></div>
+            </div>
+
+            <hr class="border-gray-100 mb-4" />
+
+            <!-- Booking dates summary -->
+            <div class="space-y-2.5 mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#f1f5f9">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div>
+                  <p class="font-sans text-xs text-gray-400">Check-in</p>
+                  <p id="summary-checkin" class="font-sans text-sm font-semibold text-gray-800">—</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#f1f5f9">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div>
+                  <p class="font-sans text-xs text-gray-400">Check-out</p>
+                  <p id="summary-checkout" class="font-sans text-sm font-semibold text-gray-800">—</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#f1f5f9">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div>
+                  <p class="font-sans text-xs text-gray-400">Tamu</p>
+                  <p id="summary-guests" class="font-sans text-sm font-semibold text-gray-800">1 Orang</p>
+                </div>
+              </div>
+            </div>
+
+            <hr class="border-gray-100 mb-4" />
+
+            <!-- Price breakdown -->
+            <div class="space-y-2 mb-5">
+              <div class="price-row">
+                <span id="nights-label" class="text-gray-500">1 malam</span>
+                <span id="nights-sub" class="font-medium text-gray-800">Rp 500.000</span>
+              </div>
+              <div class="price-row">
+                <span class="text-gray-500">Biaya layanan</span>
+                <span class="font-medium text-gray-800">Rp 50.000</span>
+              </div>
+
+              <div class="border-t border-dashed border-gray-200 pt-2 price-row">
+                <span class="font-bold text-gray-900" style="font-size:.95rem">Total</span>
+                <span id="total-price" class="font-bold text-lg" style="color:#2E7D32">Rp 550.000</span>
+              </div>
+            </div>
+
+            <!-- Submit button (desktop) -->
+            <button type="button" onclick="submitOrder()" class="btn-confirm hidden lg:flex">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="white">
+                <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm7.27 19.555c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z"/>
+              </svg>
+              Konfirmasi Pesanan
+            </button>
+
+            <!-- Trust badges -->
+            <div class="mt-4 space-y-2">
+              <div class="flex items-center gap-2 font-sans text-xs text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Booking aman & terpercaya
+              </div>
+              <div class="flex items-center gap-2 font-sans text-xs text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Respon admin &lt; 5 menit via WA
+              </div>
+            </div>
+          </div>
+
+          <!-- Need help? -->
+          <div class="rounded-2xl p-4 flex items-center gap-3" style="background:#f0fdf4;border:1px solid #bbf7d0">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#2E7D32">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="white">
+                <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm7.27 19.555c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-sans text-sm font-semibold text-gray-800">Butuh bantuan?</p>
+              <a href="https://wa.me/6281234567890" target="_blank"
+                 class="font-sans text-xs font-semibold hover:underline" style="color:#2E7D32">
+                Chat WhatsApp →
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+      <!-- end RIGHT -->
+
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<div id="footer-placeholder"></div>
+
+
+<!-- ═══════════════════════════════
+     JAVASCRIPT
+════════════════════════════════ -->
+<script>
+  /* ── Components ── */
+  renderNavbar('rooms');
+  renderFooter();
+
+  /* ── Read URL params ── */
+  var params   = new URLSearchParams(location.search);
+  var unitId   = params.get('id')       || (UNITS[0] && UNITS[0].id);
+  var checkin  = params.get('checkin')  || '';
+  var checkout = params.get('checkout') || '';
+  var guests   = parseInt(params.get('guests') || '1', 10);
+
+  var unit = getUnitById(unitId) || UNITS[0];
+
+  var guestCount = guests;
+  var unitPrice  = unit ? unit.price : 500000;
+
+  /* ── Init ── */
+  if (unit) initPage(unit);
+  else {
+    document.querySelector('main').innerHTML =
+      '<div style="display:flex;flex-direction:column;align-items:center;padding:6rem 1rem;text-align:center">' +
+      '<p style="font-family:Playfair Display,serif;font-size:1.5rem;color:#6b7280;margin-bottom:1rem">Unit tidak ditemukan</p>' +
+      '<a href="rooms.html" style="background:#2E7D32;color:white;font-family:Inter,sans-serif;font-size:.875rem;font-weight:700;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none">Kembali ke Rooms</a>' +
+      '</div>';
+  }
+
+  function initPage(u) {
+    unitPrice  = u.price;
+    guestCount = Math.min(guests, u.capacity);
+
+    /* breadcrumb */
+    var bcLink = document.getElementById('bc-unit-link');
+    bcLink.textContent = 'Unit ' + u.id;
+    bcLink.href = 'room-detail.html?id=' + encodeURIComponent(u.id);
+
+    /* photo */
+    if (u.images && u.images[0]) {
+      document.getElementById('summary-photo').src = u.images[0];
+    }
+
+    /* unit info */
+    document.getElementById('summary-unit-id').textContent  = 'Unit ' + u.id;
+    document.getElementById('summary-location').textContent = 'Tower ' + u.tower + ' · Lt. ' + u.floor + ' · Surabaya Timur';
+
+    var sb = document.getElementById('summary-status');
+    sb.textContent = STATUS_LABEL[u.status] || u.status;
+    var bColors = { available:'background:#dcfce7;color:#166534', monthly:'background:#dbeafe;color:#1e40af', daily:'background:#fef9c3;color:#854d0e', yearly:'background:#ede9fe;color:#5b21b6' };
+    sb.setAttribute('style', (bColors[u.status] || 'background:#f3f4f6;color:#374151') + ';font-family:Inter,sans-serif;font-size:.7rem;font-weight:700;padding:.2rem .7rem;border-radius:100px');
+
+    /* spec chips */
+    var specChips = [u.type, u.view, u.interior, u.capacity + ' Orang'];
+    document.getElementById('summary-specs').innerHTML = specChips.map(function(s) {
+      return '<span style="display:inline-flex;align-items:center;font-family:Inter,sans-serif;font-size:.7rem;font-weight:500;color:#6b7280;background:#f1f5f9;padding:.25rem .65rem;border-radius:100px">' + s + '</span>';
+    }).join('');
+
+    /* dates */
+    var fmt = function(d) { return d.toISOString().split('T')[0]; };
+    var today    = new Date();
+    var tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    var ci = document.getElementById('f-checkin');
+    var co = document.getElementById('f-checkout');
+    ci.value = checkin  || fmt(today);
+    co.value = checkout || fmt(tomorrow);
+    ci.min   = fmt(today);
+
+    /* guests */
+    document.getElementById('guest-display').textContent = guestCount;
+
+    /* rent type */
+    var rt = document.getElementById('f-rent-type');
+    if (u.status === 'daily')   rt.value = 'harian';
+    if (u.status === 'monthly') rt.value = 'bulanan';
+    if (u.status === 'yearly')  rt.value = 'tahunan';
+
+    /* live updates */
+    ci.addEventListener('change', syncDates);
+    co.addEventListener('change', recalc);
+    rt.addEventListener('change', recalc);
+
+    syncDates();
+  }
+
+  function syncDates() {
+    var ci = document.getElementById('f-checkin');
+    var co = document.getElementById('f-checkout');
+    var fmt = function(d) { return d.toISOString().split('T')[0]; };
+    if (!ci.value) return;
+    var d = new Date(ci.value);
+    var rt = document.getElementById('f-rent-type').value;
+    if (rt === 'bulanan')     d.setMonth(d.getMonth() + 1);
+    else if (rt === 'tahunan') d.setFullYear(d.getFullYear() + 1);
+    else                       d.setDate(d.getDate() + 1);
+    if (!co.value || new Date(co.value) <= new Date(ci.value)) co.value = fmt(d);
+    recalc();
+  }
+
+  function recalc() {
+    var ci  = document.getElementById('f-checkin').value;
+    var co  = document.getElementById('f-checkout').value;
+    if (!ci || !co) return;
+
+    var nights = Math.max(1, Math.round((new Date(co) - new Date(ci)) / 86400000));
+    var sub    = unitPrice * nights;
+    var svc    = 50000;
+    var total  = sub + svc;
+
+    /* format display */
+    var diSrc = function(n) { return 'Rp ' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+    document.getElementById('nights-label').textContent = nights + ' malam × ' + diSrc(unitPrice);
+    document.getElementById('nights-sub').textContent   = diSrc(sub);
+    document.getElementById('total-price').textContent  = diSrc(total);
+
+    /* summary dates */
+    var fmtDisplay = function(str) {
+      if (!str) return '—';
+      var d = new Date(str + 'T00:00:00');
+      return d.toLocaleDateString('id-ID', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+    };
+    document.getElementById('summary-checkin').textContent  = fmtDisplay(ci);
+    document.getElementById('summary-checkout').textContent = fmtDisplay(co);
+    document.getElementById('summary-guests').textContent   = guestCount + ' Orang';
+  }
+
+  /* ── Guest counter ── */
+  function changeGuest(dir) {
+    var maxCap = unit ? unit.capacity : 10;
+    guestCount = Math.max(1, Math.min(maxCap, guestCount + dir));
+    document.getElementById('guest-display').textContent   = guestCount;
+    document.getElementById('summary-guests').textContent  = guestCount + ' Orang';
+  }
+
+
+  /* ── Validation & Submit ── */
+  function validate() {
+    var ok = true;
+    var fields = [
+      { id:'f-name',  err:'err-name',  check: function(v) { return v.trim().length >= 2; } },
+      { id:'f-phone', err:'err-phone', check: function(v) { return v.replace(/\D/g,'').length >= 9; } },
+      { id:'f-ktp',   err:'err-ktp',   check: function(v) { return v.replace(/\D/g,'').length >= 10; } },
+    ];
+
+    fields.forEach(function(f) {
+      var input = document.getElementById(f.id);
+      var errEl = document.getElementById(f.err);
+      if (!f.check(input.value)) {
+        input.classList.add('error');
+        errEl.style.display = 'block';
+        ok = false;
+      } else {
+        input.classList.remove('error');
+        errEl.style.display = 'none';
+      }
+    });
+
+    var agree    = document.getElementById('f-agree');
+    var errAgree = document.getElementById('err-agree');
+    if (!agree.checked) {
+      errAgree.style.display = 'block';
+      ok = false;
+    } else {
+      errAgree.style.display = 'none';
+    }
+
+    return ok;
+  }
+
+  function submitOrder() {
+    if (!validate()) {
+      var firstErr = document.querySelector('.form-input.error');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var ci    = document.getElementById('f-checkin').value;
+    var co    = document.getElementById('f-checkout').value;
+    var p     = new URLSearchParams({
+      id:       unitId,
+      checkin:  ci,
+      checkout: co,
+      guests:   guestCount,
+      name:     document.getElementById('f-name').value.trim(),
+      phone:    document.getElementById('f-phone').value.trim(),
+      email:    document.getElementById('f-email').value.trim(),
+      ktp:      document.getElementById('f-ktp').value.trim(),
+      notes:    document.getElementById('f-notes').value.trim(),
+    });
+    location.href = 'payment.html?' + p.toString();
+  }
+
+  lucide.createIcons();
+</script>
+
+</body>
+</html>
