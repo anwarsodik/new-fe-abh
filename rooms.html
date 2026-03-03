@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <script src="components.js"></script>
@@ -28,163 +31,6 @@
     };
   </script>
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, sans-serif; color: #111827; }
-    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
-
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #2E7D32; border-radius: 3px; }
-
-    .nav-scrolled { background: rgba(255,255,255,0.97) !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08) !important; }
-    #mobile-menu { transition: max-height .35s ease, opacity .35s ease; max-height: 0; opacity: 0; overflow: hidden; }
-    #mobile-menu.open { max-height: 400px; opacity: 1; }
-
-    /* ── Unit card ── */
-    .unit-card { transition: transform .3s ease, box-shadow .3s ease; }
-    .unit-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(46,125,50,.13); }
-
-    /* ── Status badges ── */
-    .badge-available { background: #dcfce7; color: #15803d; }
-    .badge-monthly   { background: #dbeafe; color: #1d4ed8; }
-    .badge-daily     { background: #fef9c3; color: #a16207; }
-    .badge-yearly    { background: #f3e8ff; color: #7e22ce; }
-
-    /* ── Image slider ── */
-    .img-slider { position: relative; overflow: hidden; }
-    .img-track {
-      display: flex; height: 200px;
-      transition: transform .45s cubic-bezier(.25,.46,.45,.94);
-      will-change: transform;
-    }
-    .img-slide { flex: 0 0 100%; height: 200px; background-size: cover; background-position: center; }
-    .img-nav {
-      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
-      width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.85);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; opacity: 0; transition: opacity .2s; border: none;
-    }
-    .img-slider:hover .img-nav { opacity: 1; }
-    .img-nav-prev { left: 8px; }
-    .img-nav-next { right: 8px; }
-
-    /* ── Sort select ── */
-    select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      padding-right: 32px;
-    }
-
-    /* ══════════════════════════════
-       FILTER SIDEBAR
-    ══════════════════════════════ */
-    .filter-card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 1.25rem;
-      overflow: hidden;
-    }
-
-    .fsec-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: .875rem 1.25rem;
-      cursor: pointer; user-select: none;
-      transition: background .15s;
-    }
-    .fsec-head:hover { background: #f9fafb; }
-
-    .fsec-body {
-      padding: .5rem 1.25rem .875rem;
-      border-top: 1px solid #f3f4f6;
-    }
-
-    .fsec-icon { transition: transform .25s ease; flex-shrink: 0; }
-    .fsec-icon.rotated { transform: rotate(180deg); }
-
-    /* Custom checkbox row */
-    .fcheck-row {
-      display: flex; align-items: center; gap: .625rem;
-      padding: .35rem 0;
-      cursor: pointer;
-    }
-    .fcheck-row:hover .fcheck-box { border-color: #2E7D32; }
-
-    .fcheck-row input[type="checkbox"] {
-      position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;
-    }
-
-    .fcheck-box {
-      width: 1.125rem; height: 1.125rem; flex-shrink: 0;
-      border: 2px solid #d1d5db; border-radius: .3rem;
-      background: white;
-      display: flex; align-items: center; justify-content: center;
-      transition: background .15s, border-color .15s;
-    }
-
-    .fcheck-row input[type="checkbox"]:checked ~ .fcheck-box {
-      background: #2E7D32; border-color: #2E7D32;
-    }
-    .fcheck-row input[type="checkbox"]:checked ~ .fcheck-box::after {
-      content: '';
-      display: block;
-      width: 5px; height: 8px;
-      border: 2px solid white;
-      border-top: none; border-left: none;
-      transform: rotate(45deg) translate(-0.5px, -1px);
-    }
-
-    .fcheck-label {
-      font-family: 'Inter', sans-serif;
-      font-size: .875rem;
-      color: #4b5563;
-      transition: color .15s;
-    }
-    .fcheck-row:has(input:checked) .fcheck-label { color: #2E7D32; font-weight: 600; }
-
-    /* ── Active filter chips ── */
-    .chip {
-      display: inline-flex; align-items: center; gap: .3rem;
-      font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 600;
-      color: #2E7D32; background: #e8f5e9; border: 1px solid #a5d6a7;
-      padding: .3rem .65rem; border-radius: 100px;
-      cursor: pointer; transition: background .15s;
-      white-space: nowrap;
-    }
-    .chip:hover { background: #c8e6c9; }
-
-    /* ══════════════════════════════
-       MOBILE FILTER DRAWER
-    ══════════════════════════════ */
-    #filter-overlay {
-      display: none; position: fixed; inset: 0; z-index: 300;
-      background: rgba(0,0,0,.45); backdrop-filter: blur(3px);
-    }
-    #filter-overlay.open { display: block; }
-
-    #filter-drawer {
-      position: fixed; top: 0; left: 0; bottom: 0;
-      width: min(300px, 85vw);
-      background: white; z-index: 301;
-      overflow-y: auto;
-      transform: translateX(-100%);
-      transition: transform .3s cubic-bezier(.4,0,.2,1);
-      box-shadow: 6px 0 32px rgba(0,0,0,.18);
-    }
-    #filter-overlay.open #filter-drawer { transform: translateX(0); }
-
-    .mobile-fsec-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: .75rem 0;
-      cursor: pointer; user-select: none;
-      border-bottom: 1px solid #f3f4f6;
-    }
-    .mobile-fsec-icon { transition: transform .25s ease; }
-    .mobile-fsec-icon.rotated { transform: rotate(180deg); }
-    .mobile-fsec-body { padding: .5rem 0 .75rem; border-bottom: 1px solid #f3f4f6; }
-  </style>
 </head>
 
 <body class="bg-gray-50 antialiased">
@@ -612,7 +458,6 @@
         '</div>' +
         '<div class="flex items-center gap-2">' +
           '<a href="room-detail.html?id=' + unit.id + '" onclick="event.stopPropagation()" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans text-sm font-semibold text-white transition-all hover:opacity-90" style="background:#2E7D32">Select Room</a>' +
-          '<a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20tanya%20unit%20' + unit.id + '" target="_blank" onclick="event.stopPropagation()" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-sans text-sm font-semibold border-2 transition-all hover:bg-gray-50" style="color:#2E7D32;border-color:#2E7D32"><i data-lucide="message-circle" class="w-4 h-4"></i>Tanya</a>' +
         '</div>' +
       '</div>' +
     '</article>';

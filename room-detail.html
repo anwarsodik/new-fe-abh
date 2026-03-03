@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Unit — Bale Hinggil Stay</title>
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,148 +28,6 @@
     };
   </script>
 
-  <style>
-    html { scroll-behavior: smooth; }
-
-    /* ── Gallery ── */
-    .g-slot { background: #e5e7eb; overflow: hidden; cursor: pointer; }
-    .g-slot img { width:100%; height:100%; object-fit:cover; transition: transform .4s ease; display:block; }
-    .g-slot:hover img { transform: scale(1.04); }
-
-    /* ── Sticky tabs ── */
-    #tab-nav {
-      position: sticky;
-      top: 68px;
-      z-index: 40;
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .tab-item {
-      font-family: 'Inter', sans-serif;
-      font-size: .875rem;
-      font-weight: 600;
-      color: #6b7280;
-      padding: .875rem 1rem;
-      border-bottom: 3px solid transparent;
-      cursor: pointer;
-      transition: color .2s, border-color .2s;
-      white-space: nowrap;
-    }
-    .tab-item.active, .tab-item:hover {
-      color: #2E7D32;
-      border-bottom-color: #2E7D32;
-    }
-
-    /* ── Spec card ── */
-    .spec-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 1rem;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .4rem;
-      text-align: center;
-    }
-    .spec-icon {
-      width: 2.5rem; height: 2.5rem;
-      border-radius: .75rem;
-      display: flex; align-items: center; justify-content: center;
-      background: #e8f5e9;
-    }
-
-    /* ── Facility pill ── */
-    .fac-pill {
-      display: inline-flex; align-items: center; gap: .4rem;
-      background: #e8f5e9; color: #2E7D32;
-      font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 600;
-      padding: .45rem .9rem; border-radius: 100px;
-    }
-
-    /* ── Review card ── */
-    .review-card {
-      background: #fff;
-      border: 1px solid #f1f5f9;
-      border-radius: 1.25rem;
-      padding: 1.25rem;
-      box-shadow: 0 1px 4px rgba(0,0,0,.04);
-    }
-
-    /* ── Rating bar ── */
-    .bar-track { background:#e5e7eb; border-radius:100px; height:8px; overflow:hidden; }
-    .bar-fill  { background:#2E7D32; border-radius:100px; height:8px; }
-    .star-fill  { color:#FBBF24; fill:#FBBF24; }
-    .star-empty { color:#E5E7EB; fill:#E5E7EB; }
-
-    /* ── Lightbox ── */
-    #lightbox {
-      display: none; position: fixed; inset: 0; z-index: 9999;
-      background: rgba(0,0,0,.92);
-      align-items: center; justify-content: center;
-    }
-    #lightbox.open { display: flex; }
-    #lb-img { max-width:90vw; max-height:88vh; object-fit:contain; border-radius:1rem; }
-    .lb-btn {
-      position: absolute; background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.2); backdrop-filter: blur(8px);
-      color: white; border-radius: 50%;
-      width: 48px; height: 48px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background .2s;
-    }
-    .lb-btn:hover { background: rgba(255,255,255,.28); }
-    #lb-prev { top:50%; left:16px;  transform:translateY(-50%); }
-    #lb-next { top:50%; right:16px; transform:translateY(-50%); }
-    #lb-close{ top:16px; right:16px; }
-    #lb-counter {
-      position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
-      background:rgba(0,0,0,.5); color:white;
-      font-family:'Inter',sans-serif; font-size:13px;
-      padding:4px 14px; border-radius:100px;
-    }
-
-    /* ── Share sheet ── */
-    #share-sheet {
-      display:none; position:fixed; inset:0; z-index:800;
-      align-items:flex-end; justify-content:center;
-    }
-    #share-sheet.open { display:flex; }
-    #share-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.4); backdrop-filter:blur(4px); }
-    #share-panel {
-      position:relative; z-index:1;
-      background:white; border-radius:1.5rem 1.5rem 0 0;
-      padding:2rem 1.5rem 2.5rem; width:100%; max-width:480px;
-    }
-    @media(min-width:640px){
-      #share-sheet{align-items:center;}
-      #share-panel{border-radius:1.5rem;margin:1rem;}
-    }
-
-    /* ── Sticky sidebar ── */
-    @media(min-width:1024px){
-      .booking-sidebar { position:sticky; top:120px; }
-    }
-
-    /* ── Mobile gallery slider ── */
-    #mob-slider-track { display:flex; height:100%; transition:transform .3s ease; will-change:transform; }
-    #mob-slider-track > div { flex-shrink:0; width:100%; height:100%; }
-    #mob-slider-track img { width:100%; height:100%; object-fit:cover; display:block; }
-
-    /* ── Breadcrumb ── */
-    .bc-sep::before { content:'/'; margin:0 .4rem; color:#9CA3AF; }
-
-  /* ── Price section ── */
-  #price-bar { border-bottom: 1px solid #e5e7eb; }
-
-  /* ── Select Room button ── */
-  .btn-select-room {
-    background: #F97316;
-    transition: background .2s ease, transform .15s ease;
-  }
-  .btn-select-room:hover { background: #C2410C; }
-  .btn-select-room:active { transform: scale(.97); }
-  </style>
 </head>
 <body class="bg-white text-gray-900 font-sans">
 
@@ -671,8 +532,8 @@
     /* Mobile slider */
     var track = document.getElementById('mob-slider-track');
     if (track) {
-      track.innerHTML = imgs.map(function(src) {
-        return '<div><img src="' + src + '" alt="" /></div>';
+      track.innerHTML = imgs.map(function(src, i) {
+        return '<div onclick="openLb(' + i + ')" style="cursor:pointer"><img src="' + src + '" alt="" /></div>';
       }).join('');
     }
     var ctr = document.getElementById('mob-counter');

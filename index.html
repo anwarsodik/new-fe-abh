@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -39,108 +42,6 @@
     };
   </script>
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, sans-serif; color: #111827; }
-    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
-    [id] { scroll-margin-top: 80px; }
-
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #2E7D32; border-radius: 3px; }
-
-    /* Navbar */
-    .nav-scrolled {
-      background: rgba(255,255,255,0.97) !important;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.08) !important;
-    }
-
-    /* Hero Slider */
-    .hero-slider {
-      position: relative;
-      overflow: hidden;
-      min-height: 100vh;
-    }
-
-    .hero-slide {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 1.2s ease-in-out;
-      will-change: opacity;
-      z-index: 0;
-    }
-    .hero-slide.active { opacity: 1; z-index: 1; }
-
-    .hero-slide::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(27,67,50,0.50) 0%, rgba(0,0,0,0.72) 100%);
-      z-index: 1;
-    }
-
-    .hero-slide-1 {
-      background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=85&auto=format&fit=crop');
-    }
-    .hero-slide-2 {
-      background-image: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&q=85&auto=format&fit=crop');
-    }
-
-
-    .slider-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      z-index: 20;
-      width: 44px; height: 44px;
-      border-radius: 9999px;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.25);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background .2s;
-    }
-    .slider-arrow:hover { background: rgba(255,255,255,0.28); }
-    .slider-arrow-prev { left: 20px; }
-    .slider-arrow-next { right: 20px; }
-
-    /* Booking tabs */
-    .tab-btn.active { background-color: #2E7D32; color: #fff; }
-    .tab-btn { transition: background-color .2s, color .2s; }
-
-    /* Card hover */
-    .card-lift { transition: transform .3s ease, box-shadow .3s ease; }
-    .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(27,67,50,.15); }
-
-    /* FAQ accordion */
-    .faq-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-    .faq-body.open { max-height: 400px; }
-    .faq-icon { transition: transform .3s ease; }
-    .faq-icon.rotated { transform: rotate(45deg); }
-
-    .promo-badge { background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%); }
-
-    .featured-bg {
-      background-image:
-        linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(27,67,50,0.80) 60%, transparent 100%),
-        url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1400&q=85&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .divider { width: 56px; height: 3px; background: #2E7D32; border-radius: 2px; }
-
-    @keyframes pulse-ring {
-      0%   { box-shadow: 0 0 0 0 rgba(27,67,50,.5); }
-      70%  { box-shadow: 0 0 0 12px rgba(27,67,50,0); }
-      100% { box-shadow: 0 0 0 0 rgba(27,67,50,0); }
-    }
-    .wa-pulse { animation: pulse-ring 2s infinite; }
-
-    #mobile-menu { transition: max-height .35s ease, opacity .35s ease; max-height: 0; opacity: 0; overflow: hidden; }
-    #mobile-menu.open { max-height: 400px; opacity: 1; }
-  </style>
 </head>
 
 <body class="bg-white antialiased">
@@ -464,7 +365,6 @@
 
     </div>
     <!-- hide scrollbar for webkit -->
-    <style>#promo-track::-webkit-scrollbar { display: none; }</style>
   </div>
 
   <div class="max-w-7xl mx-auto px-4 mt-8 text-center">
