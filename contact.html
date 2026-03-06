@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontak Kami – Bale Hinggil Stay</title>
+    <meta name="description"
+        content="Hubungi tim Bale Hinggil Stay untuk pertanyaan seputar unit, reservasi, dan layanan kami. Kami siap membantu Anda 24 jam." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="components.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        /* Contact form focus ring */
+        .contact-input:focus {
+            border-color: #2E7D32;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, .1);
+        }
+
+        /* Info card hover */
+        .info-card {
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(27, 67, 50, .12);
+        }
+
+        /* Map iframe style */
+        .map-frame {
+            filter: grayscale(20%) contrast(1.05);
+        }
+
+        /* Toast notification */
+        #toast {
+            transition: opacity .4s ease, transform .4s ease;
+        }
+
+        #toast.show {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 antialiased">
+
+    <div id="navbar-placeholder"></div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+     PAGE HEADER
+════════════════════════════════════════════════════════ -->
+    <section class="relative pt-32 pb-20 px-4 overflow-hidden" style="min-height:300px">
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1600&q=85&auto=format&fit=crop"
+            alt="Bale Hinggil Stay" class="absolute inset-0 w-full h-full object-cover object-center" />
+        <div class="absolute inset-0"
+            style="background: linear-gradient(to right, rgba(27,67,50,0.92) 0%, rgba(46,125,50,0.75) 60%, rgba(0,0,0,0.5) 100%)">
+        </div>
+
+        <!-- Decorative circles -->
+        <div class="absolute -top-16 -left-16 w-64 h-64 rounded-full opacity-5 pointer-events-none"
+            style="background:#fff"></div>
+        <div class="absolute bottom-0 right-20 w-48 h-48 rounded-full opacity-5 pointer-events-none"
+            style="background:#fff"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <!-- Breadcrumb -->
+            <div class="flex items-center gap-2 mb-6">
+                <a href="index.html"
+                    class="font-sans text-sm text-white/60 hover:text-white transition-colors flex items-center gap-1.5">
+                    <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
+                </a>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-white/40"></i>
+                <span class="font-sans text-sm text-white/90">Kontak Kami</span>
+            </div>
+
+            <p class="font-sans text-white/60 text-xs font-semibold uppercase tracking-widest mb-3">Hubungi Kami</p>
+            <h1 class="font-serif text-white mb-4"
+                style="font-size:clamp(2.2rem,5vw,3.5rem); text-shadow:0 2px 16px rgba(0,0,0,0.3)">
+                Kami Siap Membantu<br />
+                <em class="not-italic" style="color:#a5d6a7">Kapan Saja</em>
+            </h1>
+            <p class="font-sans text-white/75 max-w-lg leading-relaxed">
+                Ada pertanyaan atau ingin reservasi? Hubungi tim kami melalui berbagai saluran yang tersedia — kami siap
+                melayani 24/7.
+            </p>
+
+            <!-- Quick stats -->
+            <div class="mt-10 flex flex-wrap gap-x-10 gap-y-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style="background:rgba(255,255,255,0.15)">
+                        <i data-lucide="clock" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div>
+                        <p class="font-serif text-white text-lg leading-none">24/7</p>
+                        <p class="font-sans text-white/60 text-xs mt-0.5">Layanan Aktif</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style="background:rgba(255,255,255,0.15)">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div>
+                        <p class="font-serif text-white text-lg leading-none">&lt; 1 Jam</p>
+                        <p class="font-sans text-white/60 text-xs mt-0.5">Rata-rata Respons</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style="background:rgba(255,255,255,0.15)">
+                        <i data-lucide="star" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div>
+                        <p class="font-serif text-white text-lg leading-none">4.9★</p>
+                        <p class="font-sans text-white/60 text-xs mt-0.5">Rating Layanan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+     CONTACT INFO CARDS
+════════════════════════════════════════════════════════ -->
+    <section class="relative z-20 -mt-8 px-4 mb-0">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/6281234567890?text=Halo%20Bale%20Hinggil%20Stay%2C%20saya%20ingin%20bertanya."
+                    target="_blank" rel="noopener noreferrer"
+                    class="info-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg flex flex-col gap-4 group cursor-pointer">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style="background:#e8f5e9">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-6 h-6" fill="#2E7D32">
+                            <path
+                                d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.477 2.027 7.788L0 32l8.418-2.007A15.934 15.934 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.77-1.853l-.486-.29-5.002 1.193 1.234-4.87-.317-.5A13.267 13.267 0 0 1 2.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.778c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.63-.199-.896.199-.265.398-1.029 1.295-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.978-1.183-1.057-1.982-2.362-2.214-2.76-.232-.398-.025-.613.175-.811.179-.178.398-.465.597-.698.199-.232.265-.398.398-.663.133-.266.066-.499-.033-.698-.1-.199-.896-2.161-1.228-2.96-.323-.778-.651-.673-.896-.686l-.763-.013c-.265 0-.696.1-1.061.499-.365.398-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.118c.199.265 2.809 4.287 6.808 6.015.951.41 1.694.655 2.272.839.955.304 1.824.261 2.511.158.766-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.465z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-1" style="color:#2E7D32">
+                            WhatsApp</p>
+                        <p class="font-serif text-gray-900 text-lg leading-tight">+62 812-3456-7890</p>
+                        <p class="font-sans text-gray-500 text-xs mt-1.5">Respon cepat dalam hitungan menit</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 font-sans text-xs font-semibold mt-auto"
+                        style="color:#2E7D32">
+                        Chat Sekarang <i data-lucide="arrow-right"
+                            class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Phone -->
+                <a href="tel:+6231123456789"
+                    class="info-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg flex flex-col gap-4 group cursor-pointer">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style="background:#e8f5e9">
+                        <i data-lucide="phone" class="w-6 h-6" style="color:#2E7D32"></i>
+                    </div>
+                    <div>
+                        <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-1" style="color:#2E7D32">
+                            Telepon</p>
+                        <p class="font-serif text-gray-900 text-lg leading-tight">(031) 123-456-789</p>
+                        <p class="font-sans text-gray-500 text-xs mt-1.5">Senin–Minggu, 08.00–22.00 WIB</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 font-sans text-xs font-semibold mt-auto"
+                        style="color:#2E7D32">
+                        Hubungi <i data-lucide="arrow-right"
+                            class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:info@balehinggil.id"
+                    class="info-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg flex flex-col gap-4 group cursor-pointer">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style="background:#e8f5e9">
+                        <i data-lucide="mail" class="w-6 h-6" style="color:#2E7D32"></i>
+                    </div>
+                    <div>
+                        <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-1" style="color:#2E7D32">
+                            Email</p>
+                        <p class="font-serif text-gray-900 text-lg leading-tight">info@balehinggil.id</p>
+                        <p class="font-sans text-gray-500 text-xs mt-1.5">Balasan dalam 1×24 jam kerja</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 font-sans text-xs font-semibold mt-auto"
+                        style="color:#2E7D32">
+                        Kirim Email <i data-lucide="arrow-right"
+                            class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Location -->
+                <div class="info-card bg-white rounded-2xl p-6 border border-gray-100 shadow-lg flex flex-col gap-4 group cursor-pointer"
+                    onclick="document.getElementById('map-section').scrollIntoView({behavior:'smooth'})">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style="background:#e8f5e9">
+                        <i data-lucide="map-pin" class="w-6 h-6" style="color:#2E7D32"></i>
+                    </div>
+                    <div>
+                        <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-1" style="color:#2E7D32">
+                            Lokasi</p>
+                        <p class="font-serif text-gray-900 text-lg leading-tight">Jl. Raya Merr No. 1</p>
+                        <p class="font-sans text-gray-500 text-xs mt-1.5">Surabaya Timur, Jawa Timur 60298</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 font-sans text-xs font-semibold mt-auto"
+                        style="color:#2E7D32">
+                        Lihat Peta <i data-lucide="arrow-right"
+                            class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+     CONTACT FORM + SIDEBAR
+════════════════════════════════════════════════════════ -->
+    <section class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+                <!-- ── LEFT: Contact Form ── -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 sm:p-10">
+
+                        <!-- Header -->
+                        <div class="mb-8">
+                            <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-3"
+                                style="color:#2E7D32">Kirim Pesan</p>
+                            <h2 class="font-serif text-gray-900 mb-3" style="font-size:clamp(1.6rem,3vw,2.25rem)">Ada
+                                yang ingin Anda tanyakan?</h2>
+                            <div class="divider mb-4"></div>
+                            <p class="font-sans text-gray-500 text-sm leading-relaxed">
+                                Isi formulir di bawah ini dan tim kami akan segera menghubungi Anda. Biasanya kami
+                                merespons dalam waktu kurang dari 1 jam.
+                            </p>
+                        </div>
+
+                        <!-- Form -->
+                        <form id="contactForm" onsubmit="handleSubmit(event)" novalidate>
+
+                            <!-- Name + Phone -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                                <div>
+                                    <label class="form-label" for="nama">Nama Lengkap <span
+                                            style="color:#ef4444">*</span></label>
+                                    <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda"
+                                        class="contact-input form-input" autocomplete="name" />
+                                    <p class="form-error" id="nama-err">Nama wajib diisi</p>
+                                </div>
+                                <div>
+                                    <label class="form-label" for="telepon">No. Telepon / WhatsApp <span
+                                            style="color:#ef4444">*</span></label>
+                                    <input type="tel" id="telepon" name="telepon" placeholder="08xx-xxxx-xxxx"
+                                        class="contact-input form-input" autocomplete="tel" />
+                                    <p class="form-error" id="telepon-err">Nomor telepon wajib diisi</p>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-5">
+                                <label class="form-label" for="email">Alamat Email <span
+                                        style="color:#ef4444">*</span></label>
+                                <input type="email" id="email" name="email" placeholder="contoh@email.com"
+                                    class="contact-input form-input" autocomplete="email" />
+                                <p class="form-error" id="email-err">Email wajib diisi dengan format yang valid</p>
+                            </div>
+
+                            <!-- Topic -->
+                            <div class="mb-5">
+                                <label class="form-label" for="topik">Topik Pertanyaan <span
+                                        style="color:#ef4444">*</span></label>
+                                <select id="topik" name="topik" class="contact-input form-input">
+                                    <option value="">-- Pilih topik --</option>
+                                    <option value="reservasi">Reservasi & Ketersediaan Unit</option>
+                                    <option value="harga">Informasi Harga & Promo</option>
+                                    <option value="fasilitas">Fasilitas & Layanan</option>
+                                    <option value="pembayaran">Pembayaran & Invoice</option>
+                                    <option value="kerjasama">Kerjasama & Bisnis</option>
+                                    <option value="lainnya">Lainnya</option>
+                                </select>
+                                <p class="form-error" id="topik-err">Topik wajib dipilih</p>
+                            </div>
+
+                            <!-- Message -->
+                            <div class="mb-7">
+                                <label class="form-label" for="pesan">Pesan <span style="color:#ef4444">*</span></label>
+                                <textarea id="pesan" name="pesan" rows="5"
+                                    placeholder="Tuliskan pertanyaan atau kebutuhan Anda di sini..."
+                                    class="contact-input form-input resize-none"></textarea>
+                                <div class="flex items-center justify-between mt-1">
+                                    <p class="form-error inline" id="pesan-err">Pesan wajib diisi</p>
+                                    <p class="font-sans text-xs text-gray-400 ml-auto" id="char-count">0 / 500</p>
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <button type="submit" id="submitBtn"
+                                class="w-full flex items-center justify-center gap-2.5 py-4 rounded-2xl font-sans font-semibold text-white text-sm sm:text-base transition-all hover:opacity-90 hover:scale-[1.01] active:scale-95 shadow-md"
+                                style="background:#2E7D32">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                Kirim Pesan Sekarang
+                            </button>
+
+                            <p class="font-sans text-xs text-gray-400 flex items-center justify-center gap-1.5 mt-4">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5" style="color:#2E7D32"></i>
+                                Data Anda aman dan tidak akan dibagikan kepada pihak ketiga
+                            </p>
+
+                        </form>
+                    </div>
+                </div>
+
+
+                <!-- ── RIGHT: Sidebar ── -->
+                <div class="space-y-5">
+
+                    <!-- Office Hours -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                        <div class="flex items-center gap-2.5 mb-5">
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                                style="background:#e8f5e9">
+                                <i data-lucide="clock" class="w-4.5 h-4.5" style="color:#2E7D32"></i>
+                            </div>
+                            <h3 class="font-serif text-gray-900 text-base">Jam Operasional</h3>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-center justify-between">
+                                <span class="font-sans text-sm text-gray-600">Senin – Jumat</span>
+                                <span class="font-sans text-sm font-semibold text-gray-900">08.00 – 22.00</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span class="font-sans text-sm text-gray-600">Sabtu – Minggu</span>
+                                <span class="font-sans text-sm font-semibold text-gray-900">09.00 – 21.00</span>
+                            </li>
+                            <li class="pt-3 border-t border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full animate-pulse" style="background:#2E7D32"></div>
+                                    <span class="font-sans text-xs text-gray-500">WhatsApp aktif 24 jam setiap
+                                        hari</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                        <div class="flex items-center gap-2.5 mb-5">
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                                style="background:#e8f5e9">
+                                <i data-lucide="share-2" class="w-4.5 h-4.5" style="color:#2E7D32"></i>
+                            </div>
+                            <h3 class="font-serif text-gray-900 text-base">Ikuti Kami</h3>
+                        </div>
+                        <div class="space-y-2.5">
+                            <a href="#"
+                                class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
+                                <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                                    style="background:#2E7D32">
+                                    <i data-lucide="instagram" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <div>
+                                    <p
+                                        class="font-sans text-sm font-semibold text-gray-900 group-hover:text-green-800 transition-colors">
+                                        @balehinggil.stay</p>
+                                    <p class="font-sans text-xs text-gray-400">Instagram</p>
+                                </div>
+                                <i data-lucide="external-link"
+                                    class="w-3.5 h-3.5 text-gray-300 ml-auto group-hover:text-green-800 transition-colors"></i>
+                            </a>
+                            <a href="#"
+                                class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
+                                <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                                    style="background:#2E7D32">
+                                    <i data-lucide="facebook" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <div>
+                                    <p
+                                        class="font-sans text-sm font-semibold text-gray-900 group-hover:text-green-800 transition-colors">
+                                        Bale Hinggil Stay</p>
+                                    <p class="font-sans text-xs text-gray-400">Facebook</p>
+                                </div>
+                                <i data-lucide="external-link"
+                                    class="w-3.5 h-3.5 text-gray-300 ml-auto group-hover:text-green-800 transition-colors"></i>
+                            </a>
+                            <a href="#"
+                                class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
+                                <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                                    style="background:#2E7D32">
+                                    <i data-lucide="video" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <div>
+                                    <p
+                                        class="font-sans text-sm font-semibold text-gray-900 group-hover:text-green-800 transition-colors">
+                                        @balehinggil</p>
+                                    <p class="font-sans text-xs text-gray-400">TikTok</p>
+                                </div>
+                                <i data-lucide="external-link"
+                                    class="w-3.5 h-3.5 text-gray-300 ml-auto group-hover:text-green-800 transition-colors"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick CTA -->
+                    <div class="rounded-2xl p-6 text-white"
+                        style="background: linear-gradient(135deg, #2E7D32 0%, #388E3C 100%)">
+                        <i data-lucide="calendar-check" class="w-7 h-7 text-white/80 mb-4"></i>
+                        <h3 class="font-serif text-white text-xl mb-2">Ingin Reservasi Langsung?</h3>
+                        <p class="font-sans text-white/75 text-sm leading-relaxed mb-5">
+                            Cek ketersediaan unit dan pesan langsung tanpa perlu telepon atau email.
+                        </p>
+                        <a href="rooms.html"
+                            class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-sans text-sm font-semibold text-green-800 bg-white transition-all hover:bg-gray-50">
+                            Lihat Unit Tersedia <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+     MAP SECTION
+════════════════════════════════════════════════════════ -->
+    <section id="map-section" class="px-4 pb-20">
+        <div class="max-w-7xl mx-auto">
+
+            <div class="mb-10 text-center">
+                <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-3" style="color:#2E7D32">Temukan
+                    Kami</p>
+                <h2 class="font-serif text-gray-900 mb-4" style="font-size:clamp(1.75rem,4vw,2.75rem)">Lokasi Strategis
+                    di Surabaya Timur</h2>
+                <div class="divider mx-auto mb-5"></div>
+                <p class="font-sans text-gray-500 max-w-lg mx-auto leading-relaxed text-sm">
+                    Terletak di kawasan strategis dekat tol MERR, mall, dan fasilitas kesehatan terbaik di Surabaya.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+
+                <!-- Map embed -->
+                <div class="relative" style="height:420px">
+                    <iframe class="map-frame w-full h-full"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.7185862891636!2d112.73902507499177!3d-7.290855692717285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb9e0d3e5c79%3A0x1a3a2a3a4a5a6a7a!2sJl.%20Dr.%20Ir.%20H.%20Soekarno%2C%20Surabaya%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1709000000000!5m2!1sid!2sid"
+                        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <!-- Overlay pin label -->
+                    <div class="absolute bottom-5 left-5 bg-white rounded-2xl shadow-xl px-5 py-4 max-w-xs">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
+                                style="background:#2E7D32">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-serif text-gray-900 text-base leading-tight mb-1">Bale Hinggil Stay</p>
+                                <p class="font-sans text-gray-500 text-xs leading-relaxed">Jl. Raya Merr No. 1, Surabaya
+                                    Timur, 60298</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Access info bar -->
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gray-100 px-6 py-5">
+                    <div class="flex items-center gap-4 py-4 sm:py-0 sm:px-6 first:pl-0 last:pr-0">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                            style="background:#e8f5e9">
+                            <i data-lucide="navigation" class="w-5 h-5" style="color:#2E7D32"></i>
+                        </div>
+                        <div>
+                            <p class="font-sans text-xs font-semibold uppercase tracking-widest text-gray-400 mb-0.5">
+                                Tol MERR</p>
+                            <p class="font-serif text-gray-900 text-lg leading-none">7 Menit</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 py-4 sm:py-0 sm:px-6">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                            style="background:#e8f5e9">
+                            <i data-lucide="plane" class="w-5 h-5" style="color:#2E7D32"></i>
+                        </div>
+                        <div>
+                            <p class="font-sans text-xs font-semibold uppercase tracking-widest text-gray-400 mb-0.5">
+                                Bandara Juanda</p>
+                            <p class="font-serif text-gray-900 text-lg leading-none">15 Menit</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 py-4 sm:py-0 sm:px-6">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                            style="background:#e8f5e9">
+                            <i data-lucide="building-2" class="w-5 h-5" style="color:#2E7D32"></i>
+                        </div>
+                        <div>
+                            <p class="font-sans text-xs font-semibold uppercase tracking-widest text-gray-400 mb-0.5">
+                                Galaxy Mall</p>
+                            <p class="font-serif text-gray-900 text-lg leading-none">3 Menit</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Direction button -->
+            <div class="mt-5 text-center">
+                <a href="https://maps.google.com/?q=Jl+Raya+Merr+Surabaya+Timur" target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sans font-semibold text-sm text-white transition-all hover:opacity-90 hover:scale-[1.02] shadow-md"
+                    style="background:#2E7D32">
+                    <i data-lucide="navigation" class="w-4 h-4"></i>
+                    Buka di Google Maps
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+     FAQ MINI
+════════════════════════════════════════════════════════ -->
+    <section class="py-20 px-4" style="background:#F8F9FA">
+        <div class="max-w-3xl mx-auto">
+
+            <div class="mb-12 text-center">
+                <p class="font-sans text-xs font-semibold uppercase tracking-widest mb-3" style="color:#2E7D32">Ada
+                    Pertanyaan?</p>
+                <h2 class="font-serif text-gray-900 mb-4" style="font-size:clamp(1.75rem,4vw,2.75rem)">Pertanyaan yang
+                    Sering Diajukan</h2>
+                <div class="divider mx-auto"></div>
+            </div>
+
+            <div class="space-y-3">
+
+                <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4"
+                        onclick="toggleFaq(this)">
+                        <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Bagaimana cara memesan
+                            unit di Bale Hinggil Stay?</span>
+                        <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+                    </button>
+                    <div class="faq-body px-6">
+                        <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Anda dapat memesan unit melalui
+                            website kami di halaman <a href="rooms.html" class="font-semibold hover:underline"
+                                style="color:#2E7D32">Rooms</a>, menghubungi kami via WhatsApp, atau langsung datang ke
+                            kantor pemasaran kami di lantai dasar. Proses pemesanan mudah dan tidak perlu membuat akun.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4"
+                        onclick="toggleFaq(this)">
+                        <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Berapa lama waktu
+                            respons tim Bale Hinggil?</span>
+                        <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+                    </button>
+                    <div class="faq-body px-6">
+                        <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Via WhatsApp kami merespons
+                            dalam hitungan menit (24/7). Via email, kami akan membalas dalam 1×24 jam kerja. Via
+                            telepon, kami dapat dihubungi Senin–Minggu pukul 08.00–22.00 WIB.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4"
+                        onclick="toggleFaq(this)">
+                        <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Apakah ada biaya survey
+                            atau kunjungan ke unit?</span>
+                        <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+                    </button>
+                    <div class="faq-body px-6">
+                        <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Tidak ada biaya apapun untuk
+                            kunjungan survei. Anda dapat menjadwalkan kunjungan gratis ke unit pilihan Anda dengan
+                            menghubungi tim kami terlebih dahulu agar kami dapat mempersiapkan unit yang sesuai
+                            kebutuhan Anda.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left gap-4"
+                        onclick="toggleFaq(this)">
+                        <span class="font-sans font-semibold text-gray-900 text-sm sm:text-base">Bagaimana jika saya
+                            ingin mengetahui promo terbaru?</span>
+                        <i data-lucide="plus" class="w-5 h-5 flex-shrink-0 faq-icon" style="color:#2E7D32"></i>
+                    </button>
+                    <div class="faq-body px-6">
+                        <p class="font-sans text-gray-600 text-sm leading-relaxed pb-5">Ikuti akun Instagram dan TikTok
+                            kami <strong>@balehinggil.stay</strong> untuk mendapatkan informasi promo terkini. Anda juga
+                            bisa menghubungi tim kami via WhatsApp untuk mendapatkan penawaran eksklusif yang belum
+                            dipublikasikan.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-8 text-center">
+                <p class="font-sans text-sm text-gray-500 mb-4">Masih ada pertanyaan lain?</p>
+                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sans font-semibold text-sm text-white transition-all hover:opacity-90 shadow-md"
+                    style="background:#2E7D32">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    Tanya via WhatsApp
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <div id="footer-placeholder"></div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+     TOAST NOTIFICATION
+════════════════════════════════════════════════════════ -->
+    <div id="toast"
+        class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[9999] px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3"
+        style="background:#2E7D32; opacity:0; transform: translateX(-50%) translateY(20px); pointer-events:none; min-width:280px;">
+        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="check" class="w-4 h-4 text-white"></i>
+        </div>
+        <div>
+            <p class="font-sans text-sm font-semibold text-white">Pesan berhasil dikirim!</p>
+            <p class="font-sans text-xs text-white/70">Tim kami akan segera menghubungi Anda.</p>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════ -->
+    <script>
+        renderNavbar('kontak');
+        renderFooter();
+
+        /* ── Character counter ── */
+        const pesanInput = document.getElementById('pesan');
+        const charCount = document.getElementById('char-count');
+        if (pesanInput) {
+            pesanInput.addEventListener('input', function () {
+                const len = this.value.length;
+                charCount.textContent = len + ' / 500';
+                if (len > 500) {
+                    this.value = this.value.substring(0, 500);
+                    charCount.textContent = '500 / 500';
+                }
+            });
+        }
+
+        /* ── Form validation ── */
+        function validateField(id, errId, condition) {
+            const el = document.getElementById(id);
+            const err = document.getElementById(errId);
+            if (condition) {
+                el.classList.remove('error');
+                if (err) err.style.display = 'none';
+                return true;
+            } else {
+                el.classList.add('error');
+                if (err) err.style.display = 'block';
+                return false;
+            }
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            const nama = document.getElementById('nama').value.trim();
+            const telepon = document.getElementById('telepon').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const topik = document.getElementById('topik').value;
+            const pesan = document.getElementById('pesan').value.trim();
+            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            let valid = true;
+            if (!validateField('nama', 'nama-err', nama.length > 0)) valid = false;
+            if (!validateField('telepon', 'telepon-err', telepon.length > 0)) valid = false;
+            if (!validateField('email', 'email-err', emailRe.test(email))) valid = false;
+            if (!validateField('topik', 'topik-err', topik !== '')) valid = false;
+            if (!validateField('pesan', 'pesan-err', pesan.length > 0)) valid = false;
+
+            if (!valid) return;
+
+            /* Simulate send */
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Mengirim...';
+            lucide.createIcons();
+
+            setTimeout(function () {
+                /* Reset form */
+                document.getElementById('contactForm').reset();
+                if (charCount) charCount.textContent = '0 / 500';
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Kirim Pesan Sekarang';
+                lucide.createIcons();
+
+                /* Show toast */
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(function () { toast.classList.remove('show'); }, 3500);
+            }, 1200);
+        }
+
+        /* ── FAQ accordion ── */
+        function toggleFaq(btn) {
+            const body = btn.nextElementSibling;
+            const icon = btn.querySelector('.faq-icon');
+            const isOpen = body.classList.contains('open');
+
+            /* Close all */
+            document.querySelectorAll('.faq-body').forEach(function (b) { b.classList.remove('open'); });
+            document.querySelectorAll('.faq-icon').forEach(function (i) { i.classList.remove('rotated'); });
+
+            if (!isOpen) {
+                body.classList.add('open');
+                icon.classList.add('rotated');
+            }
+        }
+    </script>
+
+</body>
+
+</html>

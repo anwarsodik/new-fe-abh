@@ -14,7 +14,7 @@ function renderNavbar(activePage = 'home') {
     { label: 'Rooms',   href: 'rooms.html',            key: 'rooms' },
     { label: 'Promo',   href: 'index.html#units',      key: 'promo' },
     { label: 'Panduan', href: 'index.html#faq',        key: 'panduan' },
-    { label: 'Kontak',  href: 'index.html#footer',     key: 'kontak' },
+    { label: 'Kontak',  href: 'contact.html',            key: 'kontak' },
   ];
 
   const desktopLinks = links.map(l => {
