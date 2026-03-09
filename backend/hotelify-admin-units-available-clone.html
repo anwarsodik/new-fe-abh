@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unit Tersedia - Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --admin-primary: #039509;
+            --admin-primary-hover: #05b30b;
+            --admin-primary-pressed: #02770a;
+            --admin-bg: #ffffff;
+            --admin-card: #f4fbf4;
+            --admin-section: #e8f5e8;
+            --admin-row-hover: #f0faf0;
+            --admin-text: #111111;
+            --admin-text-secondary: #333333;
+            --admin-text-muted: #666666;
+            --admin-border: #d4edd4;
+            --admin-border-card: #b8ddb8;
+        }
+
+        body {
+            font-family: "Instrument Sans", sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(3, 149, 9, 0.08), transparent 25%),
+                linear-gradient(180deg, #f8fff8 0%, #ffffff 20%);
+            color: var(--admin-text);
+        }
+
+        .sidebar-scroll::-webkit-scrollbar,
+        .table-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 8px;
+        }
+
+        .sidebar-scroll::-webkit-scrollbar-thumb,
+        .table-scroll::-webkit-scrollbar-thumb {
+            background: rgba(3, 149, 9, 0.22);
+            border-radius: 999px;
+        }
+
+        .th-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 0.5rem;
+            background: var(--admin-section);
+            color: var(--admin-primary);
+            margin-right: 0.35rem;
+            vertical-align: middle;
+        }
+
+        .glow-pill {
+            box-shadow: 0 0 0 1px rgba(184, 221, 184, 1), 0 0 24px rgba(5, 179, 11, 0.24);
+        }
+
+        .chip-active {
+            background: var(--admin-primary);
+            border-color: var(--admin-primary);
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex min-h-screen flex-col lg:flex-row">
+        <aside class="w-full lg:w-64 lg:min-h-screen shrink-0 overflow-hidden border-r border-black/10 bg-[#039509] shadow-[2px_0_12px_rgba(0,0,0,0.1)]">
+            <div class="h-1 bg-[#05b30b]"></div>
+            <a href="#" class="flex items-center gap-3 border-b border-white/15 px-5 py-4 transition-opacity hover:opacity-90">
+                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 shadow-sm">
+                    <i class="fas fa-building text-sm text-white"></i>
+                </div>
+                <div class="leading-tight">
+                    <div class="text-sm font-bold tracking-tight text-white">ApartmentHub</div>
+                    <div class="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/85">Admin Panel</div>
+                </div>
+            </a>
+
+            <nav class="sidebar-scroll max-h-[calc(100vh-5rem)] space-y-1 overflow-y-auto px-3 py-3">
+                <a href="#" class="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-white/90 transition hover:bg-[#05b30b] hover:text-white">
+                    <i class="fas fa-chart-line w-4 text-center text-xs"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <p class="px-3 pb-1.5 pt-5 text-[10px] font-bold uppercase tracking-[0.24em] text-white/70">Master Data</p>
+                <a href="#" class="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-white/90 transition hover:bg-[#05b30b] hover:text-white">
+                    <i class="fas fa-door-open w-4 text-center text-xs"></i>
+                    <span>Units</span>
+                </a>
+                <a href="#" class="flex items-center gap-2.5 rounded-lg bg-white/20 px-3 py-2.5 text-sm font-semibold text-white">
+                    <i class="fas fa-key w-4 text-center text-xs"></i>
+                    <span>Unit Tersedia</span>
+                </a>
+                <a href="#" class="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-white/90 transition hover:bg-[#05b30b] hover:text-white">
+                    <i class="fas fa-users w-4 text-center text-xs"></i>
+                    <span>Guests</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="flex min-w-0 flex-1 flex-col">
+            <header class="sticky top-0 z-20 border-b bg-white/90 shadow-sm backdrop-blur" style="border-color: var(--admin-border);">
+                <div class="flex h-auto flex-col gap-3 px-4 py-4 sm:h-14 sm:flex-row sm:items-center sm:gap-3 sm:px-6 sm:py-0">
+                    <div class="flex items-center gap-2 text-sm">
+                        <span class="font-medium" style="color: var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color: var(--admin-text-muted);"></i>
+                        <h1 class="font-bold" style="color: var(--admin-text);">Unit Tersedia</h1>
+                    </div>
+                    <div class="sm:flex-1"></div>
+                    <div class="flex items-center gap-2 rounded-lg border px-3 py-1.5" style="background: var(--admin-card); border-color: var(--admin-border);">
+                        <span class="h-2 w-2 rounded-full bg-[#039509]"></span>
+                        <div class="leading-tight">
+                            <div id="clock" class="text-sm font-bold tabular-nums">--:--:--</div>
+                            <div id="date" class="text-[10.5px]" style="color: var(--admin-text-muted);">--</div>
+                        </div>
+                        <span class="rounded border px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-wider" style="background: var(--admin-section); color: var(--admin-primary); border-color: var(--admin-border);">WIB</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 p-4 sm:p-6">
+                <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="flex items-start gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-xl text-white" style="background:#039509;">
+                            <i class="fas fa-key text-sm"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold">Unit Tersedia</h1>
+                            <p class="mt-0.5 text-sm" style="color:#666666;">Kelola status tersedia unit secara manual dan cari unit dengan cepat melalui live search tanpa submit.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="inline-flex overflow-hidden rounded-xl border bg-white" style="border-color:#D4EDD4;">
+                            <button id="card-view-btn" type="button" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold" style="color:#333;">
+                                <i class="fas fa-th-large"></i> Card
+                            </button>
+                            <button id="table-view-btn" type="button" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white" style="background:#039509;">
+                                <i class="fas fa-list"></i> Tabel
+                            </button>
+                        </div>
+                        <span class="glow-pill inline-flex items-center gap-2 rounded-xl bg-[#d9ffd9] px-4 py-2 text-sm font-bold text-[#02770A]">
+                            <i class="fas fa-door-open"></i>
+                            <span id="available-count">12</span>
+                            <span class="text-xs font-medium text-[#02770A]/90">/ <span id="total-count">15</span> tersedia hari ini</span>
+                        </span>
+                    </div>
+                </div>
+
+                <section class="mb-5 rounded-3xl border bg-white p-4 shadow-[0_18px_40px_rgba(3,149,9,0.06)] sm:p-5" style="border-color: var(--admin-border);">
+                    <div class="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto_auto]">
+                        <label class="rounded-2xl border px-4 py-3" style="border-color: var(--admin-border); background: #fbfffb;">
+                            <span class="mb-2 block text-xs font-semibold uppercase tracking-[0.16em]" style="color: var(--admin-text-muted);">Search Ajax</span>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-search text-sm" style="color: var(--admin-primary);"></i>
+                                <input id="search-input" type="text" placeholder="Cari unit, tipe, view, interior, status..." class="w-full border-0 bg-transparent p-0 text-sm outline-none placeholder:text-gray-400">
+                            </div>
+                        </label>
+                        <div class="flex items-center">
+                            <span id="search-status" class="inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold" style="border-color: var(--admin-border); color: var(--admin-text-muted); background: #fbfffb;">
+                                <i class="fas fa-bolt"></i>
+                                <span>Siap mencari</span>
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <button id="reset-table" class="rounded-full border px-3 py-2 text-xs font-semibold transition" style="border-color: var(--admin-border); color: var(--admin-primary-pressed); background: #fbfffb;">
+                                Reset Table
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overflow-hidden rounded-3xl border shadow-[0_18px_40px_rgba(3,149,9,0.08)]" style="background: var(--admin-card); border-color: var(--admin-border);">
+                    <div class="flex flex-col gap-3 border-b px-5 py-4 sm:flex-row sm:items-center sm:justify-between" style="border-color: var(--admin-border);">
+                        <div>
+                            <h2 id="view-title" class="text-sm font-bold">Tabel Ketersediaan Unit</h2>
+                            <p id="view-description" class="mt-0.5 text-xs" style="color: var(--admin-text-muted);">Klik header kolom untuk sorting. Search live akan langsung menyaring hasil tabel.</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span id="visible-count" class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A; border-color:#B8DDB8;">
+                                <i class="fas fa-list text-[9px]"></i>
+                                <span>0 hasil</span>
+                            </span>
+                            <span id="sort-summary" class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold" style="background:#eef7ff; color:#2563eb; border-color:#bfdbfe;">
+                                <i class="fas fa-arrow-down-short-wide text-[9px]"></i>
+                                <span>Unit (ASC)</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div id="table-view" class="table-scroll overflow-x-auto">
+                        <table class="min-w-full text-left">
+                            <thead>
+                                <tr class="border-b" style="background:#E8F5E8; border-color:#D4EDD4; color:#333;">
+                                    <th data-sort-key="code" class="sortable-header cursor-pointer px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-building"></i></span>Unit <span class="sort-indicator ml-1 text-[10px]" data-indicator="code">↕</span></th>
+                                    <th data-sort-key="type" class="sortable-header cursor-pointer px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-th-large"></i></span>Tipe <span class="sort-indicator ml-1 text-[10px]" data-indicator="type">↕</span></th>
+                                    <th data-sort-key="view" class="sortable-header cursor-pointer px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-eye"></i></span>View <span class="sort-indicator ml-1 text-[10px]" data-indicator="view">↕</span></th>
+                                    <th data-sort-key="interior" class="sortable-header cursor-pointer px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-couch"></i></span>Interior <span class="sort-indicator ml-1 text-[10px]" data-indicator="interior">↕</span></th>
+                                    <th data-sort-key="rental" class="sortable-header cursor-pointer px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-circle-dot"></i></span>Status <span class="sort-indicator ml-1 text-[10px]" data-indicator="rental">↕</span></th>
+                                    <th data-sort-key="available" class="sortable-header cursor-pointer px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-toggle-on"></i></span>Tersedia <span class="sort-indicator ml-1 text-[10px]" data-indicator="available">↕</span></th>
+                                    <th data-sort-key="priceValue" class="sortable-header cursor-pointer px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-tag"></i></span>Harga <span class="sort-indicator ml-1 text-[10px]" data-indicator="priceValue">↕</span></th>
+                                    <th class="w-28 px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="units-table"></tbody>
+                        </table>
+                    </div>
+
+                    <div id="card-view" class="hidden p-5">
+                        <div id="units-cards" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+                    </div>
+
+                    <div id="empty-state" class="hidden border-t px-6 py-12 text-center" style="border-color: var(--admin-border);">
+                        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl" style="background: #eef7ee; color: var(--admin-primary);">
+                            <i class="fas fa-search-minus text-xl"></i>
+                        </div>
+                        <h3 class="mt-4 text-lg font-bold">Unit tidak ditemukan</h3>
+                        <p class="mx-auto mt-2 max-w-md text-sm" style="color: var(--admin-text-muted);">Coba kata kunci lain atau reset table untuk menampilkan seluruh daftar unit tersedia.</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const units = [
+            { code: "A-03-37", type: "Studio", view: "Mountain", interior: "Kosongan AC", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 300.000", priceValue: 300000, period: "per malam" },
+            { code: "A-11-62", type: "2BR", view: "Sky Garden", interior: "Furnished", rental: "Bulanan", rentalColor: "green", available: false, price: "Rp 3.500.000", priceValue: 3500000, period: "per bulan" },
+            { code: "A-26-21", type: "Studio", view: "Pool", interior: "Kosongan", rental: "Tahunan", rentalColor: "blue", available: false, price: "Rp 12.500.000", priceValue: 12500000, period: "per tahun" },
+            { code: "A-26-35", type: "Studio", view: "Pool", interior: "Furnished", rental: "Flexible", rentalColor: "purple", available: true, price: "Rp 350.000", priceValue: 350000, period: "per malam" },
+            { code: "A-26-61", type: "2BR", view: "City", interior: "Furnished", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-05-36", type: "3BR", view: "Sea", interior: "Kosongan AC", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-06-09", type: "Studio", view: "Mountain", interior: "Semi Furnished", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-12-29", type: "Studio", view: "Mountain", interior: "Kosongan", rental: "Bulanan", rentalColor: "green", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-15-29", type: "Studio", view: "Mountain", interior: "Kosongan AC", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-17-29", type: "Studio", view: "Mountain", interior: "Kosongan AC", rental: "Harian", rentalColor: "amber", available: false, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-19-30", type: "Studio", view: "Mountain", interior: "Kosongan AC", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-20-20", type: "Studio", view: "Pool", interior: "Kosongan", rental: "Bulanan", rentalColor: "green", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-25-30", type: "Studio", view: "Mountain", interior: "Kosongan AC", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-26-21", type: "Studio", view: "Pool", interior: "Kosongan AC", rental: "Harian", rentalColor: "amber", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" },
+            { code: "B-27-32", type: "2BR", view: "Sea", interior: "Furnished", rental: "Bulanan", rentalColor: "green", available: true, price: "Rp 500.000", priceValue: 500000, period: "per malam" }
+        ];
+
+        const rentalStyles = {
+            amber: { bg: "#fff8e1", text: "#b45309" },
+            green: { bg: "#e8f5e8", text: "#02770a" },
+            blue: { bg: "#e3f2fd", text: "#1565c0" },
+            purple: { bg: "#f3e5f5", text: "#7b1fa2" }
+        };
+
+        const state = {
+            searchQuery: "",
+            sortKey: "code",
+            sortDirection: "asc",
+            viewMode: "table"
+        };
+
+        const tbody = document.getElementById("units-table");
+        const cardsContainer = document.getElementById("units-cards");
+        const searchInput = document.getElementById("search-input");
+        const searchStatus = document.getElementById("search-status");
+        const resetButton = document.getElementById("reset-table");
+        const visibleCount = document.getElementById("visible-count");
+        const sortSummary = document.getElementById("sort-summary");
+        const emptyState = document.getElementById("empty-state");
+        const availableCount = document.getElementById("available-count");
+        const totalCount = document.getElementById("total-count");
+        const sortableHeaders = [...document.querySelectorAll(".sortable-header")];
+        const sortIndicators = [...document.querySelectorAll(".sort-indicator")];
+        const cardViewBtn = document.getElementById("card-view-btn");
+        const tableViewBtn = document.getElementById("table-view-btn");
+        const tableView = document.getElementById("table-view");
+        const cardView = document.getElementById("card-view");
+        const viewTitle = document.getElementById("view-title");
+        const viewDescription = document.getElementById("view-description");
+        let searchDebounceId = null;
+
+        function getFilteredSortedUnits() {
+            const query = state.searchQuery.trim().toLowerCase();
+            const rows = units.filter((unit) => {
+                if (!query) return true;
+                return [
+                    unit.code,
+                    unit.type,
+                    unit.view,
+                    unit.interior,
+                    unit.rental,
+                    unit.available ? "tersedia" : "tidak"
+                ].join(" ").toLowerCase().includes(query);
+            });
+
+            rows.sort((a, b) => {
+                let comparison = 0;
+                if (state.sortKey === "priceValue") comparison = a.priceValue - b.priceValue;
+                else if (state.sortKey === "available") comparison = Number(a.available) - Number(b.available);
+                else comparison = String(a[state.sortKey]).localeCompare(String(b[state.sortKey]));
+                return state.sortDirection === "asc" ? comparison : -comparison;
+            });
+
+            return rows;
+        }
+
+        function renderTable(rows) {
+            tbody.innerHTML = rows.map((unit) => {
+                const rental = rentalStyles[unit.rentalColor];
+                return `
+                    <tr class="border-b transition hover:bg-[#F0FAF0]" style="border-color:#D4EDD4;">
+                        <td class="px-5 py-3.5 font-semibold" style="color:#111111;">${unit.code}</td>
+                        <td class="px-5 py-3.5 text-sm" style="color:#333;">${unit.type}</td>
+                        <td class="px-5 py-3.5 text-sm" style="color:#333;">${unit.view}</td>
+                        <td class="px-5 py-3.5 text-sm" style="color:#333;">${unit.interior}</td>
+                        <td class="px-5 py-3.5">
+                            <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold" style="background:${rental.bg}; color:${rental.text};">${unit.rental}</span>
+                        </td>
+                        <td class="px-5 py-3.5">
+                            <span class="inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-semibold" style="background:${unit.available ? "#dcfce7" : "#f3f4f6"}; color:${unit.available ? "#166534" : "#374151"};">
+                                <span class="h-2 w-2 rounded-full" style="background:${unit.available ? "#22c55e" : "#9ca3af"};"></span>
+                                ${unit.available ? "Tersedia" : "Tidak"}
+                            </span>
+                        </td>
+                        <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                            ${unit.price} <span class="text-[10px] font-normal opacity-80">${unit.period}</span>
+                        </td>
+                        <td class="px-5 py-3.5">
+                            <a href="#" class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white" style="background:#039509;">
+                                <i class="fas fa-eye text-[10px]"></i> Detail
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        function renderCards(rows) {
+            cardsContainer.innerHTML = rows.map((unit) => {
+                const rental = rentalStyles[unit.rentalColor];
+                return `
+                    <article class="rounded-2xl border bg-white p-4 shadow-[0_10px_30px_rgba(3,149,9,0.06)]" style="border-color:#D4EDD4;">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <p class="text-lg font-bold" style="color:#111111;">${unit.code}</p>
+                                <p class="mt-1 text-xs" style="color:#666666;">${unit.type} • ${unit.view}</p>
+                            </div>
+                            <span class="inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-semibold" style="background:${unit.available ? "#dcfce7" : "#f3f4f6"}; color:${unit.available ? "#166534" : "#374151"};">
+                                <span class="h-2 w-2 rounded-full" style="background:${unit.available ? "#22c55e" : "#9ca3af"};"></span>
+                                ${unit.available ? "Tersedia" : "Tidak"}
+                            </span>
+                        </div>
+                        <div class="mt-4 space-y-3">
+                            <div class="rounded-xl px-3 py-2" style="background:#f8fff8;">
+                                <p class="text-[11px] font-semibold uppercase tracking-[0.16em]" style="color:#666666;">Interior</p>
+                                <p class="mt-1 text-sm font-medium">${unit.interior}</p>
+                            </div>
+                            <div class="flex items-center justify-between gap-3">
+                                <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold" style="background:${rental.bg}; color:${rental.text};">${unit.rental}</span>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold" style="color:#02770A;">${unit.price}</p>
+                                    <p class="text-[11px]" style="color:#666666;">${unit.period}</p>
+                                </div>
+                            </div>
+                            <a href="#" class="inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-white" style="background:#039509;">
+                                <i class="fas fa-eye text-xs"></i>
+                                Detail Unit
+                            </a>
+                        </div>
+                    </article>
+                `;
+            }).join("");
+        }
+
+        function renderMeta(rows) {
+            visibleCount.innerHTML = `<i class="fas fa-list text-[9px]"></i><span>${rows.length} hasil</span>`;
+            sortSummary.innerHTML = `<i class="fas fa-arrow-down-short-wide text-[9px]"></i><span>${state.sortKey} (${state.sortDirection.toUpperCase()})</span>`;
+            availableCount.textContent = rows.filter((unit) => unit.available).length;
+            totalCount.textContent = rows.length;
+        }
+
+        function updateSortIndicators() {
+            sortIndicators.forEach((indicator) => {
+                indicator.textContent = "↕";
+                indicator.style.color = "#6b7280";
+            });
+            const activeIndicator = document.querySelector(`[data-indicator="${state.sortKey}"]`);
+            if (activeIndicator) {
+                activeIndicator.textContent = state.sortDirection === "asc" ? "↑" : "↓";
+                activeIndicator.style.color = "#039509";
+            }
+        }
+
+        function updateViewMode() {
+            const isTable = state.viewMode === "table";
+            tableView.classList.toggle("hidden", !isTable);
+            cardView.classList.toggle("hidden", isTable);
+
+            tableViewBtn.style.background = isTable ? "#039509" : "transparent";
+            tableViewBtn.style.color = isTable ? "#fff" : "#333";
+            cardViewBtn.style.background = isTable ? "transparent" : "#039509";
+            cardViewBtn.style.color = isTable ? "#333" : "#fff";
+
+            viewTitle.textContent = isTable ? "Tabel Ketersediaan Unit" : "Card Ketersediaan Unit";
+            viewDescription.textContent = isTable
+                ? "Klik header kolom untuk sorting. Search live akan langsung menyaring hasil tabel."
+                : "Search live dan sorting tetap aktif, ditampilkan dalam format card yang lebih mudah dipindai.";
+        }
+
+        function render() {
+            const rows = getFilteredSortedUnits();
+            renderTable(rows);
+            renderCards(rows);
+            renderMeta(rows);
+            updateSortIndicators();
+            updateViewMode();
+            emptyState.classList.toggle("hidden", rows.length !== 0);
+        }
+
+        searchInput.addEventListener("input", (event) => {
+            const nextQuery = event.target.value;
+            searchStatus.innerHTML = `<i class="fas fa-spinner fa-spin"></i><span>Mencari...</span>`;
+            if (searchDebounceId) clearTimeout(searchDebounceId);
+            searchDebounceId = setTimeout(() => {
+                state.searchQuery = nextQuery;
+                render();
+                searchStatus.innerHTML = state.searchQuery
+                    ? `<i class="fas fa-check-circle"></i><span>Hasil untuk "${state.searchQuery}"</span>`
+                    : `<i class="fas fa-bolt"></i><span>Siap mencari</span>`;
+            }, 250);
+        });
+
+        resetButton.addEventListener("click", () => {
+            if (searchDebounceId) clearTimeout(searchDebounceId);
+            state.searchQuery = "";
+            state.sortKey = "code";
+            state.sortDirection = "asc";
+            state.viewMode = "table";
+            searchInput.value = "";
+            searchStatus.innerHTML = `<i class="fas fa-bolt"></i><span>Siap mencari</span>`;
+            render();
+        });
+
+        cardViewBtn.addEventListener("click", () => {
+            state.viewMode = "card";
+            render();
+        });
+
+        tableViewBtn.addEventListener("click", () => {
+            state.viewMode = "table";
+            render();
+        });
+
+        sortableHeaders.forEach((header) => {
+            header.addEventListener("click", () => {
+                const key = header.dataset.sortKey;
+                if (state.sortKey === key) state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
+                else {
+                    state.sortKey = key;
+                    state.sortDirection = key === "priceValue" || key === "available" ? "desc" : "asc";
+                }
+                render();
+            });
+        });
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById("clock").textContent = now.toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta", hour12: false });
+            document.getElementById("date").textContent = now.toLocaleDateString("id-ID", { timeZone: "Asia/Jakarta", weekday: "short", day: "numeric", month: "short" });
+        }
+
+        updateClock();
+        render();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
