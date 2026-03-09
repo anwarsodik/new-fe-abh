@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Activity Log - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-activity-logs-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="activityLogs">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Activity Log</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    <p class="text-sm mb-6" style="color:#4a7a4c;">
+        <i class="fas fa-info-circle mr-1.5"></i>
+        Track data changes: create, update, delete on <strong>payment</strong>, <strong>booking</strong>, check-in, check-out. For audit and compliance.
+    </p>
+
+    <div class="mb-6">
+        <form action="hotelify-admin-activity-logs-clone.html" method="get"
+              class="flex flex-wrap items-end gap-3">
+            <div>
+                <label for="from" class="block text-[11px] font-bold uppercase tracking-wider mb-1.5" style="color:#4a7a4c;">
+                    <i class="fas fa-calendar-alt mr-1"></i> From
+                </label>
+                <input type="date" name="from" id="from" value=""
+                       class="px-3 py-2 rounded-lg text-sm transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                       style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+            </div>
+            <div>
+                <label for="to" class="block text-[11px] font-bold uppercase tracking-wider mb-1.5" style="color:#4a7a4c;">
+                    <i class="fas fa-calendar-alt mr-1"></i> To
+                </label>
+                <input type="date" name="to" id="to" value=""
+                       class="px-3 py-2 rounded-lg text-sm transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                       style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+            </div>
+            <div>
+                <label for="type" class="block text-[11px] font-bold uppercase tracking-wider mb-1.5" style="color:#4a7a4c;">
+                    <i class="fas fa-layer-group mr-1"></i> Type
+                </label>
+                <select name="type" id="type"
+                        class="px-3 py-2 rounded-lg text-sm transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                        style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+                    <option value="">All types</option>
+                    <option value="booking" >Booking</option>
+                    <option value="payment" >Payment</option>
+                    <option value="checkin" >Check-in</option>
+                    <option value="checkout" >Check-out</option>
+                    <option value="unit" >Unit</option>
+                    <option value="guest" >Guest</option>
+                    <option value="promo" >Promo</option>
+                    <option value="user" >User</option>
+                    <option value="role" >Role</option>
+                    <option value="profile" >Profile</option>
+                    <option value="additional_payment" >Pajak & Biaya Layanan</option>
+                </select>
+            </div>
+            <div>
+                <label for="action" class="block text-[11px] font-bold uppercase tracking-wider mb-1.5" style="color:#4a7a4c;">
+                    <i class="fas fa-bolt mr-1"></i> Action
+                </label>
+                <select name="action" id="action"
+                        class="px-3 py-2 rounded-lg text-sm transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                        style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+                    <option value="">All</option>
+                    <option value="created" >Created</option>
+                    <option value="updated" >Updated</option>
+                    <option value="deleted" >Deleted</option>
+                </select>
+            </div>
+            <div>
+                <label for="subject_type" class="block text-[11px] font-bold uppercase tracking-wider mb-1.5" style="color:#4a7a4c;">
+                    <i class="fas fa-database mr-1"></i> Subject
+                </label>
+                <select name="subject_type" id="subject_type"
+                        class="px-3 py-2 rounded-lg text-sm transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                        style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+                    <option value="">All</option>
+                    <option value="App\Models\Payment" >Payment</option>
+                    <option value="App\Models\Booking" >Booking</option>
+                    <option value="App\Models\Checkin" >Checkin</option>
+                    <option value="App\Models\Checkout" >Checkout</option>
+                </select>
+            </div>
+            
+            <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-xs" style="color:#4a7a4c;"></i>
+                <input type="text" name="q" value=""
+                       placeholder="Search description..."
+                       class="pl-8 pr-4 py-2 rounded-lg text-sm w-48 transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                       style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+            </div>
+            <button type="submit"
+                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
+                    style="background: linear-gradient(135deg, #66BB6A, #43A047); color:#fff;">
+                <i class="fas fa-filter text-xs"></i> Filter
+            </button>
+        </form>
+    </div>
+
+    <div class="rounded-2xl overflow-hidden"
+         style="background:#fff; border:1px solid #e0ede0; box-shadow:0 1px 4px rgba(102,187,106,0.08);">
+
+        <div class="flex items-center gap-3 px-6 py-4"
+             style="background:#f8fcf8; border-bottom:1px solid #edf5ed;">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                 style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44);">
+                <i class="fas fa-history text-sm" style="color:#66BB6A;"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold" style="color:#1e2d1f;">Activity Log History</p>
+                <p class="text-xs mt-0.5" style="color:#4a7a4c;">Create, update, delete — from activity_logs table</p>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left admin-table">
+                <thead>
+                    <tr style="background:#f8fcf8; border-bottom:1px solid #edf5ed;">
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">Time</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">Action</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">Type</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">Subject</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">Description</th>
+                        
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">By (Account)</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">IP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">09 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">06:47 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e3f2fd; color:#1565c0;">
+                                    <i class="fas fa-edit text-[9px]"></i> Updated
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#eceff1; color:#455a64;">
+                                    <i class="fas fa-id-card text-[9px]"></i> Profile
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                User
+                                                                    <span style="color:#999;">#3</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Profile updated</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">Admin Internal</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@internal.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">103.121.96.169</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">09 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">06:42 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e3f2fd; color:#1565c0;">
+                                    <i class="fas fa-edit text-[9px]"></i> Updated
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#eceff1; color:#455a64;">
+                                    <i class="fas fa-id-card text-[9px]"></i> Profile
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                User
+                                                                    <span style="color:#999;">#3</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Profile updated</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">Admin Internal</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@internal.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">103.121.96.169</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">09 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">04:29 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8eaf6; color:#3949ab;">
+                                    <i class="fas fa-calendar-plus text-[9px]"></i> Booking
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Booking
+                                                                    <span style="color:#999;">#14</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Booking walk-in INV-26-0009-75b3</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">114.10.47.92</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">08 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">22:49 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e3f2fd; color:#1565c0;">
+                                    <i class="fas fa-edit text-[9px]"></i> Updated
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#efebe9; color:#5d4037;">
+                                    <i class="fas fa-user-tag text-[9px]"></i> Role
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Role
+                                                                    <span style="color:#999;">#5</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Role permissions updated: internal</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">110.139.60.143</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">08 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">22:16 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#ffebee; color:#c62828;">
+                                    <i class="fas fa-trash text-[9px]"></i> Deleted
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e0f7fa; color:#0097a7;">
+                                    <i class="fas fa-user-cog text-[9px]"></i> User
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                User
+                                                                    <span style="color:#999;">#2</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">User deleted: berliantino@gmail.com</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">110.139.60.143</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">08 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">22:15 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e0f7fa; color:#0097a7;">
+                                    <i class="fas fa-user-cog text-[9px]"></i> User
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                User
+                                                                    <span style="color:#999;">#3</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">User created: admin@internal.com</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">110.139.60.143</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">08 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">22:15 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#efebe9; color:#5d4037;">
+                                    <i class="fas fa-user-tag text-[9px]"></i> Role
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Role
+                                                                    <span style="color:#999;">#5</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Role created: internal</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">110.139.60.143</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">08 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">21:36 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f5faf5; color:#4a7a4c;">
+                                    <i class="fas fa-circle text-[9px]"></i> unit_gallery
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Unit
+                                                                    <span style="color:#999;">#12</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Gallery images added for unit A-03-37</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">104.28.160.164</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">08 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">19:40 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e3f2fd; color:#1565c0;">
+                                    <i class="fas fa-edit text-[9px]"></i> Updated
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#fce4ec; color:#c2185b;">
+                                    <i class="fas fa-door-open text-[9px]"></i> Unit
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Unit
+                                                                    <span style="color:#999;">#12</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Unit updated A-03-37</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">110.139.60.143</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">05 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">15:27 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#ffebee; color:#c62828;">
+                                    <i class="fas fa-trash text-[9px]"></i> Deleted
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f5faf5; color:#4a7a4c;">
+                                    <i class="fas fa-circle text-[9px]"></i> unit_gallery
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                UnitGallery
+                                                                    <span style="color:#999;">#2</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Gallery image deleted for unit A-03-37</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">05 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">15:13 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8eaf6; color:#3949ab;">
+                                    <i class="fas fa-calendar-plus text-[9px]"></i> Booking
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Booking
+                                                                    <span style="color:#999;">#13</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Booking created INV-26-0008-5761</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">05 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">15:13 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#25</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Pembayaran gateway · INV-26-0008-5761 (INV-RIHYPQ7AMLAK)</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">05 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">03:55 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#24</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Pembayaran tunai (cash) · INV-26-0001-c493</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">114.10.47.228</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">02:49 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#fff8e1; color:#fb8c00;">
+                                    <i class="fas fa-sign-out-alt text-[9px]"></i> Check-out
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Checkout
+                                                                    <span style="color:#999;">#5</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Check-out INV-26-0007-f11f</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">02:49 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#23</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Biaya keterlambatan &amp; kerusakan · Check-out INV-26-0007-f11f</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">02:49 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e0f2f1; color:#00897b;">
+                                    <i class="fas fa-sign-in-alt text-[9px]"></i> Check-in
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Checkin
+                                                                    <span style="color:#999;">#9</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Check-in INV-26-0007-f11f</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">02:49 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#22</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Deposit check-in · INV-26-0007-f11f</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">02:48 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#21</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Pembayaran tunai (cash) · INV-26-0007-f11f</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">02:48 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#20</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Pembayaran gateway · INV-26-0007-f11f (INV-9PQ7ZIFWBJL8)</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">02:48 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8eaf6; color:#3949ab;">
+                                    <i class="fas fa-calendar-plus text-[9px]"></i> Booking
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Booking
+                                                                    <span style="color:#999;">#12</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Booking created INV-26-0007-f11f</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">36.78.118.84</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">04 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">00:00 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e0f2f1; color:#00897b;">
+                                    <i class="fas fa-sign-in-alt text-[9px]"></i> Check-in
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Checkin
+                                                                    <span style="color:#999;">#8</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Check-in INV-26-0006-dfb3</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">180.251.124.194</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">03 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">23:57 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#19</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Pembayaran tunai (cash) · INV-26-0006-dfb3</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">180.251.124.194</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">03 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">23:48 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#f0faf0; color:#388e3c;">
+                                    <i class="fas fa-money-bill-wave text-[9px]"></i> Payment
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Payment
+                                                                    <span style="color:#999;">#18</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Pembayaran gateway · INV-26-0006-dfb3 (INV-WVOUHQAW6XO8)</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">180.251.124.194</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">03 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">23:48 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8eaf6; color:#3949ab;">
+                                    <i class="fas fa-calendar-plus text-[9px]"></i> Booking
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Booking
+                                                                    <span style="color:#999;">#11</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Booking created INV-26-0006-dfb3</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">180.251.124.194</td>
+                        </tr>
+                                            <tr class="transition-colors" style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">03 Mar 2026</span>
+                                <br><span class="text-xs" style="color:#4a7a4c;">23:40 WIB</span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e8f5e9; color:#2e7d32;">
+                                    <i class="fas fa-plus text-[9px]"></i> Created
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold" style="background:#e0f2f1; color:#00897b;">
+                                    <i class="fas fa-sign-in-alt text-[9px]"></i> Check-in
+                                </span>
+                            </td>
+                            <td class="px-5 py-3.5 text-xs font-medium" style="color:#333;">
+                                Checkin
+                                                                    <span style="color:#999;">#7</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">Check-in INV-26-0005-bc0d</td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    <br><span class="text-[10px]" style="color:#999;">admin@super.com</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#666;">180.251.124.194</td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+
+                    <div class="px-5 py-3" style="border-top:1px solid #edf5ed;">
+                <nav role="navigation" aria-label="Pagination Navigation">
+
+        <div class="flex gap-2 items-center justify-between sm:hidden">
+
+                            <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 cursor-not-allowed leading-5 rounded-md dark:text-gray-300 dark:bg-gray-700 dark:border-gray-600">
+                    pagination.previous
+                </span>
+            
+                            <a href="hotelify-admin-activity-logs-clone.html?page=2" rel="next" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-800 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-700 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-800 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 dark:hover:text-gray-200">
+                    pagination.next
+                </a>
+            
+        </div>
+
+        <div class="hidden sm:flex-1 sm:flex sm:gap-2 sm:items-center sm:justify-between">
+
+            <div>
+                <p class="text-sm text-gray-700 leading-5 dark:text-gray-600">
+                    Showing
+                                            <span class="font-medium">1</span>
+                        to
+                        <span class="font-medium">25</span>
+                                        of
+                    <span class="font-medium">74</span>
+                    results
+                </p>
+            </div>
+
+            <div>
+                <span class="inline-flex rtl:flex-row-reverse shadow-sm rounded-md">
+
+                    
+                                            <span aria-disabled="true" aria-label="pagination.previous">
+                            <span class="inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-not-allowed rounded-l-md leading-5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400" aria-hidden="true">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </span>
+                    
+                    
+                                            
+                        
+                        
+                                                                                                                        <span aria-current="page">
+                                        <span class="inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-gray-200 border border-gray-300 cursor-default leading-5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">1</span>
+                                    </span>
+                                                                                                                                <a href="hotelify-admin-activity-logs-clone.html?page=2" class="inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-700 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:text-gray-300 dark:active:bg-gray-700 dark:focus:border-blue-800 hover:bg-gray-100 dark:hover:bg-gray-900" aria-label="Go to page 2">
+                                        2
+                                    </a>
+                                                                                                                                <a href="hotelify-admin-activity-logs-clone.html?page=3" class="inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-700 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:text-gray-300 dark:active:bg-gray-700 dark:focus:border-blue-800 hover:bg-gray-100 dark:hover:bg-gray-900" aria-label="Go to page 3">
+                                        3
+                                    </a>
+                                                                                                        
+                    
+                                            <a href="hotelify-admin-activity-logs-clone.html?page=2" rel="next" class="inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:active:bg-gray-700 dark:focus:border-blue-800 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-300" aria-label="pagination.next">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                                    </span>
+            </div>
+        </div>
+    </nav>
+
+            </div>
+            </div>
+
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-activity-logs-clone.js"></script>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guests - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-guests-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="guests">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Guests</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="flex items-center gap-4 rounded-2xl px-5 py-3"
+            style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background:#C8EBC8;">
+                <i class="fas fa-users text-base" style="color:#039509;"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wider" style="color:#666666;">Total Guests</p>
+                <p class="text-xl font-bold leading-tight" style="color:#111111;">12</p>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="rounded-2xl overflow-hidden"
+        style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+
+        <div class="px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+            style="border-bottom:1px solid #D4EDD4;">
+            <div>
+                <h2 class="text-sm font-bold" style="color:#111111;">
+                    <i class="fas fa-address-book mr-1.5" style="color:#039509;"></i> Daftar Guest
+                </h2>
+                <p class="text-xs mt-0.5" style="color:#666666;">Kelola data semua tamu terdaftar</p>
+            </div>
+            <form action="hotelify-admin-guests-clone.html" method="get" class="flex gap-2 w-full sm:w-auto">
+                <div class="relative flex-1 sm:w-72">
+                    <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-xs" style="color:#666666;"></i>
+                    </span>
+                    <input type="text" name="q" value=""
+                        placeholder="Cari nama, email, telepon…"
+                        class="w-full pl-8 pr-4 py-2 rounded-xl text-sm outline-none transition-all"
+                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;"
+                        onfocus="this.style.borderColor='#039509'; this.style.boxShadow='0 0 0 3px rgba(3,149,9,0.15)';"
+                        onblur="this.style.borderColor='#D4EDD4'; this.style.boxShadow='none';">
+                </div>
+                <button type="submit"
+                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+                    style="background:#039509; color:#fff;"
+                    onmouseover="this.style.background='#05B30B';"
+                    onmouseout="this.style.background='#039509';">
+                    <i class="fas fa-search text-xs"></i> Cari
+                </button>
+            </form>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left admin-table">
+                <thead>
+                    <tr style="background:#E8F5E8; border-bottom:1px solid #D4EDD4;">
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-user"></i></span> Nama</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-phone"></i></span> Kontak</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-id-card"></i></span> Identitas</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-map-marker-alt"></i></span> Kota</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider w-28">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        A
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/4" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">anwar</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> anwa@itats.ac.id
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> 000000
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 000000
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/4"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/4/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        A
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/5" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">anwar</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> anwar@itats.ac.id
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> 088888
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 0000000000
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/5"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/5/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        A
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/12" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">anwar ganteng</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> 099999999
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 1323434343434
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/12"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/12/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        A
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/9" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Aristotle Carlson</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> wixu@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (535) 784-3643
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> Passport: 239
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/9"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/9/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        G
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/7" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Gisela Mcclure</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> wymekawi@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (611) 852-6206
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 653
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/7"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/7/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        H
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/8" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Hu Cummings</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> nenycym@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (472) 929-9735
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 278
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/8"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/8/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        J
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/11" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Justina Lambert</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> zakasor@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (569) 227-8231
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> Passport: 504
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/11"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/11/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        K
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/2" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Kristen Rich</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> rydamipu@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (571) 826-6472
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> Passport: 17
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/2"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/2/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        L
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/10" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Leslie Barrett</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> dakufoxi@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (182) 394-9378
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 193
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/10"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/10/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        M
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/3" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Marny Leach</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> cilenidexa@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (679) 959-3198
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 716
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/3"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/3/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        Q
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/1" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Quintessa Ellis</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> matu@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (318) 576-1796
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> KTP: 459
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/1"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/1/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style="background:#039509; color:#fff;">
+                                        R
+                                    </div>
+                                    <a href="https://dev.hotelify.id/admin/guests/6" class="text-sm font-semibold transition-colors" style="color:#111111;"
+                                        onmouseover="this.style.color='#039509';" onmouseout="this.style.color='#111111';">Rinah Parsons</a>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-1.5 text-xs mb-0.5" style="color:#333333;">
+                                        <i class="fas fa-envelope text-[10px]" style="color:#039509;"></i> mevoq@mailinator.com
+                                    </div>
+                                                                                                    <div class="flex items-center gap-1.5 text-xs" style="color:#333333;">
+                                        <i class="fas fa-phone text-[10px]" style="color:#039509;"></i> +1 (229) 324-4543
+                                    </div>
+                                                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <i class="fas fa-id-badge text-[10px]"></i> Passport: 129
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">–</td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                <a href="https://dev.hotelify.id/admin/guests/6"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                    style="background:#039509; color:#fff;"
+                                    onmouseover="this.style.background='#05B30B';"
+                                    onmouseout="this.style.background='#039509';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                                                                    <a href="https://dev.hotelify.id/admin/guests/6/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                        onmouseover="this.style.background='#D4EDD4';"
+                                        onmouseout="this.style.background='#E8F5E8';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+
+            </div>
+
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-guests-clone.js"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Promo - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-promos-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="promos">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Promo</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="flex items-center gap-4 rounded-2xl px-5 py-3"
+            style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background:#fff8e1;">
+                <i class="fas fa-ticket text-base" style="color:#DD8B26;"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wider" style="color:#666666;">Total Promo</p>
+                <p class="text-xl font-bold leading-tight" style="color:#111111;">3</p>
+            </div>
+        </div>
+                    <a href="https://dev.hotelify.id/admin/promos/create"
+                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all"
+                style="background:#039509; color:#ffffff;"
+                onmouseover="this.style.background='#05B30B';"
+                onmouseout="this.style.background='#039509';">
+                <i class="fas fa-plus text-xs"></i> Tambah Promo
+            </a>
+            </div>
+
+    <div class="rounded-2xl overflow-hidden"
+        style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+
+        <div class="px-5 py-4" style="border-bottom:1px solid #D4EDD4;">
+            <h2 class="text-sm font-bold flex items-center gap-1.5" style="color:#111111;">
+                <i class="fas fa-tags" style="color:#DD8B26;"></i> Daftar Promo
+            </h2>
+            <p class="text-xs mt-0.5" style="color:#666666;">Kelola kode diskon dan promosi untuk tamu</p>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left admin-table">
+                <thead>
+                    <tr style="background:#E8F5E8; border-bottom:1px solid #D4EDD4;">
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider w-16"><span class="th-icon"><i class="fas fa-image"></i></span> Gambar</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-barcode"></i></span> Kode</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-tag"></i></span> Nama</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-percent"></i></span> Tipe / Nilai</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-calendar"></i></span> Validitas</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-chart-bar"></i></span> Pemakaian</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-circle-dot"></i></span> Status</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider w-24">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-xs" style="background:#F4FBF4; color:#999;"><i class="fas fa-image"></i></span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold tracking-widest"
+                                    style="background:#fff8e1; color:#DD8B26; border:1px solid #ffe0b2; letter-spacing:0.08em;">EARLY10</span>
+                            </td>
+                            <td class="px-5 py-3.5 text-sm font-medium" style="color:#111111;">Early Bird 10%</td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 text-sm font-bold" style="color:#039509;"><i class="fas fa-percent text-xs"></i> 10.00%</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#333333;">
+                                <div class="flex items-center gap-1"><i class="fas fa-calendar-check text-[10px]" style="color:#039509;"></i> 01 Jan 2026</div>
+                                <div class="flex items-center gap-1 mt-0.5"><i class="fas fa-calendar-xmark text-[10px]" style="color:#666666;"></i> 31 Dec 2027</div>
+                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">
+                                <span class="font-semibold" style="color:#111111;">4</span>
+                                 / ∞
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#039509;"></span> Aktif
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                                                    <a href="https://dev.hotelify.id/admin/promos/1/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-xs" style="background:#F4FBF4; color:#999;"><i class="fas fa-image"></i></span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold tracking-widest"
+                                    style="background:#fff8e1; color:#DD8B26; border:1px solid #ffe0b2; letter-spacing:0.08em;">WEEKEND50K</span>
+                            </td>
+                            <td class="px-5 py-3.5 text-sm font-medium" style="color:#111111;">Weekend Fixed</td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 text-sm font-bold" style="color:#2B90D9;"><i class="fas fa-money-bill text-xs"></i> Rp 50.000</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#333333;">
+                                <div class="flex items-center gap-1"><i class="fas fa-calendar-check text-[10px]" style="color:#039509;"></i> 01 Jan 2026</div>
+                                <div class="flex items-center gap-1 mt-0.5"><i class="fas fa-calendar-xmark text-[10px]" style="color:#666666;"></i> 31 Dec 2027</div>
+                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">
+                                <span class="font-semibold" style="color:#111111;">2</span>
+                                 / 100
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#039509;"></span> Aktif
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                                                    <a href="https://dev.hotelify.id/admin/promos/2/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                                                    <img src="https://dev.hotelify.id/storage/promos/NHZz3cmxkBwnJxww5PFZjzBboQLA4hL1fFXc2WhV.jpg" alt="" class="h-10 w-10 rounded-lg object-cover border" style="border-color:#D4EDD4;">
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold tracking-widest"
+                                    style="background:#fff8e1; color:#DD8B26; border:1px solid #ffe0b2; letter-spacing:0.08em;">LEBARAN03</span>
+                            </td>
+                            <td class="px-5 py-3.5 text-sm font-medium" style="color:#111111;">Special Lebaran</td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 text-sm font-bold" style="color:#2B90D9;"><i class="fas fa-money-bill text-xs"></i> Rp 50.000</span>
+                                                            </td>
+                            <td class="px-5 py-3.5 text-xs" style="color:#333333;">
+                                <div class="flex items-center gap-1"><i class="fas fa-calendar-check text-[10px]" style="color:#039509;"></i> 03 Mar 2026</div>
+                                <div class="flex items-center gap-1 mt-0.5"><i class="fas fa-calendar-xmark text-[10px]" style="color:#666666;"></i> 31 Mar 2026</div>
+                            </td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">
+                                <span class="font-semibold" style="color:#111111;">1</span>
+                                 / ∞
+                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                                        style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">
+                                        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#039509;"></span> Aktif
+                                    </span>
+                                                            </td>
+                            <td class="px-5 py-3.5 admin-action-cell">
+                                                                    <a href="https://dev.hotelify.id/admin/promos/3/edit"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+
+            </div>
+
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-promos-clone.js"></script>
+</body>
+</html>

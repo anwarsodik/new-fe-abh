@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Log Check-in - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-checkins-log-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="checkinsLog">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Log Check-in</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    
+    <nav class="flex items-center gap-2 text-sm mb-6">
+        <a href="hotelify-admin-checkins-clone.html"
+           class="transition-colors" style="color:#4a7a4c;"
+           onmouseover="this.style.color='#66BB6A';"
+           onmouseout="this.style.color='#a3c4a5';">
+            <i class="fas fa-sign-in-alt mr-1"></i> Check-in
+        </a>
+        <i class="fas fa-chevron-right text-[10px]" style="color:#81c784;"></i>
+        <span class="font-semibold" style="color:#1e2d1f;">Log Check-in</span>
+    </nav>
+
+    
+    <div class="mb-6">
+        <form action="hotelify-admin-checkins-log-clone.html" method="get"
+              class="flex flex-wrap items-end gap-3">
+
+            <div>
+                <label for="dari" class="block text-[11px] font-bold uppercase tracking-wider mb-1.5"
+                       style="color:#4a7a4c;">
+                    <i class="fas fa-calendar-alt mr-1"></i> Dari
+                </label>
+                <input type="date" name="dari" id="dari" value=""
+                       class="px-3 py-2 rounded-lg text-sm transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                       style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+            </div>
+
+            <div>
+                <label for="sampai" class="block text-[11px] font-bold uppercase tracking-wider mb-1.5"
+                       style="color:#4a7a4c;">
+                    <i class="fas fa-calendar-alt mr-1"></i> Sampai
+                </label>
+                <input type="date" name="sampai" id="sampai" value=""
+                       class="px-3 py-2 rounded-lg text-sm transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                       style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-xs"
+                   style="color:#4a7a4c;"></i>
+                <input type="text" name="q" value=""
+                       placeholder="No. booking / tamu..."
+                       class="pl-8 pr-4 py-2 rounded-lg text-sm w-44 transition focus:outline-none focus:ring-2 focus:ring-[#66BB6A]/40"
+                       style="background:#fff; border:1px solid #e0ede0; color:#1e2d1f;">
+            </div>
+
+            <button type="submit"
+                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
+                    style="background: linear-gradient(135deg, #66BB6A, #43A047); color:#fff; box-shadow:0 2px 8px rgba(102,187,106,0.35);">
+                <i class="fas fa-filter text-xs"></i> Filter
+            </button>
+        </form>
+    </div>
+
+    
+    <div class="rounded-2xl overflow-hidden"
+         style="background:#fff; border:1px solid #e0ede0; box-shadow:0 1px 4px rgba(102,187,106,0.08);">
+
+        
+        <div class="flex items-center justify-between px-6 py-4"
+             style="background:#f8fcf8; border-bottom:1px solid #edf5ed;">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                     style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44);">
+                    <i class="fas fa-history text-sm" style="color:#66BB6A;"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-bold" style="color:#1e2d1f;">Riwayat Check-in</p>
+                    <p class="text-xs mt-0.5" style="color:#4a7a4c;">Tracking dan analisis operasional check-in</p>
+                </div>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style="background:#f0faf0; color:#388e3c;">
+                <i class="fas fa-sign-in-alt text-[9px]"></i> Check-in
+            </span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                    <tr style="background:#f8fcf8; border-bottom:1px solid #edf5ed;">
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">
+                            <i class="fas fa-clock mr-1"></i> Tanggal / Waktu
+                        </th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">
+                            <i class="fas fa-hashtag mr-1"></i> No. Booking
+                        </th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">
+                            <i class="fas fa-door-open mr-1"></i> Unit
+                        </th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">
+                            <i class="fas fa-user mr-1"></i> Tamu
+                        </th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">
+                            <i class="fas fa-money-bill-wave mr-1"></i> Deposit (Rp)
+                        </th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider" style="color:#4a7a4c;">
+                            <i class="fas fa-user-shield mr-1"></i> Oleh
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    04 Mar 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    02:49 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/12"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-26-0007-f11f
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                B-06-09
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Leslie Barrett
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    Rp 2.000
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    04 Mar 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    00:00 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/11"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-26-0006-dfb3
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                A-26-35
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Aristotle Carlson
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    Rp 100.000
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    03 Mar 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    23:40 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/10"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-26-0005-bc0d
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                A-26-21
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Hu Cummings
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    Rp 1.000.000
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    03 Mar 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    22:57 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/8"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-26-0003-9c82
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                A-03-37
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Rinah Parsons
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    <span style="color:#4a7a4c;">–</span>
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    02 Mar 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    13:54 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/7"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-26-0002-7a85
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                A-11-62
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                anwar
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    <span style="color:#4a7a4c;">–</span>
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    27 Feb 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    10:13 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/4"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-2026-2026202620260004
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                A-03-37
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Kristen Rich
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    Rp 800.000
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    27 Feb 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    10:13 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/5"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-2026--9223372036854775808
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                A-03-37
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Marny Leach
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    <span style="color:#4a7a4c;">–</span>
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    27 Feb 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    09:55 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/3"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-2026-202620260003
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                A-11-62
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Quintessa Ellis
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    Rp 1.000
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                            <tr class="transition-colors last:border-0"
+                            style="border-bottom:1px solid #f5faf5;"
+                            onmouseover="this.style.background='#f8fcf8';"
+                            onmouseout="this.style.background='transparent';">
+
+                            <td class="px-5 py-3.5">
+                                <span class="text-sm font-semibold" style="color:#1e2d1f;">
+                                    27 Feb 2026
+                                </span><br>
+                                <span class="text-xs" style="color:#4a7a4c;">
+                                    <i class="fas fa-clock mr-0.5"></i>
+                                    07:18 WIB
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/bookings/1"
+                                   class="text-sm font-semibold transition-colors"
+                                   style="color:#388e3c;"
+                                   onmouseover="this.style.color='#1e2d1f';"
+                                   onmouseout="this.style.color='#388e3c';">
+                                    INV-2026-0001
+                                </a>
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                B-17-29
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm" style="color:#2e5130;">
+                                Georgia Donaldson
+                            </td>
+
+                            <td class="px-5 py-3.5 text-sm font-semibold" style="color:#1e2d1f;">
+                                                                    Rp 2.000
+                                                            </td>
+
+                            <td class="px-5 py-3.5">
+                                                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                                             style="background: linear-gradient(135deg, #66BB6A22, #66BB6A44); color:#388e3c;">
+                                            S
+                                        </div>
+                                        <span class="text-sm" style="color:#2e5130;">super admin</span>
+                                    </div>
+                                                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+
+            </div>
+
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-checkins-log-clone.js"></script>
+</body>
+</html>

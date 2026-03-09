@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pajak &amp; Biaya Layanan - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-additional-payments-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="additionalPayments">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Pajak &amp; Biaya Layanan</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    <div class="rounded-2xl overflow-hidden mb-6"
+         style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+        <div class="px-5 py-4" style="border-bottom:1px solid #D4EDD4;">
+            <h2 class="text-sm font-bold flex items-center gap-1.5" style="color:#111111;">
+                <i class="fas fa-percent" style="color:#039509;"></i> Pembayaran Tambahan
+            </h2>
+            <p class="text-xs mt-0.5" style="color:#666666;">Ubah pajak dan biaya layanan kapan saja. Dipakai di perkiraan biaya (admin & guest).</p>
+        </div>
+
+        <form action="hotelify-admin-additional-payments-clone.html" method="post">
+            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">            <div class="overflow-x-auto">
+                <table class="w-full text-left admin-table">
+                    <thead>
+                        <tr style="background:#E8F5E8; border-bottom:1px solid #D4EDD4;">
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Nama</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Tipe</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Nilai</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider w-20">Urut</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider w-20">Aktif</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                                                    <tr style="border-bottom:1px solid #D4EDD4;">
+                                <td class="px-5 py-3.5">
+                                    <input type="hidden" name="items[0][id]" value="1">
+                                    <input type="text" name="items[0][name]" value="Pajak"
+                                           class="w-full px-3 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;" maxlength="100" required>
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <select name="items[0][type]" class="px-3 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;">
+                                        <option value="percentage" selected>Persen (%)</option>
+                                        <option value="fixed" >Tetap (Rp)</option>
+                                    </select>
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <input type="number" name="items[0][value]" value="10.00"
+                                           min="0" step="0.01"
+                                           class="w-28 px-3 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;" required>
+                                                                            <span class="text-xs ml-1" style="color:#666;">%</span>
+                                                                    </td>
+                                <td class="px-5 py-3.5">
+                                    <input type="number" name="items[0][sort_order]" value="1"
+                                           min="0" class="w-16 px-2 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;">
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="hidden" name="items[0][is_active]" value="0">
+                                        <input type="checkbox" name="items[0][is_active]" value="1"
+                                                checked
+                                                class="rounded border-D4EDD4 text-[#039509] focus:ring-[#039509]">
+                                        <span class="text-xs" style="color:#333;">Ya</span>
+                                    </label>
+                                </td>
+                            </tr>
+                                                    <tr style="border-bottom:1px solid #D4EDD4;">
+                                <td class="px-5 py-3.5">
+                                    <input type="hidden" name="items[1][id]" value="2">
+                                    <input type="text" name="items[1][name]" value="Biaya layanan"
+                                           class="w-full px-3 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;" maxlength="100" required>
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <select name="items[1][type]" class="px-3 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;">
+                                        <option value="percentage" >Persen (%)</option>
+                                        <option value="fixed" selected>Tetap (Rp)</option>
+                                    </select>
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <input type="number" name="items[1][value]" value="10000.00"
+                                           min="0" step="1"
+                                           class="w-28 px-3 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;" required>
+                                                                            <span class="text-xs ml-1" style="color:#666;">Rp</span>
+                                                                    </td>
+                                <td class="px-5 py-3.5">
+                                    <input type="number" name="items[1][sort_order]" value="2"
+                                           min="0" class="w-16 px-2 py-2 rounded-lg text-sm border" style="border-color:#D4EDD4;">
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="hidden" name="items[1][is_active]" value="0">
+                                        <input type="checkbox" name="items[1][is_active]" value="1"
+                                                checked
+                                                class="rounded border-D4EDD4 text-[#039509] focus:ring-[#039509]">
+                                        <span class="text-xs" style="color:#333;">Ya</span>
+                                    </label>
+                                </td>
+                            </tr>
+                                            </tbody>
+                </table>
+            </div>
+                            <div class="px-5 py-4" style="border-top:1px solid #D4EDD4;">
+                    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                            style="background:#039509; color:#fff;"
+                            onmouseover="this.style.background='#05B30B';"
+                            onmouseout="this.style.background='#039509';">
+                        <i class="fas fa-save text-xs"></i> Simpan Perubahan
+                    </button>
+                </div>
+                    </form>
+    </div>
+
+    
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-additional-payments-clone.js"></script>
+</body>
+</html>

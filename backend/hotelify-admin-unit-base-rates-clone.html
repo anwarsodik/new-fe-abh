@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harga Dasar Unit - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-unit-base-rates-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="unitBaseRates">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Harga Dasar Unit</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    <nav class="flex items-center gap-2 text-xs mb-5" style="color:#666666;">
+        <a href="hotelify-admin-units-clone.html" class="flex items-center gap-1.5 transition-colors" style="color:#039509;"
+            onmouseover="this.style.color='#02770A'" onmouseout="this.style.color='#039509'">
+            <i class="fas fa-door-open"></i> Units
+        </a>
+        <i class="fas fa-chevron-right text-[9px]"></i>
+        <span style="color:#111111; font-weight:600;">Harga Dasar Unit (Minimum)</span>
+    </nav>
+
+    
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div class="rounded-2xl overflow-hidden flex items-center gap-4 p-5" style="background:#E8F5E8; border:1px solid #B8DDB8;">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:#039509;">
+                <i class="fas fa-check-circle text-white text-lg"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold" style="color:#02770A;">15</p>
+                <p class="text-sm font-medium" style="color:#1e2d1f;">Unit sudah punya harga dasar</p>
+                <p class="text-xs mt-0.5" style="color:#4a7a4c;">Memiliki base rate yang berlaku hari ini</p>
+            </div>
+        </div>
+        <div class="rounded-2xl overflow-hidden flex items-center gap-4 p-5" style="background:#fff8e1; border:1px solid #ffe0b2;">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:#FFA726;">
+                <i class="fas fa-exclamation-triangle text-white text-lg"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold" style="color:#E65100;">0</p>
+                <p class="text-sm font-medium" style="color:#1e2d1f;">Unit belum punya harga dasar</p>
+                <p class="text-xs mt-0.5" style="color:#666;">Belum ada base rate yang berlaku</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="rounded-2xl px-5 py-3 flex items-center gap-4"
+            style="background:#F4FBF4; border:1px solid #D4EDD4;">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background:#E8F5E8;">
+                <i class="fas fa-tag text-base" style="color:#039509;"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wider" style="color:#666666;">Harga Dasar (Minimum)</p>
+                <p class="text-sm mt-0.5" style="color:#111111;">Pemilik unit tidak boleh menaruh harga jual di bawah nilai ini</p>
+            </div>
+        </div>
+                    <a href="https://dev.hotelify.id/admin/unit-base-rates/create"
+                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all"
+                style="background:#039509; color:#fff;"
+                onmouseover="this.style.background='#05B30B';"
+                onmouseout="this.style.background='#039509';">
+                <i class="fas fa-plus text-xs"></i> Tambah Harga Dasar
+            </a>
+            </div>
+
+    <div class="rounded-2xl overflow-hidden" style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+        <div class="px-5 py-4 flex flex-wrap items-center gap-3" style="border-bottom:1px solid #D4EDD4;">
+            <h2 class="text-sm font-bold flex items-center gap-1.5" style="color:#111111;">
+                <i class="fas fa-list" style="color:#039509;"></i> Daftar Harga Dasar Unit
+            </h2>
+            <form action="hotelify-admin-unit-base-rates-clone.html" method="get" class="flex flex-wrap gap-2">
+                <select name="unit_id" class="px-3 py-2 rounded-lg text-sm" style="border:1px solid #D4EDD4; background:#fff;">
+                    <option value="">Semua Unit</option>
+                                            <option value="12" >A-03-37</option>
+                                            <option value="10" >A-11-62</option>
+                                            <option value="2" >A-26-21</option>
+                                            <option value="3" >A-26-35</option>
+                                            <option value="15" >A-26-61</option>
+                                            <option value="1" >B-05-36</option>
+                                            <option value="4" >B-06-09</option>
+                                            <option value="13" >B-12-29</option>
+                                            <option value="5" >B-15-29</option>
+                                            <option value="6" >B-17-29</option>
+                                            <option value="7" >B-19-30</option>
+                                            <option value="14" >B-20-20</option>
+                                            <option value="8" >B-25-30</option>
+                                            <option value="9" >B-26-21</option>
+                                            <option value="11" >B-27-32</option>
+                                    </select>
+                <button type="submit" class="px-3 py-2 rounded-lg text-xs font-semibold" style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;">
+                    <i class="fas fa-filter mr-1"></i> Filter
+                </button>
+            </form>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left admin-table">
+                <thead>
+                    <tr style="background:#E8F5E8; border-bottom:1px solid #D4EDD4;">
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">No. Unit</th>
+                        
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Berlaku Mulai</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Berlaku Sampai</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Harga</th>
+                        
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider">Status</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider w-28">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-05-36</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/15/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/15" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">A-26-21</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 12.500.000 <span class="text-[10px] font-normal opacity-80">per tahun</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/1/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/1" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">A-26-35</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 350.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/2/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/2" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-06-09</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/3/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/3" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-15-29</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/4/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/4" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-17-29</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/5/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/5" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-19-30</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/6/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/6" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-25-30</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/7/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/7" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-26-21</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/8/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/8" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">A-11-62</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 3.500.000 <span class="text-[10px] font-normal opacity-80">per bulan</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/12/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/12" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-27-32</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/13/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/13" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">A-03-37</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 300.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/9/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/9" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-12-29</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/10/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/10" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">B-20-20</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/11/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/11" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5 font-semibold" style="color:#111111;">A-26-61</td>
+                            
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">01 Jan 2026</td>
+                            <td class="px-5 py-3.5 text-sm" style="color:#333333;">-</td>
+                            <td class="px-5 py-3.5 font-semibold" style="color:#02770A;">
+                                                                Rp 500.000 <span class="text-[10px] font-normal opacity-80">per malam</span>
+                            </td>
+                            
+                            <td class="px-5 py-3.5">
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A;">Aktif</span>
+                                                            </td>
+                            <td class="px-5 py-3.5">
+                                                                    <a href="https://dev.hotelify.id/admin/unit-base-rates/14/edit"
+                                        class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-pen text-[10px]"></i> Edit
+                                    </a>
+                                                                                                    <form action="https://dev.hotelify.id/admin/unit-base-rates/14" method="post" class="inline ml-1"
+                                        onsubmit="return confirm('Hapus harga dasar ini?');">
+                                        <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold"
+                                            style="background:#fef2f2; color:#E53E3E; border:1px solid #fecaca;">
+                                            <i class="fas fa-trash text-[10px]"></i> Hapus
+                                        </button>
+                                    </form>
+                                                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+            </div>
+
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-unit-base-rates-clone.js"></script>
+</body>
+</html>

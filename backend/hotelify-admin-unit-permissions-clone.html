@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unit Permission - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-unit-permissions-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="unitPermissions">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Unit Permission</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    <nav class="flex items-center gap-2 text-xs mb-5" style="color:#666666;">
+        <a href="hotelify-admin-units-clone.html" class="flex items-center gap-1.5 transition-colors" style="color:#039509;"
+            onmouseover="this.style.color='#02770A'" onmouseout="this.style.color='#039509'">
+            <i class="fas fa-door-open"></i> Daftar Unit
+        </a>
+        <i class="fas fa-chevron-right text-[9px]"></i>
+        <span style="color:#111111; font-weight:600;">Pembagian Akses Unit</span>
+    </nav>
+
+    
+    <div class="rounded-2xl overflow-hidden" style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+
+        <div class="px-5 py-4 flex items-center justify-between" style="border-bottom:1px solid #D4EDD4;">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:#039509;">
+                    <i class="fas fa-user-lock text-white text-sm"></i>
+                </div>
+                <div>
+                    <h2 class="text-sm font-bold" style="color:#111111;">Pembagian Unit ke User</h2>
+                    <p class="text-xs mt-0.5" style="color:#666666;">Tetapkan user yang mengelola master data tiap unit (nanti hanya user tersebut yang bisa mengubah unit ini)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left admin-table">
+                <thead>
+                    <tr style="background:#E8F5E8; border-bottom:1px solid #D4EDD4;">
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-building"></i></span> Unit</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-th-large"></i></span> Tipe</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-eye"></i></span> View</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-user-check"></i></span> User yang mengelola</th>
+                        <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider w-28">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">A-03-37</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Mountain</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/12/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/12"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">A-11-62</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">2BR</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Sky Garden</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/10/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/10"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">A-26-21</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Pool</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/2/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/2"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">A-26-35</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Pool</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/3/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/3"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">A-26-61</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">2BR</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">City</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/15/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/15"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-05-36</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">3BR</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Sea</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/1/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/1"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-06-09</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Mountain</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/4/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/4"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-12-29</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Mountain</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/13/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/13"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-15-29</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Mountain</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/5/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/5"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-17-29</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Mountain</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/6/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/6"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-19-30</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Mountain</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/7/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/7"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-20-20</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Pool</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/14/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/14"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-25-30</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Mountain</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/8/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/8"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-26-21</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Studio</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Pool</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/9/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/9"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                            <tr style="border-bottom:1px solid #D4EDD4;"
+                            onmouseover="this.style.background='#F0FAF0';"
+                            onmouseout="this.style.background='';">
+                            <td class="px-5 py-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style="background:#039509;">
+                                        <i class="fas fa-building text-white text-[10px]"></i>
+                                    </div>
+                                    <p class="text-sm font-semibold" style="color:#111111;">B-27-32</p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">2BR</span></td>
+                            <td class="px-5 py-3.5"><span class="text-xs" style="color:#333333;">Sea</span></td>
+                            <td class="px-5 py-3.5">
+                                <form action="https://dev.hotelify.id/admin/units/11/permission" method="post" class="flex flex-wrap items-center gap-2">
+                                    <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                                    <input type="hidden" name="_method" value="put">                                    <select name="user_id" class="px-3 py-2 rounded-lg text-sm min-w-[180px]"
+                                        style="border:1px solid #D4EDD4; background:#FFFFFF; color:#111111;">
+                                        <option value="">– Belum ditetapkan –</option>
+                                                                                    <option value="3" >
+                                                Admin Internal (admin@internal.com)
+                                            </option>
+                                                                                    <option value="1" >
+                                                super admin (admin@super.com)
+                                            </option>
+                                                                            </select>
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                                        style="background:#039509; color:#fff;"
+                                        onmouseover="this.style.background='#05B30B';"
+                                        onmouseout="this.style.background='#039509';">
+                                        <i class="fas fa-save text-[10px]"></i> Simpan
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="px-5 py-3.5">
+                                <a href="https://dev.hotelify.id/admin/units/11"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                                   style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;"
+                                   onmouseover="this.style.background='#D4EDD4';"
+                                   onmouseout="this.style.background='#E8F5E8';">
+                                    <i class="fas fa-eye text-[10px]"></i> Detail
+                                </a>
+                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+    </div>
+
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-unit-permissions-clone.js"></script>
+</body>
+</html>

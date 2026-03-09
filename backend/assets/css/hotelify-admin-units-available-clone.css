@@ -1,0 +1,57 @@
+:root {
+    --admin-primary: #039509;
+    --admin-primary-hover: #05b30b;
+    --admin-primary-pressed: #02770a;
+    --admin-bg: #ffffff;
+    --admin-card: #f4fbf4;
+    --admin-section: #e8f5e8;
+    --admin-row-hover: #f0faf0;
+    --admin-text: #111111;
+    --admin-text-secondary: #333333;
+    --admin-text-muted: #666666;
+    --admin-border: #d4edd4;
+    --admin-border-card: #b8ddb8;
+}
+
+body {
+    font-family: "Instrument Sans", sans-serif;
+    background:
+        radial-gradient(circle at top right, rgba(3, 149, 9, 0.08), transparent 25%),
+        linear-gradient(180deg, #f8fff8 0%, #ffffff 20%);
+    color: var(--admin-text);
+}
+
+.sidebar-scroll::-webkit-scrollbar,
+.table-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb,
+.table-scroll::-webkit-scrollbar-thumb {
+    background: rgba(3, 149, 9, 0.22);
+    border-radius: 999px;
+}
+
+.th-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.5rem;
+    background: var(--admin-section);
+    color: var(--admin-primary);
+    margin-right: 0.35rem;
+    vertical-align: middle;
+}
+
+.glow-pill {
+    box-shadow: 0 0 0 1px rgba(184, 221, 184, 1), 0 0 24px rgba(5, 179, 11, 0.24);
+}
+
+.chip-active {
+    background: var(--admin-primary);
+    border-color: var(--admin-primary);
+    color: #fff;
+}

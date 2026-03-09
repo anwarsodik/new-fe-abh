@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-dashboard-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="dashboard">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">Dashboard</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+        <div class="rounded-2xl p-5 flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5"
+             style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:#C8EBC8;">
+                <i class="fas fa-door-open text-xl" style="color:#039509;"></i>
+            </div>
+            <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider" style="color:#666666;">Total Units</p>
+                <p class="text-2xl font-bold mt-0.5 leading-tight" style="color:#111111;">15</p>
+                <p class="text-[11px] mt-0.5" style="color:#666666;">Unit terdaftar</p>
+            </div>
+        </div>
+
+        <div class="rounded-2xl p-5 flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5"
+             style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:#E8F5E8;">
+                <i class="fas fa-key text-xl" style="color:#02770A;"></i>
+            </div>
+            <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider" style="color:#666666;">Aktif</p>
+                <p class="text-2xl font-bold mt-0.5 leading-tight" style="color:#111111;">15</p>
+                <p class="text-[11px] mt-0.5" style="color:#666666;">Unit aktif (bisa dipesan)</p>
+            </div>
+        </div>
+
+        <div class="rounded-2xl p-5 flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5"
+             style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:#C8EBC8;">
+                <i class="fas fa-calendar-alt text-xl" style="color:#039509;"></i>
+            </div>
+            <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider" style="color:#666666;">Monthly</p>
+                <p class="text-2xl font-bold mt-0.5 leading-tight" style="color:#111111;">4</p>
+                <p class="text-[11px] mt-0.5" style="color:#666666;">Sewa bulanan</p>
+            </div>
+        </div>
+
+        <div class="rounded-2xl p-5 flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5"
+             style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:#fff8e1;">
+                <i class="fas fa-moon text-xl" style="color:#DD8B26;"></i>
+            </div>
+            <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider" style="color:#666666;">Daily</p>
+                <p class="text-2xl font-bold mt-0.5 leading-tight" style="color:#111111;">9</p>
+                <p class="text-[11px] mt-0.5" style="color:#666666;">Sewa harian</p>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+
+        <a href="hotelify-admin-bookings-clone.html"
+           class="rounded-2xl p-5 flex items-center justify-between transition-all duration-200 hover:-translate-y-0.5 group"
+           style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider" style="color:#666666;">Total Bookings</p>
+                <p class="text-3xl font-bold mt-1 leading-tight" style="color:#111111;">14</p>
+                <p class="text-xs mt-1" style="color:#666666;">Semua waktu</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:#C8EBC8;">
+                <i class="fas fa-calendar-check text-xl" style="color:#039509;"></i>
+            </div>
+        </a>
+
+        <a href="hotelify-admin-bookings-clone.html?status=pending_payment"
+           class="rounded-2xl p-5 flex items-center justify-between transition-all duration-200 hover:-translate-y-0.5 group"
+           style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider" style="color:#666666;">Pending Payment</p>
+                <p class="text-3xl font-bold mt-1 leading-tight" style="color:#111111;">2</p>
+                <p class="text-xs mt-1 font-medium" style="color:#DD8B26;">Menunggu pembayaran</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:#fff8e1;">
+                <i class="fas fa-clock text-xl" style="color:#DD8B26;"></i>
+            </div>
+        </a>
+
+        <a href="hotelify-admin-bookings-clone.html?status=confirmed"
+           class="rounded-2xl p-5 flex items-center justify-between transition-all duration-200 hover:-translate-y-0.5 group"
+           style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div>
+                <p class="text-[11px] font-semibold uppercase tracking-wider" style="color:#666666;">Confirmed</p>
+                <p class="text-3xl font-bold mt-1 leading-tight" style="color:#111111;">3</p>
+                <p class="text-xs mt-1 font-medium" style="color:#02770A;">Terkonfirmasi</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:#C8EBC8;">
+                <i class="fas fa-check-circle text-xl" style="color:#039509;"></i>
+            </div>
+        </a>
+    </div>
+
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+
+        
+        <div class="rounded-2xl p-5"
+             style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-sm font-bold" style="color:#111111;">Distribusi Status Unit</h2>
+                    <p class="text-xs mt-0.5" style="color:#666666;">Persentase berdasarkan status sewa</p>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                      style="background:#C8EBC8; color:#02770A;">
+                    <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#039509;"></span> Live
+                </span>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="relative w-44 h-44 shrink-0 mx-auto">
+                    <canvas id="unitStatusChart"></canvas>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                        <span class="text-2xl font-bold" style="color:#111111;">15</span>
+                        <span class="text-[11px] font-medium" style="color:#666666;">Total</span>
+                    </div>
+                </div>
+                <div class="space-y-3 flex-1">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#039509;"></span>
+                            <span class="text-xs" style="color:#333333;">Aktif</span>
+                        </div>
+                        <span class="text-xs font-bold" style="color:#111111;">15</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#2B90D9;"></span>
+                            <span class="text-xs" style="color:#333333;">Monthly</span>
+                        </div>
+                        <span class="text-xs font-bold" style="color:#111111;">4</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:#DD8B26;"></span>
+                            <span class="text-xs" style="color:#333333;">Daily</span>
+                        </div>
+                        <span class="text-xs font-bold" style="color:#111111;">9</span>
+                    </div>
+                                        <div class="pt-2" style="border-top:1px solid #D4EDD4;">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs" style="color:#666666;">Tingkat Hunian</span>
+                            <span class="text-xs font-bold" style="color:#039509;">
+                                0%
+                            </span>
+                        </div>
+                        <div class="mt-1.5 h-1.5 rounded-full overflow-hidden" style="background:#D4EDD4;">
+                            <div class="h-full rounded-full transition-all duration-700"
+                                 style="width: 0%; background:#039509;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-2xl p-5"
+             style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-sm font-bold" style="color:#111111;">Ringkasan Booking</h2>
+                    <p class="text-xs mt-0.5" style="color:#666666;">Perbandingan status booking</p>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                      style="background:#C8EBC8; color:#02770A;">
+                    <i class="fas fa-chart-bar text-[10px]"></i> Overview
+                </span>
+            </div>
+            <div class="h-44">
+                <canvas id="bookingStatusChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    
+            <div class="rounded-2xl overflow-hidden mb-6"
+             style="background:#F4FBF4; border:1px solid #D4EDD4; box-shadow:0 1px 4px rgba(3,149,9,0.08);">
+            <div class="px-5 py-4 flex items-center justify-between" style="border-bottom:1px solid #D4EDD4;">
+                <div>
+                    <h2 class="text-sm font-bold" style="color:#111111;">Booking Terbaru</h2>
+                    <p class="text-xs mt-0.5" style="color:#666666;">5 transaksi terakhir</p>
+                </div>
+                <a href="hotelify-admin-bookings-clone.html"
+                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
+                   style="background:#C8EBC8; color:#02770A;">
+                    Lihat Semua <i class="fas fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left admin-table">
+                    <thead>
+                        <tr style="background:#E8F5E8; border-bottom:1px solid #D4EDD4;">
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-hashtag"></i></span> No. Booking</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-door-open"></i></span> Unit</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-user"></i></span> Guest</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-calculator"></i></span> Subtotal</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-money-bill-wave"></i></span> Total</th>
+                            <th class="px-5 py-3 text-[11px] font-bold uppercase tracking-wider"><span class="th-icon"><i class="fas fa-circle-dot"></i></span> Status</th>
+                            <th class="px-5 py-3 w-16">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                                                    <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                                onmouseover="this.style.background='#F0FAF0';"
+                                onmouseout="this.style.background='transparent';">
+                                <td class="px-5 py-3.5"><span class="text-sm font-semibold" style="color:#039509;">INV-26-0009-75b3</span></td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">A-03-37</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">anwar ganteng</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#333333;">Rp 300.000</td>
+                                <td class="px-5 py-3.5 text-sm font-semibold" style="color:#111111;">Rp 340.000</td>
+                                <td class="px-5 py-3.5">
+                                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">confirmed</span>
+                                </td>
+                                <td class="px-5 py-3.5 admin-action-cell">
+                                    <a href="https://dev.hotelify.id/admin/bookings/14" class="text-xs font-semibold transition-colors" style="color:#039509;" onmouseover="this.style.color='#02770A';" onmouseout="this.style.color='#039509';">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                                                    <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                                onmouseover="this.style.background='#F0FAF0';"
+                                onmouseout="this.style.background='transparent';">
+                                <td class="px-5 py-3.5"><span class="text-sm font-semibold" style="color:#039509;">INV-26-0008-5761</span></td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">A-03-37</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">Justina Lambert</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#333333;">Rp 600.000</td>
+                                <td class="px-5 py-3.5 text-sm font-semibold" style="color:#111111;">Rp 604.000</td>
+                                <td class="px-5 py-3.5">
+                                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold" style="background:#C8EBC8; color:#02770A; border:1px solid #B8DDB8;">confirmed</span>
+                                </td>
+                                <td class="px-5 py-3.5 admin-action-cell">
+                                    <a href="https://dev.hotelify.id/admin/bookings/13" class="text-xs font-semibold transition-colors" style="color:#039509;" onmouseover="this.style.color='#02770A';" onmouseout="this.style.color='#039509';">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                                                    <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                                onmouseover="this.style.background='#F0FAF0';"
+                                onmouseout="this.style.background='transparent';">
+                                <td class="px-5 py-3.5"><span class="text-sm font-semibold" style="color:#039509;">INV-26-0007-f11f</span></td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">B-06-09</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">Leslie Barrett</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#333333;">Rp 500.000</td>
+                                <td class="px-5 py-3.5 text-sm font-semibold" style="color:#111111;">Rp 505.000</td>
+                                <td class="px-5 py-3.5">
+                                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold" style="background:#F4FBF4; color:#333333; border:1px solid #D4EDD4;">checked out</span>
+                                </td>
+                                <td class="px-5 py-3.5 admin-action-cell">
+                                    <a href="https://dev.hotelify.id/admin/bookings/12" class="text-xs font-semibold transition-colors" style="color:#039509;" onmouseover="this.style.color='#02770A';" onmouseout="this.style.color='#039509';">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                                                    <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                                onmouseover="this.style.background='#F0FAF0';"
+                                onmouseout="this.style.background='transparent';">
+                                <td class="px-5 py-3.5"><span class="text-sm font-semibold" style="color:#039509;">INV-26-0006-dfb3</span></td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">A-26-35</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">Aristotle Carlson</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#333333;">Rp 350.000</td>
+                                <td class="px-5 py-3.5 text-sm font-semibold" style="color:#111111;">Rp 350.000</td>
+                                <td class="px-5 py-3.5">
+                                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold" style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;">checked in</span>
+                                </td>
+                                <td class="px-5 py-3.5 admin-action-cell">
+                                    <a href="https://dev.hotelify.id/admin/bookings/11" class="text-xs font-semibold transition-colors" style="color:#039509;" onmouseover="this.style.color='#02770A';" onmouseout="this.style.color='#039509';">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                                                    <tr class="transition-colors last:border-0" style="border-bottom:1px solid #D4EDD4;"
+                                onmouseover="this.style.background='#F0FAF0';"
+                                onmouseout="this.style.background='transparent';">
+                                <td class="px-5 py-3.5"><span class="text-sm font-semibold" style="color:#039509;">INV-26-0005-bc0d</span></td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">A-26-21</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#111111;">Hu Cummings</td>
+                                <td class="px-5 py-3.5 text-sm" style="color:#333333;">Rp 12.500.002</td>
+                                <td class="px-5 py-3.5 text-sm font-semibold" style="color:#111111;">Rp 12.500.002</td>
+                                <td class="px-5 py-3.5">
+                                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold" style="background:#E8F5E8; color:#02770A; border:1px solid #D4EDD4;">checked in</span>
+                                </td>
+                                <td class="px-5 py-3.5 admin-action-cell">
+                                    <a href="https://dev.hotelify.id/admin/bookings/10" class="text-xs font-semibold transition-colors" style="color:#039509;" onmouseover="this.style.color='#02770A';" onmouseout="this.style.color='#039509';">
+                                        Detail
+                                    </a>
+                                </td>
+                            </tr>
+                                            </tbody>
+                </table>
+            </div>
+        </div>
+    
+    
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-dashboard-clone.js"></script>
+</body>
+</html>

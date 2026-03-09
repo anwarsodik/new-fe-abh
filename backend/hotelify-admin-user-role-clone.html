@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User &amp; Role - Laravel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-live-shared.css">
+    <link rel="stylesheet" href="assets/css/hotelify-admin-user-role-clone.css">
+</head>
+<body class="font-sans antialiased h-screen overflow-hidden" style="background-color: var(--admin-bg); color: var(--admin-text);" data-sidebar-page="userRole">
+    <div class="flex h-full overflow-hidden">
+        <div id="sidebar-root"></div>
+        <div class="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+           
+            <header class="shrink-0 z-30 shadow-sm" style="background:var(--admin-bg); border-bottom: 1px solid var(--admin-border);">
+                <div class="flex items-center gap-3 h-14 px-6">
+
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium" style="color:var(--admin-text-muted);">Admin</span>
+                        <i class="fas fa-chevron-right text-[10px]" style="color:var(--admin-text-muted);"></i>
+                        <h1 class="text-sm font-bold" style="color:var(--admin-text);">User &amp; Role</h1>
+                    </div>
+
+                    
+                    <div class="flex-1"></div>
+
+                    
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                        style="background:var(--admin-card); border:1px solid var(--admin-border);"
+                        title="Waktu Indonesia Barat (WIB)">
+
+                        
+                        <span class="shrink-0 w-2 h-2 rounded-full" style="background:var(--admin-primary); animation: wib-pulse 2s ease-in-out infinite;"></span>
+
+                        
+                        <div class="flex flex-col leading-tight">
+                            <span id="admin-wib-time" class="text-sm font-bold tabular-nums" style="color:var(--admin-text); letter-spacing:.3px;">--:--:--</span>
+                            <span id="admin-wib-date" class="text-[10.5px] font-medium" style="color:var(--admin-text-muted);">--</span>
+                        </div>
+
+                        
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                            style="background:var(--admin-section); color:var(--admin-primary); border:1px solid var(--admin-border);">
+                            WIB
+                        </span>
+                    </div>
+
+                    
+                    <div class="w-px h-5 shrink-0" style="background:var(--admin-border);"></div>
+
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full"
+                            style="background:var(--admin-card); border:1px solid var(--admin-border);">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background:var(--admin-primary);">
+                                <span class="text-white text-[10px] font-bold leading-none">S</span>
+                            </div>
+                            <span class="text-xs font-semibold leading-none" style="color:var(--admin-primary-pressed);">super admin</span>
+                        </div>
+                        <div class="w-px h-5" style="background:var(--admin-border);"></div>
+                        <a href="https://dev.hotelify.id/profile" title="Edit Profil"
+                            class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150"
+                            style="color:var(--admin-text-secondary);"
+                            onmouseover="this.style.color='var(--admin-primary)'; this.style.background='var(--admin-card)';"
+                            onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                            <i class="fas fa-user-cog"></i>
+                        </a>
+                        <form method="POST" action="https://dev.hotelify.id/logout" class="inline">
+                            <input type="hidden" name="_token" value="7e7dcbuCXtHY6vIO3Dwsn9GS7lrLlbnPIUplq5Oj" autocomplete="off">                            <button type="submit" title="Keluar"
+                                class="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all duration-150 cursor-pointer border-0 bg-transparent"
+                                style="color:var(--admin-text-secondary);"
+                                onmouseover="this.style.color='var(--admin-error)'; this.style.background='#fef2f2';"
+                                onmouseout="this.style.color='var(--admin-text-secondary)'; this.style.background='transparent';">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </header>
+
+            
+            <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background:var(--admin-bg);">
+
+                
+                
+                
+                
+                
+                
+                
+    
+    <div class="mb-6">
+        <p class="text-sm" style="color:#2e5130;">Kelola akun pengguna dan hak akses role dalam sistem.</p>
+    </div>
+
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+
+        
+        <a href="https://dev.hotelify.id/admin/users"
+           class="group rounded-2xl p-5 flex flex-col transition-all duration-200"
+           style="background:#ffffff; border:1px solid #e0ede0; box-shadow:0 1px 4px rgba(102,187,106,0.08);"
+           onmouseover="this.style.borderColor='#66BB6A'; this.style.boxShadow='0 4px 16px rgba(102,187,106,0.18)';"
+           onmouseout="this.style.borderColor='#e0ede0'; this.style.boxShadow='0 1px 4px rgba(102,187,106,0.08)';">
+            <div class="flex items-center gap-4">
+                <div class="nav-icon-user w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200"
+                     style="background:linear-gradient(135deg,#f0faf0,#e0f5e0); border:1px solid #b9e0bb;">
+                    <i class="fas fa-users text-xl transition-colors duration-200" style="color:#66BB6A;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-base font-bold" style="color:#1e2d1f;">Daftar User</h2>
+                    <p class="text-xs mt-0.5" style="color:#4a7a4c;">Manajemen akun pengguna sistem</p>
+                </div>
+                <div class="flex flex-col items-end gap-1 shrink-0">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-bold"
+                          style="background:#f0faf0; color:#388e3c; border:1px solid #b9e0bb;">
+                        2
+                    </span>
+                    <span class="text-[10px]" style="color:#4a7a4c;">user</span>
+                </div>
+            </div>
+
+            <p class="mt-4 text-sm leading-relaxed" style="color:#2e5130;">
+                Tambah, edit, atau hapus akun pengguna dan tetapkan role untuk setiap user.
+            </p>
+
+                        <div class="mt-4 pt-4 flex items-center justify-between" style="border-top:1px solid #edf5ed;">
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-200" style="color:#388e3c;">
+                    <i class="fas fa-plus text-[10px]"></i> Tambah User
+                </span>
+                <i class="fas fa-arrow-right text-xs transition-all duration-200" style="color:#4a7a4c;"></i>
+            </div>
+                    </a>
+
+        
+        <a href="https://dev.hotelify.id/admin/roles"
+           class="group rounded-2xl p-5 flex flex-col transition-all duration-200"
+           style="background:#ffffff; border:1px solid #e0ede0; box-shadow:0 1px 4px rgba(102,187,106,0.08);"
+           onmouseover="this.style.borderColor='#26A69A'; this.style.boxShadow='0 4px 16px rgba(38,166,154,0.15)';"
+           onmouseout="this.style.borderColor='#e0ede0'; this.style.boxShadow='0 1px 4px rgba(102,187,106,0.08)';">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
+                     style="background:linear-gradient(135deg,#e0f2f1,#b2dfdb); border:1px solid #80cbc4;">
+                    <i class="fas fa-user-shield text-xl" style="color:#26A69A;"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-base font-bold" style="color:#1e2d1f;">Daftar Role</h2>
+                    <p class="text-xs mt-0.5" style="color:#4a7a4c;">Pengaturan hak akses &amp; permission</p>
+                </div>
+                <div class="flex flex-col items-end gap-1 shrink-0">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-bold"
+                          style="background:#e0f2f1; color:#00796b; border:1px solid #80cbc4;">
+                        5
+                    </span>
+                    <span class="text-[10px]" style="color:#4a7a4c;">role</span>
+                </div>
+            </div>
+
+            <p class="mt-4 text-sm leading-relaxed" style="color:#2e5130;">
+                Buat dan atur role beserta permission yang dapat diakses oleh masing-masing kelompok user.
+            </p>
+
+                        <div class="mt-4 pt-4 flex items-center justify-between" style="border-top:1px solid #edf5ed;">
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold" style="color:#26A69A;">
+                    <i class="fas fa-plus text-[10px]"></i> Tambah Role
+                </span>
+                <i class="fas fa-arrow-right text-xs" style="color:#4a7a4c;"></i>
+            </div>
+                    </a>
+
+    </div>
+
+    
+    <div class="flex flex-wrap items-center gap-3">
+                <a href="https://dev.hotelify.id/admin/users"
+           class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-white text-sm font-semibold transition-all"
+           style="background:linear-gradient(135deg,#66BB6A,#4caf50); box-shadow:0 2px 8px rgba(102,187,106,0.35);"
+           onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(102,187,106,0.45)';"
+           onmouseout="this.style.transform=''; this.style.boxShadow='0 2px 8px rgba(102,187,106,0.35)';">
+            <i class="fas fa-users text-xs"></i> Ke Daftar User
+        </a>
+                        <a href="https://dev.hotelify.id/admin/roles"
+           class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all"
+           style="background:#f8fcf8; color:#2e5130; border:1px solid #e0ede0;"
+           onmouseover="this.style.background='#e0f2f1'; this.style.color='#00796b'; this.style.borderColor='#80cbc4'; this.style.transform='translateY(-1px)';"
+           onmouseout="this.style.background='#f8fcf8'; this.style.color='#5a7a5c'; this.style.borderColor='#e0ede0'; this.style.transform='';">
+            <i class="fas fa-user-shield text-xs"></i> Ke Daftar Role
+        </a>
+            </div>
+
+            </main>
+        </div>
+
+    </div>
+    </div>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/hotelify-admin-user-role-clone.js"></script>
+</body>
+</html>
